@@ -1,0 +1,16 @@
+#项目配置
+properties:
+  gateway:
+    sessionHeaderKey: x-tif-sessionid
+    userHeaderKey: x-tif-uid
+  wx:
+    appid: appid
+    secret: secret
+server:
+  port: 8080
+spring:
+  redis:
+    database: 0
+    host: 192.168.13.39
+    port: 6379
+    password: a
