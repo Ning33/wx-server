@@ -1,5 +1,7 @@
 package cn.hnisi.wx.core.io;
 
+import org.springframework.util.StringUtils;
+
 public enum ResponseStatus{
     OK("1"),
     JS_CODE_INVALID("1001","js_code is invalid"),
@@ -22,6 +24,15 @@ public enum ResponseStatus{
     @Override
     public String toString() {
         return this.errcode;
+    }
+
+    public static ResponseStatus valueFrom(String errcode){
+        for(ResponseStatus responseStatus : values()){
+            if(responseStatus.getErrcode().equals(errcode)){
+                return responseStatus;
+            }
+        }
+        throw new IllegalArgumentException("errcode is not match,errcode: "+errcode);
     }
 
     public String getErrcode() {

@@ -1,11 +1,12 @@
 package cn.hnisi.wx.server.security;
 
 
+import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.core.security.ISecurityService;
 import cn.hnisi.wx.core.security.User;
-import cn.hnisi.wx.core.wxapi.IWxService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,22 +17,16 @@ import javax.validation.constraints.NotNull;
 public class SecurityController {
 
     @Resource
-    private IWxService wxService;
-
-    @Resource
     private ISecurityService securityService;
 
     @RequestMapping("/api/frontend/user/login")
     public ResponseEntity<User> login(@NotNull String jsCode){
-        if(true){
-            return new ResponseEntity<>(ResponseStatus.JS_CODE_INVALID);
+        if(StringUtils.isEmpty(jsCode)){
+            throw new AppException(ResponseStatus.JS_CODE_INVALID,"jsCode is null");
         }
-        //调用微信接口，换取微信身份信息
-        User user = wxService.jscode2session(jsCode);
-        //调用业务接口，注入个人基本信息
-        securityService.injectUserPersonalInfo(user);
-        //存储用户信息至用户中心，目前使用redis管理
-        securityService.storeUser(user);
+
+        User user = securityService.login(jsCode);
+
         return new ResponseEntity<>(user);
     }
 

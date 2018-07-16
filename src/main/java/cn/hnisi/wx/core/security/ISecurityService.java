@@ -1,5 +1,8 @@
 package cn.hnisi.wx.core.security;
 
+import cn.hnisi.wx.core.exception.AppException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface ISecurityService {
 
     /**
@@ -9,24 +12,14 @@ public interface ISecurityService {
      * @param jsCode 微信客户端给出的令牌，用于向微信服务器查询openid和sessionKey
      * @return
      */
-    User login(String jsCode);
-
-    /**
-     * 登录
-     * 具体实现类推荐实现此方法，自动注入appid和secret
-     * @param jsCode
-     * @param appid
-     * @param secret
-     * @return
-     */
-    User login(String jsCode, String appid, String secret);
+    User login(String jsCode) throws AppException;
 
     /**
      * 存储用户信息
      * @param user
      * @return sessionid
      */
-    String storeUser(User user);
+    void storeUser(User user) throws JsonProcessingException;
 
     /**
      * 获取用户信息

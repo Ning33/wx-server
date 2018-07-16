@@ -9,5 +9,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(WxProperties.class)
 public class CoreAutoConfiguration {
 
-
 }
