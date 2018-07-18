@@ -1,22 +1,21 @@
-package cn.hnisi.wx.core.exception;
+package cn.hnisi.wx.server.exception;
 
-import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.server.io.ResponseStatus;
 import org.springframework.util.StringUtils;
 
 public class AppException extends RuntimeException {
 
-    private String errcode;
+    private ResponseStatus status;
     private String errmsg;
 
-    public AppException(String errcode,String errmsg){
-        super(errmsg);
-        this.errcode = errcode;
-        this.errmsg = errmsg;
+    public AppException(ResponseStatus responseStatus){
+        super(responseStatus.getErrmsg());
+        this.status = responseStatus;
     }
 
     public AppException(ResponseStatus responseStatus, String errmsg){
         super(StringUtils.isEmpty(errmsg)?responseStatus.getErrmsg():errmsg);
-        this.errcode = responseStatus.toString();
+        this.status = responseStatus;
         this.errmsg = errmsg;
     }
 
@@ -40,12 +39,12 @@ public class AppException extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public String getErrcode() {
-        return errcode;
+    public ResponseStatus getStatus() {
+        return status;
     }
 
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
+    public void setStatus(ResponseStatus status) {
+        this.status = status;
     }
 
     public String getErrmsg() {

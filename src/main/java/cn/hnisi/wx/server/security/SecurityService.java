@@ -1,4 +1,4 @@
-package cn.hnisi.wx.core.security;
+package cn.hnisi.wx.server.security;
 
 
 import org.springframework.beans.BeanUtils;

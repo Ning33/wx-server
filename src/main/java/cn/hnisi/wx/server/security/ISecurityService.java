@@ -1,6 +1,6 @@
-package cn.hnisi.wx.core.security;
+package cn.hnisi.wx.server.security;
 
-import cn.hnisi.wx.core.exception.AppException;
+import cn.hnisi.wx.server.exception.AppException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface ISecurityService {

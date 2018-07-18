@@ -4,8 +4,8 @@ properties:
     sessionHeaderKey: x-tif-sessionid
     userHeaderKey: x-tif-uid
   wx:
-    appid: appid
-    secret: secret
+    appid: wx1b023cc14a212804
+    secret: 9c8b4949ba1ad1c8af474431f54cdff7
 server:
   port: 8080
 spring:

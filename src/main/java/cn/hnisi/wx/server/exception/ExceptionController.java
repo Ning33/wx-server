@@ -1,7 +1,7 @@
-package cn.hnisi.wx.core.exception;
+package cn.hnisi.wx.server.exception;
 
-import cn.hnisi.wx.core.io.ResponseEntity;
-import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.server.io.ResponseEntity;
+import cn.hnisi.wx.server.io.ResponseStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionController {
     @RequestMapping("/exception")
     public ResponseEntity handleException(HttpServletRequest request){
-        AppException ex = (AppException) request.getAttribute("exception");
-        return new ResponseEntity(ResponseStatus.valueFrom(ex.getErrcode()),ex.getErrmsg());
+        AppException exception = (AppException) request.getAttribute("exception");
+        ResponseStatus status = exception.getStatus();
+        return new ResponseEntity(status,status.getErrmsg());
     }
 }

@@ -1,17 +1,16 @@
 package cn.hnisi.wx.server.security;
 
 
-import cn.hnisi.wx.core.exception.AppException;
-import cn.hnisi.wx.core.io.ResponseEntity;
-import cn.hnisi.wx.core.io.ResponseStatus;
-import cn.hnisi.wx.core.security.ISecurityService;
-import cn.hnisi.wx.core.security.User;
+import cn.hnisi.wx.server.WxProperties;
+import cn.hnisi.wx.server.exception.AppException;
+import cn.hnisi.wx.server.io.ResponseEntity;
+import cn.hnisi.wx.server.io.ResponseStatus;
+import cn.hnisi.wx.server.wxapi.IWxService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
 
 @RestController
 public class SecurityController {
@@ -19,8 +18,14 @@ public class SecurityController {
     @Resource
     private ISecurityService securityService;
 
+    @Resource
+    private WxProperties wxProperties;
+
+    @Resource
+    private IWxService wxService;
+
     @RequestMapping("/api/frontend/user/login")
-    public ResponseEntity<User> login(@NotNull String jsCode){
+    public ResponseEntity<User> login(String jsCode){
         if(StringUtils.isEmpty(jsCode)){
             throw new AppException(ResponseStatus.JS_CODE_INVALID,"jsCode is null");
         }
@@ -30,10 +35,18 @@ public class SecurityController {
         return new ResponseEntity<>(user);
     }
 
+    @RequestMapping("/api/frontend/signature")
+    public ResponseEntity<String> signature(String apiName){
+        if(StringUtils.isEmpty(apiName)){
+            apiName = "appauth";
+        }
+        return new ResponseEntity<>(wxService.signature(apiName));
+    }
+
     @RequestMapping("/api/frontend/user/bind")
     public ResponseEntity<User> bind(){
         //TODO
-        return null;
+        return new ResponseEntity<>(ResponseStatus.OK);
     }
 
     @RequestMapping("/api/frontend/user/unbind")

@@ -1,4 +1,4 @@
-package cn.hnisi.wx.core.exception;
+package cn.hnisi.wx.server.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
