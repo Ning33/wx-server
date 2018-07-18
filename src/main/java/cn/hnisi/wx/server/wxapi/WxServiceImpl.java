@@ -3,7 +3,6 @@ package cn.hnisi.wx.server.wxapi;
 import cn.hnisi.wx.server.WxProperties;
 import cn.hnisi.wx.server.exception.AppException;
 import cn.hnisi.wx.server.utils.JsonUtil;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +12,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +62,6 @@ public class WxServiceImpl implements IWxService {
 
         byte[] originBytes = mac.doFinal(originStr.getBytes());
         byte[] mixBytes = ArrayUtils.addAll(originBytes,originStr.getBytes());
-        String encodeStr = new String(Base64.encodeBase64(mixBytes));
-        return encodeStr;
+        return Base64.getEncoder().encodeToString(mixBytes);
     }
 }
