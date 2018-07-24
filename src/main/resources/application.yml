@@ -1,13 +1,18 @@
 #项目配置
 properties:
   gateway:
-    sessionHeaderKey: x-tif-sessionid
-    userHeaderKey: x-tif-uid
+    session-header-key: x-tif-sessionid
+    user-header-key: x-tif-uid
   wx:
     appid: wx1b023cc14a212804
     secret: 9c8b4949ba1ad1c8af474431f54cdff7
+  validate-face:
+    appid: 4818
+    secret-key: 5dffe557603cdc4079b6a33554760837
+    result-key: a98fe02e5d0075fc2089a3c3cb21f260
+    expired: 600
 server:
-  port: 8080
+  port: 8081
 spring:
   redis:
     database: 0

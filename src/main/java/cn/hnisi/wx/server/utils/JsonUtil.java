@@ -1,6 +1,7 @@
 package cn.hnisi.wx.server.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -8,6 +9,11 @@ import java.io.IOException;
 public class JsonUtil {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static{
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+    }
+
 
     public static <T> T convertJsonToBean(String json,Class<T> cls){
         try {

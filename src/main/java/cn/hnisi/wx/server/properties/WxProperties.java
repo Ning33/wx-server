@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server;
+package cn.hnisi.wx.server.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -12,7 +12,7 @@ public abstract class SecurityService implements ISecurityService{
         if(!personalInfo.isBound()){
             return false;
         }
-        String[] ignoreProperties = new String[]{"appid","openid","sessionKey","sessionid"};
+        String[] ignoreProperties = new String[]{"appid","openid","session_key","sessionid"};
         BeanUtils.copyProperties(personalInfo,user, ignoreProperties);
         return true;
     }
