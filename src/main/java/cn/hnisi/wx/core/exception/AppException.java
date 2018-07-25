@@ -1,6 +1,6 @@
-package cn.hnisi.wx.server.exception;
+package cn.hnisi.wx.core.exception;
 
-import cn.hnisi.wx.server.io.ResponseStatus;
+import cn.hnisi.wx.core.io.ResponseStatus;
 import org.springframework.util.StringUtils;
 
 public class AppException extends RuntimeException {
@@ -21,22 +21,31 @@ public class AppException extends RuntimeException {
 
     public AppException() {
         super();
+        this.status = ResponseStatus.UNKNOWN_ERROR;
     }
 
     public AppException(String message) {
         super(message);
+        this.status = ResponseStatus.UNKNOWN_ERROR;
+        this.errmsg = message;
     }
 
     public AppException(String message, Throwable cause) {
         super(message, cause);
+        this.status = ResponseStatus.UNKNOWN_ERROR;
+        this.errmsg = message;
     }
 
     public AppException(Throwable cause) {
         super(cause);
+        this.status = ResponseStatus.UNKNOWN_ERROR;
+        this.errmsg = cause.getMessage();
     }
 
     public AppException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
+        this.status = ResponseStatus.UNKNOWN_ERROR;
+        this.errmsg = message;
     }
 
     public ResponseStatus getStatus() {

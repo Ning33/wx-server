@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server.utils;
+package cn.hnisi.wx.core.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,6 +18,14 @@ public class JsonUtil {
     public static <T> T convertJsonToBean(String json,Class<T> cls){
         try {
             return objectMapper.readValue(json,cls);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T convertJsonToBean(byte[] bytes,Class<T> cls){
+        try{
+            return objectMapper.readValue(bytes,cls);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

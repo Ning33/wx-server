@@ -1,9 +1,9 @@
 package cn.hnisi.wx.server.security;
 
 
-import cn.hnisi.wx.server.exception.AppException;
-import cn.hnisi.wx.server.io.ResponseEntity;
-import cn.hnisi.wx.server.io.ResponseStatus;
+import cn.hnisi.wx.core.exception.AppException;
+import cn.hnisi.wx.core.io.ResponseEntity;
+import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.server.properties.WxProperties;
 import cn.hnisi.wx.server.wxapi.IWxService;
 import org.springframework.beans.BeanUtils;
@@ -38,29 +38,7 @@ public class SecurityController {
         return new ResponseEntity<>(result);
     }
 
-    @RequestMapping("/api/frontend/signature")
-    public ResponseEntity<String> signature(String apiName){
-        if(StringUtils.isEmpty(apiName)){
-            apiName = "appauth";
-        }
-        return new ResponseEntity<>(wxService.signature(apiName));
-    }
 
-    @RequestMapping("/api/frontend/validateFace/saveToken")
-    public ResponseEntity saveToken(String token){
-        if(StringUtils.isEmpty(token)){
-            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"token is null");
-        }
-        //解析token
-        IWxService.GetDetectInfoResponse response = wxService.getDetectInfo(token);
-
-        //保存至redis中
-
-        //保存至数据库中
-
-
-        return new ResponseEntity(ResponseStatus.OK);
-    }
 
 
     /**

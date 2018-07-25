@@ -1,7 +1,5 @@
-package cn.hnisi.wx.server;
+package cn.hnisi.wx.core;
 
-import cn.hnisi.wx.server.properties.WxProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties(WxProperties.class)
 public class CoreAutoConfiguration {
 
     @Bean

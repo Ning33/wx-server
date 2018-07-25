@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.validateface.ValidateFaceDao">
+
+    <insert id="insert">
+        insert into validate_face_log(token,idcard,name,data)
+        values(#{token},#{idcard,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{data})
+    </insert>
+
+    <select id="queryByToken" resultType="cn.hnisi.wx.server.validateface.ValidateFaceLog">
+        select idcard,name,token,log_time,data from validate_face_log where token = #{token}
+    </select>
+
+    <select id="queryByIdcard" resultType="cn.hnisi.wx.server.validateface.ValidateFaceLog">
+        select * from validate_face_log where idcard = #{idcard}
+    </select>
+
+</mapper>

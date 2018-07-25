@@ -1,16 +1,14 @@
 package cn.hnisi.wx.server.security;
 
-import cn.hnisi.wx.server.exception.AppException;
-import cn.hnisi.wx.server.io.ResponseStatus;
+import cn.hnisi.wx.core.exception.AppException;
+import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.core.utils.JsonUtil;
 import cn.hnisi.wx.server.wxapi.IWxService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -51,21 +49,12 @@ public class SecurityServiceImpl extends SecurityService {
 
     @Override
     public void storeUser(User user) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            redisTemplate.opsForValue().set("sessionid:"+user.getSessionid(),objectMapper.writeValueAsString(user),2,TimeUnit.HOURS);
-        } catch (JsonProcessingException e) {
-            throw new AppException(e);
-        }
+        redisTemplate.opsForValue().set("sessionid:"+user.getSessionid(),JsonUtil.convertBeanToJson(user),2,TimeUnit.HOURS);
     }
 
     @Override
     public User getUser(String sessionid) {
-        try {
-            return new ObjectMapper().readValue(redisTemplate.opsForValue().get("sessionid:"+sessionid),User.class);
-        } catch (IOException e) {
-           throw new AppException(e);
-        }
+        return JsonUtil.convertJsonToBean(redisTemplate.opsForValue().get("sessionid:"+sessionid),User.class);
     }
 
     @Override

@@ -19,3 +19,11 @@ spring:
     host: 192.168.13.39
     port: 6379
     password: a
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.14.12:1521:ora10g
+    username: wxxcx_gateway
+    password: a
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml

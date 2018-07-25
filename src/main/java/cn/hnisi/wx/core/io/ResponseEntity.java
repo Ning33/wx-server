@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server.io;
+package cn.hnisi.wx.core.io;
 
 public class ResponseEntity<T>{
     private String errcode;
