@@ -38,7 +38,14 @@ public class SecurityController {
         return new ResponseEntity<>(result);
     }
 
-
+    @RequestMapping("/frontend/user/checkLogin")
+    public ResponseEntity<User> checkLogin(String sessionid){
+        if(StringUtils.isEmpty(sessionid)){
+            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION);
+        }
+        User user = securityService.getUser(sessionid);
+        return new ResponseEntity<>(user);
+    }
 
 
     /**

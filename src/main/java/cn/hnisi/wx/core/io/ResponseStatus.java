@@ -2,12 +2,13 @@ package cn.hnisi.wx.core.io;
 
 public enum ResponseStatus{
     OK("0"),
-    JS_CODE_INVALID("1001","js_code is invalid"),
-    SESSION_WX_EXPIRED("1002","sessionKey is expired"),
-    SESSION_GATEWAY_EXPIRED("1003","sessionid is expired"),
-    VALIDATE_FACE_EXPIRED("1004","validate face token is expired"),
-    DATA_VALIDATE_EXCEPTION("2001","data validate error"),
-    UNKNOWN_ERROR("9999","unknown error");
+    JS_CODE_INVALID("1001","js_code无效"),
+    SESSION_WX_EXPIRED("1002","微信登录失效，sessionKey过期"),
+    SESSION_GATEWAY_EXPIRED("1003","网关sessionid无效"),
+    VALIDATE_FACE_EXPIRED("1004","人脸识别token无效"),
+    UNBOUND_USER("1005","未实名用户"),
+    DATA_VALIDATE_EXCEPTION("2001","数据检验错误"),
+    UNKNOWN_ERROR("9999","未知错误");
 
     private String errcode;
     private String errmsg;

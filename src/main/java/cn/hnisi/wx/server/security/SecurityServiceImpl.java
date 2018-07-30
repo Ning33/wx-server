@@ -7,6 +7,7 @@ import cn.hnisi.wx.server.wxapi.IWxService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.UUID;
@@ -54,7 +55,11 @@ public class SecurityServiceImpl extends SecurityService {
 
     @Override
     public User getUser(String sessionid) {
-        return JsonUtil.convertJsonToBean(redisTemplate.opsForValue().get("sessionid:"+sessionid),User.class);
+        String jsonStr = redisTemplate.opsForValue().get("sessionid:"+sessionid);
+        if(StringUtils.isEmpty(jsonStr)){
+            throw new AppException(ResponseStatus.SESSION_GATEWAY_EXPIRED);
+        }
+        return JsonUtil.convertJsonToBean(jsonStr,User.class);
     }
 
     @Override

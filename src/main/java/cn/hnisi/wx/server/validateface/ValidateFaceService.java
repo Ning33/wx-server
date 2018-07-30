@@ -42,7 +42,7 @@ public class ValidateFaceService {
 
     @Transactional
     public void saveToken(String token) throws AppException{
-        //解析token
+        //拉取token信息
         GetDetectInfoResponse response = getDetectInfo(token);
 
         //保存至redis中
@@ -314,7 +314,10 @@ public class ValidateFaceService {
             this.type = type;
         }
     }
-    public GetDetectInfoResponse getDetectInfo(String token) {
+    public GetDetectInfoResponse getDetectInfo(String token){
+        return getDetectInfo(token,false);
+    }
+    public GetDetectInfoResponse getDetectInfo(String token,boolean getDetail) {
         String url = "https://iauth-sandbox.wecity.qq.com/new/cgi-bin/getdetectinfo.php";
 
         HttpHeaders headers = new HttpHeaders();
@@ -325,7 +328,7 @@ public class ValidateFaceService {
         inMap.put("token",token);
         inMap.put("appid",validateFaceProperties.getAppid());
         inMap.put("crypt_type",3);
-        inMap.put("info_type",1);
+        inMap.put("info_type",getDetail?0:1);
 
         HttpEntity<Map> request = new HttpEntity<>(inMap,headers);
 

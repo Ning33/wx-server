@@ -11,8 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionController {
     @RequestMapping("/exception")
     public ResponseEntity handleException(HttpServletRequest request){
-        AppException exception = (AppException) request.getAttribute("exception");
-        ResponseStatus status = exception.getStatus();
-        return new ResponseEntity(status,exception.getErrmsg());
+        Exception exception = (Exception) request.getAttribute("exception");
+        if(exception instanceof  AppException){
+            AppException appException = (AppException) exception;
+            ResponseStatus status = appException.getStatus();
+            return new ResponseEntity(status,appException.getErrmsg());
+        }else{
+            ResponseStatus status = ResponseStatus.UNKNOWN_ERROR;
+            return new ResponseEntity(status,exception.getMessage());
+        }
+
     }
 }

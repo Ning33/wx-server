@@ -12,11 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 public class HandlerExceptionResolverImpl implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-        if(e instanceof AppException){
-            ModelAndView modelAndView = new ModelAndView("/exception",HttpStatus.OK);
-            modelAndView.addObject("exception",e);
-            return modelAndView;
-        }
-        return null;
+        ModelAndView modelAndView = new ModelAndView("/exception",HttpStatus.OK);
+        modelAndView.addObject("exception",e);
+        return modelAndView;
     }
 }
