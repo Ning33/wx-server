@@ -5,6 +5,12 @@ public class ResponseEntity<T>{
     private String errmsg;
     private T data;
 
+    public ResponseEntity(){
+        ResponseStatus status = ResponseStatus.OK;
+        this.errcode = status.getErrcode();
+        this.errmsg = status.getErrmsg();
+    }
+
     public ResponseEntity(T data) {
         this.data = data;
         ResponseStatus status = ResponseStatus.OK;

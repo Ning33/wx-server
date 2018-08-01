@@ -19,6 +19,12 @@ public class AppException extends RuntimeException {
         this.errmsg = errmsg;
     }
 
+    public AppException(ResponseStatus responseStatus, String errmsg,Throwable cause){
+        super(StringUtils.isEmpty(errmsg)?responseStatus.getErrmsg():errmsg,cause);
+        this.status = responseStatus;
+        this.errmsg = errmsg;
+    }
+
     public AppException() {
         super();
         this.status = ResponseStatus.UNKNOWN_ERROR;

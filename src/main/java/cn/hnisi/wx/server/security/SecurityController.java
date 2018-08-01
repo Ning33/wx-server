@@ -4,26 +4,24 @@ package cn.hnisi.wx.server.security;
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.core.io.ResponseStatus;
-import cn.hnisi.wx.server.properties.WxProperties;
-import cn.hnisi.wx.server.wxapi.IWxService;
+import cn.hnisi.wx.server.security.model.User;
+import cn.hnisi.wx.server.validateface.ValidateFaceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class SecurityController {
 
     @Resource
-    private ISecurityService securityService;
+    private SecurityService securityService;
 
     @Resource
-    private WxProperties wxProperties;
-
-    @Resource
-    private IWxService wxService;
+    private ValidateFaceService validateFaceService;
 
     @RequestMapping("/api/frontend/user/login")
     public ResponseEntity<User> login(String jsCode){
@@ -49,19 +47,34 @@ public class SecurityController {
 
 
     /**
-     * 绑定参保人,第一个绑定的是自己
+     * 注册
      */
-    @RequestMapping("/api/frontend/user/bind")
-    public ResponseEntity<User> bind(String name,String idcard){
-        //TODO
-        return new ResponseEntity<>(ResponseStatus.OK);
+    @RequestMapping("/api/frontend/user/register")
+    public ResponseEntity<User> register(String idcard, String name, User user,HttpServletRequest request){
+        //验证人脸和注册用户是否一致
+        validateFaceService.validateToken(request,idcard,name);
+
+        //注册用户信息
+        user.setIdcard(idcard);
+        user.setName(name);
+        User resultUser = securityService.register(user);
+
+        return new ResponseEntity<>(resultUser);
     }
 
-    @RequestMapping("/api/frontend/user/unbind")
-    public ResponseEntity<Boolean> unbind(String idcard){
-        //TODO
-        return new ResponseEntity<>(true);
-    }
+    /**
+     * TODO
+     * 注销用户，暂不实现
+     * @param user
+     * @param request
+     * @return
+     */
+    @RequestMapping("/api/frontend/user/unregister")
+    public ResponseEntity unregister(User user,HttpServletRequest request){
+        //验证人脸和注册用户是否一致
+        validateFaceService.validateToken(request,user.getIdcard());
 
+        return new ResponseEntity(ResponseStatus.UNKNOWN_ERROR,"此功能暂未开放");
+    }
 
 }

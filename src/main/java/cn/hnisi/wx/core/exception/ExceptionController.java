@@ -17,6 +17,7 @@ public class ExceptionController {
             ResponseStatus status = appException.getStatus();
             return new ResponseEntity(status,appException.getErrmsg());
         }else{
+            exception.printStackTrace();
             ResponseStatus status = ResponseStatus.UNKNOWN_ERROR;
             return new ResponseEntity(status,exception.getMessage());
         }

@@ -1,26 +1,39 @@
-package cn.hnisi.wx.server.security;
+package cn.hnisi.wx.server.security.impl;
 
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.core.utils.GuidUtil;
 import cn.hnisi.wx.core.utils.JsonUtil;
+import cn.hnisi.wx.server.person.PersonService;
+import cn.hnisi.wx.server.person.model.Person;
+import cn.hnisi.wx.server.security.BaseSecurityService;
+import cn.hnisi.wx.server.security.SecurityService;
+import cn.hnisi.wx.server.security.dao.UserDAO;
+import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.wxapi.IWxService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class SecurityServiceImpl extends SecurityService {
+public class SecurityServiceImpl extends BaseSecurityService implements SecurityService {
 
     @Resource
     private IWxService wxService;
 
     @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate redisTemplate;
+
+    @Resource
+    private UserDAO userDAO;
+
+    @Resource
+    private PersonService personService;
 
     @Override
     public User login(String jsCode) throws AppException {
@@ -37,15 +50,16 @@ public class SecurityServiceImpl extends SecurityService {
         String sessionid = initSessionid();
         user.setSessionid(sessionid);
 
-        //调用业务接口，注入个人基本信息
-        injectUserPersonalInfo(user);
+        //注入用户基本信息
+        injectPerson(user);
+
         //存储用户信息至用户中心，目前使用redis管理
         storeUser(user);
         return user;
     }
 
     private String initSessionid(){
-        return UUID.randomUUID().toString().replaceAll("-","");
+        return GuidUtil.generate();
     }
 
     @Override
@@ -62,28 +76,49 @@ public class SecurityServiceImpl extends SecurityService {
         return JsonUtil.convertJsonToBean(jsonStr,User.class);
     }
 
+
     @Override
-    public User queryUserPersonalInfo(String openid) {
-        //TODO TEST
-        User user = new User();
-        user.setBound(true);
-        user.setIdcard("444444444");
-        user.setName("张三");
-        user.setSex("1");
-        user.setBirthday("2018-01-01");
-        user.setAddress("sfdsf");
-        user.setTel("15478456542");
+    protected User queryUserInfo(String openid) {
+        User user = userDAO.query(openid);
+        if(user == null){
+            return null;
+        }
+
+        Person selfUser = personService.querySelfUser(user);
+
+        BeanUtils.copyProperties(selfUser,user,Person.class);
+
         return user;
     }
 
     @Override
-    public User bindUser(User user) {
-        return null;
+    @Transactional
+    public User register(User user) {
+
+        //查询用户信息表，校验是否允许注册
+        User queryUser = userDAO.query(user.getOpenid());
+        if(queryUser != null){
+            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"用户已注册");
+        }
+
+        //注册用户信息
+        user.setUserid(GuidUtil.generate());
+        userDAO.insert(user);
+
+        //同步生成人员信息
+        personService.bind(user,user);
+
+        //注入人员信息
+        injectPerson(user);
+
+        //回写至redis中
+        storeUser(user);
+
+        return user;
     }
 
     @Override
-    public boolean unbindUser(User user) {
+    public boolean unregister(User user) {
         return false;
     }
-
 }

@@ -46,7 +46,7 @@ public class ValidateFaceService {
         GetDetectInfoResponse response = getDetectInfo(token);
 
         //保存至redis中
-        redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,JsonUtil.convertBeanToJson(response),10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,JsonUtil.convertBeanToJson(response),60, TimeUnit.MINUTES);
 
         //保存至数据库中
         ValidateFaceLog validateFaceLog = new ValidateFaceLog();
@@ -55,6 +55,15 @@ public class ValidateFaceService {
         validateFaceLog.setName(response.getName());
         validateFaceLog.setData(JsonUtil.convertBeanToJson(response));
         validateFaceDao.insert(validateFaceLog);
+    }
+
+    /**
+     * 测试使用，保存永久有效的人脸token
+     * @param token
+     * @param json
+     */
+    public void saveToken(String token,String json){
+        redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,json);
     }
 
     /**
@@ -80,6 +89,29 @@ public class ValidateFaceService {
 
         return token;
 
+    }
+
+    public String validateToken(HttpServletRequest request, String idcard, String name){
+        String token = request.getHeader("x-tif-validate-face-"+idcard);
+
+        //从redis中获取token
+        String tokenStr = redisTemplate.opsForValue().get(VALIDATE_FACE_TOKEN+token);
+        if(StringUtils.isEmpty(tokenStr)){
+            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED);
+        }
+
+        //获取token信息，判断证件号码是否相同
+        GetDetectInfoResponse response = JsonUtil.convertJsonToBean(tokenStr,GetDetectInfoResponse.class);
+        if(!response.getID().equals(idcard)){
+            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED,"证件号码不符");
+        }
+
+        //判断姓名是否相同
+        if(!response.getName().equals(name)){
+            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED,"姓名不符");
+        }
+
+        return token;
     }
 
     public String signature(String apiName) {

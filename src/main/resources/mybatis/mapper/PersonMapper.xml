@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.person.dao.PersonDAO">
+
+    <insert id="insert">
+        insert into t_person(personid,userid,name,idcard,birthday,sex,tel,address,sicard)
+                values(#{personid},#{userid},#{name},#{idcard},#{birthday,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{tel,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{sicard,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="queryByUserid" resultType="cn.hnisi.wx.server.person.model.Person">
+        select * from t_person where userid = #{userid}
+    </select>
+
+    <delete id="delete">
+        delete from t_person where personid = #{personid}
+    </delete>
+</mapper>
