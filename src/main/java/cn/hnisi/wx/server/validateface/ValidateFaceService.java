@@ -370,6 +370,9 @@ public class ValidateFaceService {
 
         int errorcode = (int) dataMap.get("errorcode");
         String errormsg = (String) dataMap.get("errormsg");
+        if(errorcode != 0){
+            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,errormsg);
+        }
         String data = (String) dataMap.get("data");
 
         //解密
