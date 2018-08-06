@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.validateface.ValidateFaceDetailDao">
+
+    <!-- 插入数据日志-->
+    <insert id="insertFirst">
+        insert into validate_face_log_detail(token,idcard,name,data)
+        values(#{token},#{idcard,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{data})
+    </insert>
+
+    <!--查询没有存入明细数据的token值-->
+    <select id="queryTokenByFlag" resultType="String">
+        select
+          token
+        from
+          validate_face_log_detail
+        where
+          exist = 0
+    </select>
+
+    <!--更新数据-->
+    <update id="updateDetail">
+        update
+          validate_face_log_detail
+        <set>
+            <if test="data != null">
+                data = #{data},
+            </if>
+            <if test="exist != null">
+                exist = #{exist},
+            </if>
+            <if test="pic_1 != null">
+                pic_1 = #{pic_1},
+            </if>
+            <if test="pic_2 != null">
+                pic_2 = #{pic_2},
+            </if>
+            <if test="pic_3 != null">
+                pic_3 = #{pic_3},
+            </if>
+            <if test="video != null">
+                video = #{video},
+            </if>
+            log_time = sysdate
+        </set>
+        where
+          token = #{token}
+    </update>
+</mapper>
