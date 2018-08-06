@@ -36,5 +36,5 @@ public interface ValidateFaceDetailDao {
      * @param machine
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void updateMachine(@Param("machine") String machine);
+    void updateMachine(@Param("host") String machine);
 }

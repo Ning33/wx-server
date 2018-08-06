@@ -53,15 +53,15 @@
     
     <!--更新十条数据 并标记-->
     <update id="updateMachine">
-        update
+        UPDATE
           validate_face_log_detail
-        set
-          machine = #{host}
-        where
-          exist = 0
-        and
-          machine is null
-        and
-          ROWNUM &lt;= 10
+        SET
+          machine=#{host}
+        WHERE token
+          IN
+            (SELECT t.token FROM
+                    (SELECT token FROM validate_face_log_detail
+                        where exist=0 and machine is null and rownum &lt;=10
+                              order by log_time) t)
     </update>
 </mapper>
