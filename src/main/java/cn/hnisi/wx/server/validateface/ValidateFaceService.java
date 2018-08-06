@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
-import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
 import javax.crypto.Cipher;
@@ -26,9 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.Base64.Decoder;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -81,15 +83,20 @@ public class ValidateFaceService {
     }
 
     /**
-     * 定时存入(每天凌晨2点执行一次存入操作 cron = ("* * 2 ? * *")  人脸详细日志
+     * 定时存入(每天凌晨二点到七点 每半小时执行一次存入操作 cron = ("0 0/30 2-7 ? * *")  人脸详细日志
      *
      * @throws AppException
      */
     @Scheduled(cron = ("*/5 * * ? * *"))
     @Transactional
     public void saveTokenDetail() throws AppException {
-        //读取没有插入明细数据的token值
-        List<String> listToken = validateFaceDetailDao.queryTokenByFlag();
+        //获取本机IP地址
+        String host = getHostAddress();
+        //开始更新十条数据 ,并标记机器码
+        validateFaceDetailDao.updateMachine(host);
+
+        //读取没有插入明细数据 且 标识为本机IP的token值
+        List<String> listToken = validateFaceDetailDao.queryTokenByFlag(host);
         //遍历查询出来的token值
         for (String token : listToken) {
             try{
@@ -132,6 +139,19 @@ public class ValidateFaceService {
         }
     }
 
+    /**
+     * 获取本机IP地址
+     */
+    private String getHostAddress(){
+        String host = null;
+        try {
+            InetAddress add = InetAddress.getLocalHost();
+            host = add.getHostAddress().toString();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return host;
+    }
 
     /**
      * 测试使用，保存永久有效的人脸token
@@ -160,11 +180,12 @@ public class ValidateFaceService {
             if (strs[i] == null) {
                 throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
             }
-            BASE64Decoder decoder = new BASE64Decoder();
+            // 获取解密对象
+            Decoder decoder = Base64.getDecoder();
             //Base64解码
             byte[] b = null;
             try {
-                b = decoder.decodeBuffer(strs[i]);
+                b = decoder.decode(strs[i]);
                 for (int j = 0; j < b.length; ++j) {
                     if (b[j] < 0) {//调整异常数据
                         b[j] += 256;
@@ -184,7 +205,7 @@ public class ValidateFaceService {
                 }
                 listPath.add(path_ftp + "/" + fileName);
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
             }

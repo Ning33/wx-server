@@ -4,7 +4,7 @@ package cn.hnisi.wx.server.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("properties.ftp-upload")
+@ConfigurationProperties("properties.validate-face.ftp-upload")
 @Component
 public class FtpProperties {
 

@@ -10,7 +10,7 @@
         values(#{token},#{idcard,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{data})
     </insert>
 
-    <!--查询没有存入明细数据的token值-->
+    <!--查询没有存入明细数据 且含有此机器码的token值-->
     <select id="queryTokenByFlag" resultType="String">
         select
           token
@@ -18,6 +18,8 @@
           validate_face_log_detail
         where
           exist = 0
+        and
+          machine = #{host}
     </select>
 
     <!--更新数据-->
@@ -47,5 +49,19 @@
         </set>
         where
           token = #{token}
+    </update>
+    
+    <!--更新十条数据 并标记-->
+    <update id="updateMachine">
+        update
+          validate_face_log_detail
+        set
+          machine = #{host}
+        where
+          exist = 0
+        and
+          machine is null
+        and
+          ROWNUM &lt;= 10
     </update>
 </mapper>

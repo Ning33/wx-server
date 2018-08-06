@@ -22,6 +22,7 @@ create table validate_face_log_detail(
    pic_2    varchar2(200),
    pic_3    varchar2(200),
    video    varchar2(200),
+   machine  varchar2(50),
    log_time date default sysdate,
    data     clob
 );
@@ -35,6 +36,7 @@ comment on column validate_face_log_detail.pic_1 is '照片数据地址_1';
 comment on column validate_face_log_detail.pic_2 is '照片数据地址_2';
 comment on column validate_face_log_detail.pic_3 is '照片数据地址_3';
 comment on column validate_face_log_detail.video is '视频数据地址';
+comment on column validate_face_log_detail.machine is '处理应用，记录具体哪一个应用处理';
 comment on column validate_face_log_detail.log_time is '日志记录时间戳';
 
 create table t_user(

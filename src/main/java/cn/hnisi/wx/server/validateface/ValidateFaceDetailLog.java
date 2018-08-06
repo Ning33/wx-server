@@ -16,7 +16,16 @@ public class ValidateFaceDetailLog {
     private String pic_2;   //图2
     private String pic_3;   //图3
     private String video;   //视频
+    private String machine; //机器标志
     private Date logTime;   //日志时间
+
+    public String getMachine() {
+        return machine;
+    }
+
+    public void setMachine(String machine) {
+        this.machine = machine;
+    }
 
     public int getExist() {
         return exist;

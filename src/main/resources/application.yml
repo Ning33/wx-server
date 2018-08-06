@@ -11,14 +11,14 @@ properties:
     secret-key: 5dffe557603cdc4079b6a33554760837
     result-key: a98fe02e5d0075fc2089a3c3cb21f260
     expired: 600
-  ftp-upload:
-    username: lfq
-    password: lfq
-    hostname: 192.168.51.45
-    port: 21
-    path_ftp: /data/
-    imgPath_suf_jpg: .jpg
-    videoPath_suf: .mp4
+    ftp-upload:
+      username: lfq
+      password: lfq
+      hostname: 192.168.51.45
+      port: 21
+      path_ftp: /data/
+      imgPath_suf_jpg: .jpg
+      videoPath_suf: .mp4
 server:
   port: 8081
 spring:
