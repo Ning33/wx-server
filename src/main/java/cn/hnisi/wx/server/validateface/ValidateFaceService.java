@@ -87,7 +87,7 @@ public class ValidateFaceService {
      *
      * @throws AppException
      */
-    @Scheduled(cron = ("*/5 * * ? * *"))
+    @Scheduled(cron = ("0 0/30 2-7 ? * *"))
     @Transactional
     public void saveTokenDetail() throws AppException {
         //获取本机IP地址
