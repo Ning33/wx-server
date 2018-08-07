@@ -114,10 +114,12 @@ public class ValidateFaceDetailLog {
                 ", name='" + name + '\'' +
                 ", token='" + token + '\'' +
                 ", data='" + data + '\'' +
+                ", exist=" + exist +
                 ", pic_1='" + pic_1 + '\'' +
                 ", pic_2='" + pic_2 + '\'' +
                 ", pic_3='" + pic_3 + '\'' +
                 ", video='" + video + '\'' +
+                ", machine='" + machine + '\'' +
                 ", logTime=" + logTime +
                 '}';
     }
