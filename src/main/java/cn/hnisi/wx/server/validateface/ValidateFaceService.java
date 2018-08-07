@@ -82,10 +82,10 @@ public class ValidateFaceService {
     }
 
     /**
-     * 定时存入(每天凌晨二点 执行存入操作 cron = ("0 0 2 ? * *")
+     * 定时存入(每天凌晨二点 开始执行存入操作 cron = ("0 0 2 * * ?")
      * @throws AppException
      */
-    @Scheduled(cron = ("*/5 * * ? * *") )
+    @Scheduled(cron = ("0 0 2 * * ?") )
     public void startSaveDetail()throws AppException{
         while(true){
             //获取当前时间
@@ -97,14 +97,16 @@ public class ValidateFaceService {
 
                 if(num == 0 ){
                     Timer timer = new Timer();
-                    //隔一个小时后执行
+                    //延迟一个小时后执行
                     TimerTask task = new TimerTask(){
                         @Override
                         public void run() {
-                            System.out.println("一个小时");
+                            System.out.println("一小时后再次执行:");
+                            startSaveDetail();
                         }
                     };
-                    timer.schedule(task,1000*4);
+                    timer.schedule(task,1000*60*60);
+                    break;
                 }
             }else{
                 System.out.println("停止存入");
