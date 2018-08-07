@@ -63,7 +63,7 @@
                  (SELECT token FROM validate_face_log_detail
                         where exist=0 and machine is null
                               order by log_time) t where
-                                    rownum &lt;=10)
+                                    rownum &lt;=#{number})
     </update>
 
     <!--回滚机器码 重置为空-->

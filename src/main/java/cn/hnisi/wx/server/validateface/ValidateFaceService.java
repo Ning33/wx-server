@@ -85,18 +85,33 @@ public class ValidateFaceService {
      * 定时存入(每天凌晨二点 执行存入操作 cron = ("0 0 2 ? * *")
      * @throws AppException
      */
-    @Scheduled(cron = ("0 0 2 ? * *") )
+    @Scheduled(cron = ("*/5 * * ? * *") )
     public void startSaveDetail()throws AppException{
         while(true){
-           //获取当前时间
-           Calendar time =  Calendar.getInstance();
-           //每天七点停止存入
-           if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
-               saveTokenDetail();
-           }else{
-               System.out.println("停止存入");
-               break;
-           }
+            //获取当前时间
+            Calendar time = Calendar.getInstance();
+            //每天七点停止存入
+            if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
+                int num = saveTokenDetail(ftpProperties.getSaveNumberOnce());
+
+                if(num == 0 ){
+            //延迟一个小时后执行
+                    new Thread(){
+                        public void run(){
+                            try {
+                                System.out.println("休眠一个小时");
+//Thread.sleep(1000*60*60);
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                }
+            }else{
+                System.out.println("停止存入");
+                break;
+            }
         }
 
     }
@@ -106,10 +121,12 @@ public class ValidateFaceService {
      * @throws AppException
      */
     @Transactional
-    public void saveTokenDetail() throws AppException {
+    public int saveTokenDetail(int number) throws AppException {
+        //已处理的数据
+        int handleNum = 0;
 
-        //开始更新十条数据 ,并标记机器码
-        validateFaceDetailDao.updateMachine(ftpProperties.getMachineId());
+        //开始更新数据 ,并标记机器码
+        validateFaceDetailDao.updateMachine(ftpProperties.getMachineId(),number);
 
         //读取没有插入明细数据 且 标识为本机IP的token值
         List<String> listToken = validateFaceDetailDao.queryTokenByFlag(ftpProperties.getMachineId());
@@ -145,16 +162,20 @@ public class ValidateFaceService {
                     validateFaceDetailLog.setExist(1);
                     //更新数据库
                     validateFaceDetailDao.updateDetail(validateFaceDetailLog);
+                    handleNum++;
                     System.out.println("更新成功!");
                 }
             } catch (Exception e){
                 e.printStackTrace();
                 //回滚机器码 重置为空
                 validateFaceDetailDao.fallbackMachineId(token);
+                handleNum++;
                 throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
             }
 
         }
+
+        return handleNum;
     }
 
     /**

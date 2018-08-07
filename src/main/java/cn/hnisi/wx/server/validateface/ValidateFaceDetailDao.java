@@ -36,11 +36,12 @@ public interface ValidateFaceDetailDao {
      * @param machineId
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void updateMachine(@Param("machineId") String machineId);
+    void updateMachine(@Param("machineId") String machineId,@Param("number") int number);
 
     /**
      * 根据token回滚机器码 重置为空
      * @param token
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     void fallbackMachineId(@Param("token") String token);
 }

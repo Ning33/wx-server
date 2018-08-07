@@ -12,6 +12,7 @@ properties:
     result-key: a98fe02e5d0075fc2089a3c3cb21f260
     expired: 600
     ftp-upload:
+      saveNumberOnce: 10
       stopSaveTime: 7
       machineid: 1
       username: lfq
