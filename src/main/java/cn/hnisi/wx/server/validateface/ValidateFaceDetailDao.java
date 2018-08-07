@@ -22,7 +22,7 @@ public interface ValidateFaceDetailDao {
      * 查询未存入明细数据的token值
      * @return
      */
-    List<String> queryTokenByFlag(@Param("host") String host);
+    List<String> queryTokenByFlag(@Param("machineId") String machineId);
 
     /**
      * 更新数据
@@ -33,8 +33,14 @@ public interface ValidateFaceDetailDao {
 
     /**
      * 更新十条数据,并标记机器码
-     * @param machine
+     * @param machineId
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void updateMachine(@Param("host") String machine);
+    void updateMachine(@Param("machineId") String machineId);
+
+    /**
+     * 根据token回滚机器码 重置为空
+     * @param token
+     */
+    void fallbackMachineId(@Param("token") String token);
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class FtpProperties {
 
+    private int stopSaveTime;
+    private String machineId;
     private String username;
     private String password;
     private String hostname;
@@ -16,6 +18,22 @@ public class FtpProperties {
     private String imgPath_suf_jpg;
     private String videoPath_suf;
 
+
+    public int getStopSaveTime() {
+        return stopSaveTime;
+    }
+
+    public void setStopSaveTime(int stopSaveTime) {
+        this.stopSaveTime = stopSaveTime;
+    }
+
+    public String getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(String machineid) {
+        this.machineId = machineid;
+    }
 
     public String getPath_ftp() {
         return path_ftp;

@@ -23,7 +23,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -83,20 +82,37 @@ public class ValidateFaceService {
     }
 
     /**
-     * 定时存入(每天凌晨二点到七点 每半小时执行一次存入操作 cron = ("0 0/30 2-7 ? * *")  人脸详细日志
+     * 定时存入(每天凌晨二点 执行存入操作 cron = ("0 0 2 ? * *")
+     * @throws AppException
+     */
+    @Scheduled(cron = ("0 0 2 ? * *") )
+    public void startSaveDetail()throws AppException{
+        while(true){
+           //获取当前时间
+           Calendar time =  Calendar.getInstance();
+           //每天七点停止存入
+           if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
+               saveTokenDetail();
+           }else{
+               System.out.println("七点停止存入");
+               break;
+           }
+        }
+
+    }
+    /**
+     * 存入 人脸详细日志
      *
      * @throws AppException
      */
-    @Scheduled(cron = ("0 0/30 2-7 ? * *"))
     @Transactional
     public void saveTokenDetail() throws AppException {
-        //获取本机IP地址
-        String host = getHostAddress();
+
         //开始更新十条数据 ,并标记机器码
-        validateFaceDetailDao.updateMachine(host);
+        validateFaceDetailDao.updateMachine(ftpProperties.getMachineId());
 
         //读取没有插入明细数据 且 标识为本机IP的token值
-        List<String> listToken = validateFaceDetailDao.queryTokenByFlag(host);
+        List<String> listToken = validateFaceDetailDao.queryTokenByFlag(ftpProperties.getMachineId());
         //遍历查询出来的token值
         for (String token : listToken) {
             try{
@@ -133,24 +149,12 @@ public class ValidateFaceService {
                 }
             } catch (Exception e){
                 e.printStackTrace();
+                //回滚机器码 重置为空
+                validateFaceDetailDao.fallbackMachineId(token);
                 throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
             }
 
         }
-    }
-
-    /**
-     * 获取本机IP地址
-     */
-    private String getHostAddress(){
-        String host = null;
-        try {
-            InetAddress add = InetAddress.getLocalHost();
-            host = add.getHostAddress().toString();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return host;
     }
 
     /**

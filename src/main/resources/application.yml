@@ -12,6 +12,8 @@ properties:
     result-key: a98fe02e5d0075fc2089a3c3cb21f260
     expired: 600
     ftp-upload:
+      stopSaveTime: 7
+      machineid: 1
       username: lfq
       password: lfq
       hostname: 192.168.51.45
