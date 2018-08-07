@@ -94,7 +94,7 @@ public class ValidateFaceService {
            if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
                saveTokenDetail();
            }else{
-               System.out.println("七点停止存入");
+               System.out.println("停止存入");
                break;
            }
         }
