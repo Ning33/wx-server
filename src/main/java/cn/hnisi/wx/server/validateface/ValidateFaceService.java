@@ -92,21 +92,19 @@ public class ValidateFaceService {
             Calendar time = Calendar.getInstance();
             //每天七点停止存入
             if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
+                //上传数据
                 int num = saveTokenDetail(ftpProperties.getSaveNumberOnce());
 
                 if(num == 0 ){
-            //延迟一个小时后执行
-                    new Thread(){
-                        public void run(){
-                            try {
-                                System.out.println("休眠一个小时");
-//Thread.sleep(1000*60*60);
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    Timer timer = new Timer();
+                    //隔一个小时后执行
+                    TimerTask task = new TimerTask(){
+                        @Override
+                        public void run() {
+                            System.out.println("一个小时");
                         }
-                    }.start();
+                    };
+                    timer.schedule(task,1000*4);
                 }
             }else{
                 System.out.println("停止存入");

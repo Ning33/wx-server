@@ -13,7 +13,7 @@ properties:
     expired: 600
     ftp-upload:
       saveNumberOnce: 10
-      stopSaveTime: 7
+      stopSaveTime: 18
       machineid: 1
       username: lfq
       password: lfq
