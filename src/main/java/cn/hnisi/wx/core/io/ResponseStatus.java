@@ -8,7 +8,8 @@ public enum ResponseStatus{
     VALIDATE_FACE_EXPIRED("1004","人脸识别token无效"),
     UNBOUND_USER("1005","未实名用户"),
     DATA_VALIDATE_EXCEPTION("2001","数据检验错误"),
-    UNKNOWN_ERROR("9999","未知错误");
+    UNKNOWN_ERROR("9999","未知错误"),
+    GENERATE_ImageToFTP("1005","上传FTP错误");
 
     private String errcode;
     private String errmsg;
