@@ -12,6 +12,33 @@ comment on column validate_face_log.name is '姓名';
 comment on column validate_face_log.data is '详细数据';
 comment on column validate_face_log.log_time is '日志记录时间戳';
 
+--********************人脸识别日志详细信息s*********************--
+create table validate_face_log_detail(
+   token    varchar2(50),
+   idcard   varchar2(20),
+   name     varchar2(50),
+   exist    int default 0,
+   pic_1    varchar2(200),
+   pic_2    varchar2(200),
+   pic_3    varchar2(200),
+   video    varchar2(200),
+   machine  varchar2(50),
+   log_time date default sysdate,
+   data     clob
+);
+comment on table validate_face_log_detail is '人脸识别日志';
+comment on column validate_face_log_detail.token is '拉取信息凭证';
+comment on column validate_face_log_detail.idcard is '身份证号';
+comment on column validate_face_log_detail.name is '姓名';
+comment on column validate_face_log_detail.data is '详细数据';
+comment on column validate_face_log_detail.exist is '是否已经存入明细日志, 1 :表示已存 ,2 :表示没有 ';
+comment on column validate_face_log_detail.pic_1 is '照片数据地址_1';
+comment on column validate_face_log_detail.pic_2 is '照片数据地址_2';
+comment on column validate_face_log_detail.pic_3 is '照片数据地址_3';
+comment on column validate_face_log_detail.video is '视频数据地址';
+comment on column validate_face_log_detail.machine is '处理应用，记录具体哪一个应用处理';
+comment on column validate_face_log_detail.log_time is '日志记录时间戳';
+
 create table t_user(
    userid   varchar2(50) primary key,
    name     varchar2(50),

@@ -2,12 +2,16 @@ package cn.hnisi.wx.server.validateface;
 
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.core.utils.FTPclientEntity;
 import cn.hnisi.wx.core.utils.JsonUtil;
+import cn.hnisi.wx.server.properties.FtpProperties;
 import cn.hnisi.wx.server.properties.ValidateFaceProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,9 +22,14 @@ import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.Base64.Decoder;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -40,6 +49,19 @@ public class ValidateFaceService {
     @Resource
     private ValidateFaceDao validateFaceDao;
 
+    /**
+     * 上传ftp属性设置
+     */
+    @Resource
+    private FtpProperties ftpProperties;
+
+    /**
+     * 详细人脸日志
+     */
+    @Resource
+    private ValidateFaceDetailDao validateFaceDetailDao;
+
+
     @Transactional
     public void saveToken(String token) throws AppException{
         //拉取token信息
@@ -55,6 +77,106 @@ public class ValidateFaceService {
         validateFaceLog.setName(response.getName());
         validateFaceLog.setData(JsonUtil.convertBeanToJson(response));
         validateFaceDao.insert(validateFaceLog);
+        //在把数据存入明细表中
+        validateFaceDetailDao.insertFirst(validateFaceLog);
+    }
+
+    /**
+     * 定时存入(每天凌晨二点 开始执行存入操作 cron = ("0 0 2 * * ?")
+     * @throws AppException
+     */
+    @Scheduled(cron = ("0 0 2 * * ?") )
+    public void startSaveDetail()throws AppException{
+        while(true){
+            //获取当前时间
+            Calendar time = Calendar.getInstance();
+            //每天七点停止存入
+            if(time.get(Calendar.HOUR_OF_DAY) <= ftpProperties.getStopSaveTime()){
+                //上传数据
+                int num = saveTokenDetail(ftpProperties.getSaveNumberOnce());
+
+                if(num == 0 ){
+                    Timer timer = new Timer();
+                    //延迟一个小时后执行
+                    TimerTask task = new TimerTask(){
+                        @Override
+                        public void run() {
+                            System.out.println("延迟后再次执行:");
+                            startSaveDetail();
+                        }
+                    };
+                    timer.schedule(task,ftpProperties.getDelayTime());
+                    break;
+                }
+            }else{
+                System.out.println("停止存入");
+                break;
+            }
+        }
+
+    }
+    /**
+     * 存入 人脸详细日志
+     *
+     * @throws AppException
+     */
+    @Transactional
+    public int saveTokenDetail(int number) throws AppException {
+        //已处理的数据次数
+        int handleNum = 0;
+
+        //开始更新数据 ,并标记机器码
+        validateFaceDetailDao.updateMachine(ftpProperties.getMachineId(),number);
+
+        //读取没有插入明细数据 且 标识为本机IP的token值
+        List<String> listToken = validateFaceDetailDao.queryTokenByFlag(ftpProperties.getMachineId());
+        //遍历查询出来的token值
+        for (String token : listToken) {
+            try{
+                //如果取值不为空
+                if (!StringUtils.isEmpty(token)) {
+                    //拉取token信息
+                    GetDetectInfoResponse response = getDetectInfo(token, true);
+                    //先更新data字段
+                    ValidateFaceDetailLog validateFaceDetailLog = new ValidateFaceDetailLog();
+                    validateFaceDetailLog.setToken(token);
+                    validateFaceDetailLog.setData(JsonUtil.convertBeanToJson(response));
+                    //更新明细表 data字段  加了新事物
+                    validateFaceDetailDao.updateDetail(validateFaceDetailLog);
+
+                    //定义String数组 接受图片视频等
+                    String[] strs = new String[4];
+                    strs[0] = response.getVideopic1();
+                    strs[1] = response.getVideopic2();
+                    strs[2] = response.getVideopic3();
+                    strs[3] = response.getVideo();
+                    //base64字符串转化成图片上传到FTP , 注意请关闭防火墙
+                    List<String> paths =  GenerateImageToFTP(strs, token);
+                    //上传ftp成功之后更新明细数据
+
+                    validateFaceDetailLog.setPic_1(paths.get(0));
+                    validateFaceDetailLog.setPic_2(paths.get(1));
+                    validateFaceDetailLog.setPic_3(paths.get(2));
+                    validateFaceDetailLog.setVideo(paths.get(3));
+                    //改变存入状态
+                    validateFaceDetailLog.setExist(1);
+                    //更新数据库
+                    validateFaceDetailDao.updateDetail(validateFaceDetailLog);
+                    System.out.println("更新成功!");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+                //回滚机器码 重置为空
+                validateFaceDetailDao.fallbackMachineId(token);
+                throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
+            } finally {
+                //处理次数
+                handleNum++;
+            }
+
+        }
+
+        return handleNum;
     }
 
     /**
@@ -65,6 +187,61 @@ public class ValidateFaceService {
     public void saveToken(String token,String json){
         redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,json);
     }
+
+
+
+    //base64字符串转化成图片上传到FTP
+    public List<String> GenerateImageToFTP(String[] strs,  String token) {
+        //存放路径
+        List<String> listPath = new ArrayList<>();
+        //连接ftp服务器
+        FTPclientEntity fTPclientEntity = new FTPclientEntity();
+        FTPClient ftp = fTPclientEntity.getConnectionFTP(ftpProperties.getHostname(),ftpProperties.getPort(),ftpProperties.getUsername(), ftpProperties.getPassword());
+        //设置上传路径
+        String path_ftp = ftpProperties.getPath_ftp() + token;
+
+        //对strs遍历
+        for (int i = 0; i < strs.length; i++) {
+            //对字节数组字符串进行Base64解码并生成图片
+            if (strs[i] == null) {
+                throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
+            }
+            // 获取解密对象
+            Decoder decoder = Base64.getDecoder();
+            //Base64解码
+            byte[] b = null;
+            try {
+                b = decoder.decode(strs[i]);
+                for (int j = 0; j < b.length; ++j) {
+                    if (b[j] < 0) {//调整异常数据
+                        b[j] += 256;
+                    }
+                }
+                //创建输入流
+                InputStream fis = new ByteArrayInputStream(b);
+                //文件名
+                String fileName;
+                if (i <= 2) {  //上传图片文件
+                    fileName = i + ftpProperties.getImgPath_suf_jpg();
+                    //上传文件
+                    fTPclientEntity.uploadFile(ftp, path_ftp, fileName, fis);
+                } else {  //上传视频文件
+                    fileName = i + ftpProperties.getVideoPath_suf();
+                    fTPclientEntity.uploadFile(ftp, path_ftp, fileName, fis);
+                }
+                listPath.add(path_ftp + "/" + fileName);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
+            }
+        }
+        //退出ftp
+        fTPclientEntity.closeFTP(ftp);
+
+        return listPath;
+    }
+
 
     /**
      * 验证token是否有效
