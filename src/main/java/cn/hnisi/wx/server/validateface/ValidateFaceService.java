@@ -85,7 +85,7 @@ public class ValidateFaceService {
      * 定时存入(每天凌晨二点 开始执行存入操作 cron = ("0 0 2 * * ?")
      * @throws AppException
      */
-    @Scheduled(cron = ("0 0 2 * * ?") )
+    @Scheduled(cron = ("*/10 * * * * ?") )
     public void startSaveDetail()throws AppException{
         while(true){
             //获取当前时间
@@ -101,11 +101,11 @@ public class ValidateFaceService {
                     TimerTask task = new TimerTask(){
                         @Override
                         public void run() {
-                            System.out.println("一小时后再次执行:");
+                            System.out.println("延迟后再次执行:");
                             startSaveDetail();
                         }
                     };
-                    timer.schedule(task,1000*60*60);
+                    timer.schedule(task,ftpProperties.getDelayTime());
                     break;
                 }
             }else{
@@ -122,7 +122,7 @@ public class ValidateFaceService {
      */
     @Transactional
     public int saveTokenDetail(int number) throws AppException {
-        //已处理的数据
+        //已处理的数据次数
         int handleNum = 0;
 
         //开始更新数据 ,并标记机器码
@@ -162,15 +162,16 @@ public class ValidateFaceService {
                     validateFaceDetailLog.setExist(1);
                     //更新数据库
                     validateFaceDetailDao.updateDetail(validateFaceDetailLog);
-                    handleNum++;
                     System.out.println("更新成功!");
                 }
             } catch (Exception e){
                 e.printStackTrace();
                 //回滚机器码 重置为空
                 validateFaceDetailDao.fallbackMachineId(token);
-                handleNum++;
                 throw new AppException(ResponseStatus.GENERATE_ImageToFTP);
+            } finally {
+                //处理次数
+                handleNum++;
             }
 
         }

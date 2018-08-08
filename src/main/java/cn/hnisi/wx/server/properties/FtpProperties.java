@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FtpProperties {
 
+    private long delayTime;
     private int saveNumberOnce;
     private int stopSaveTime;
     private String machineId;
@@ -18,6 +19,14 @@ public class FtpProperties {
     private String path_ftp;
     private String imgPath_suf_jpg;
     private String videoPath_suf;
+
+    public long getDelayTime() {
+        return delayTime;
+    }
+
+    public void setDelayTime(long delayTime) {
+        this.delayTime = delayTime;
+    }
 
     public int getSaveNumberOnce() {
         return saveNumberOnce;
