@@ -31,6 +31,7 @@ comment on column t_user.updated_time is '数据更新时间戳';
 create table t_person(
    personid    varchar2(50) primary key ,
    userid      varchar2(50),
+   is_self     varchar2(1),
    name        varchar2(50),
    idcard      varchar2(50),
    birthday    varchar2(8),

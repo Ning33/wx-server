@@ -18,6 +18,8 @@ public class Person {
     private String tel;
     private String address;
 
+    private boolean isSelf;
+
     public String getPersonid() {
         return personid;
     }
@@ -93,5 +95,14 @@ public class Person {
     @JsonProperty("isBoundSicard")
     public boolean isBoundSicard() {
         return (sicard != null && !sicard.equals(""));
+    }
+
+    @JsonProperty("isSelf")
+    public boolean getIsSelf() {
+        return isSelf;
+    }
+
+    public void setIsSelf(boolean isSelf) {
+        this.isSelf = isSelf;
     }
 }

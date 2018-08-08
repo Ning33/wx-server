@@ -19,7 +19,7 @@ public interface PersonService {
 
     List<Person> queryByUser(String userid);
 
-    Person querySelfUser(User user);
+    Person querySelf(String userid);
 
 
 }

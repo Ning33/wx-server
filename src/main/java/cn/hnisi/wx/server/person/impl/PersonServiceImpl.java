@@ -1,8 +1,6 @@
 package cn.hnisi.wx.server.person.impl;
 
-import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.exception.DataValidationException;
-import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.core.utils.GuidUtil;
 import cn.hnisi.wx.server.person.PersonService;
 import cn.hnisi.wx.server.person.dao.PersonDAO;
@@ -27,7 +25,7 @@ public class PersonServiceImpl implements PersonService {
         List<Person> personList = personDAO.queryByUserid(user.getUserid());
         for(Person _person : personList){
             if(_person.getIdcard().equals(person.getIdcard())){
-                throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"参保人已添加");
+                throw new DataValidationException("参保人已添加");
             }
         }
 
@@ -61,13 +59,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person querySelfUser(User user) {
-        List<Person> personList = queryByUser(user.getUserid());
-        for(Person person : personList){
-            if(person.getIdcard().equals(user.getIdcard())){
-                return person;
-            }
+    public Person querySelf(String userid) {
+        Person person = personDAO.querySelf(userid);
+        if(person == null){
+            throw new DataValidationException("查找不到当前用户对应的人员信息");
         }
-        throw new DataValidationException("查找不到当前用户对应的人员信息");
+        return person;
     }
 }

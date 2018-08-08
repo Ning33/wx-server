@@ -84,9 +84,9 @@ public class SecurityServiceImpl extends BaseSecurityService implements Security
             return null;
         }
 
-        Person selfUser = personService.querySelfUser(user);
+        Person selfPerson = personService.querySelf(user.getUserid());
 
-        BeanUtils.copyProperties(selfUser,user,Person.class);
+        BeanUtils.copyProperties(selfPerson,user,Person.class);
 
         return user;
     }
@@ -106,6 +106,7 @@ public class SecurityServiceImpl extends BaseSecurityService implements Security
         userDAO.insert(user);
 
         //同步生成人员信息
+        user.setIsSelf(true);
         personService.bind(user,user);
 
         //注入人员信息

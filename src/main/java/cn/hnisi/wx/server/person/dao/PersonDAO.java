@@ -15,4 +15,6 @@ public interface PersonDAO {
 
     void delete(@Param("personid") String personid);
 
+    Person querySelf(@Param("userid") String userid);
+
 }

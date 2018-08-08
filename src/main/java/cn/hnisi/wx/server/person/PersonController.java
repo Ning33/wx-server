@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class PersonController {
@@ -23,8 +24,6 @@ public class PersonController {
 
     @RequestMapping("/api/frontend/user/bind")
     public ResponseEntity<Person> bind(String idcard, String name, User user, HttpServletRequest request){
-        //验证人脸和注册用户是否一致
-        validateFaceService.validateToken(request,user.getIdcard());
         //验证人脸和参保人用户是否一致
         validateFaceService.validateToken(request,idcard,name);
 
@@ -52,4 +51,11 @@ public class PersonController {
         personService.unbind(personid);
         return new ResponseEntity();
     }
+
+    @RequestMapping("/api/frontend/user/person/query")
+    public ResponseEntity<List<Person>> query(User user){
+        List<Person> persons = personService.queryByUser(user.getUserid());
+        return new ResponseEntity<>(persons);
+    }
+
 }
