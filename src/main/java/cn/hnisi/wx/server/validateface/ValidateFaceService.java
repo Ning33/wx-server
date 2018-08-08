@@ -85,7 +85,7 @@ public class ValidateFaceService {
      * 定时存入(每天凌晨二点 开始执行存入操作 cron = ("0 0 2 * * ?")
      * @throws AppException
      */
-    @Scheduled(cron = ("*/10 * * * * ?") )
+    @Scheduled(cron = ("0 0 2 * * ?") )
     public void startSaveDetail()throws AppException{
         while(true){
             //获取当前时间
