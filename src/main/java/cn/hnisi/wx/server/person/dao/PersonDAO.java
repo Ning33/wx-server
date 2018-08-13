@@ -17,4 +17,6 @@ public interface PersonDAO {
 
     Person querySelf(@Param("userid") String userid);
 
+    Person queryByPersonid(@Param("personid") String personid);
+
 }

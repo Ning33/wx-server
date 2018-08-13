@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.service.dao.OrderDAO">
+
+    <insert id="insert">
+        insert into t_order(orderno,serviceid,service_name,userid,user_idcard,user_name,personid,person_idcard,person_name,status,data)
+        values(#{orderno},#{serviceid,jdbcType=VARCHAR},#{serviceName},#{userid},#{userIdcard},#{userName},#{personid},#{personIdcard},#{personName},#{status},#{data})
+    </insert>
+
+    <update id="updateStatus">
+        update t_order
+           set status = #{status},
+               updated_time = sysdate
+         where orderno = #{orderno}
+    </update>
+
+    <select id="queryByOrderno" resultType="cn.hnisi.wx.server.service.model.Order">
+        select * from t_order where orderno = #{orderno}
+    </select>
+</mapper>

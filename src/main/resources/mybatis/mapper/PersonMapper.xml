@@ -13,6 +13,10 @@
         select * from t_person where userid = #{userid}
     </select>
 
+    <select id="queryByPersonid" resultType="cn.hnisi.wx.server.person.model.Person">
+        select * from t_person where personid = #{personid}
+    </select>
+
     <delete id="delete">
         delete from t_person where personid = #{personid}
     </delete>

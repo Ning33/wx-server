@@ -21,5 +21,7 @@ public interface PersonService {
 
     Person querySelf(String userid);
 
+    Person queryByPersonid(String personid);
+
 
 }

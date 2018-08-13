@@ -80,3 +80,33 @@ comment on column t_person.tel is '联系电话';
 comment on column t_person.address is '联系地址';
 comment on column t_person.sicard is '社保卡号';
 comment on column t_person.updated_time is '数据更新时间戳';
+
+create table t_order(
+   orderno     varchar2(50) primary key ,
+   serviceid   varchar2(50),
+   service_name varchar2(50),
+   userid     varchar2(50),
+   user_idcard varchar2(20),
+   user_name   varchar2(50),
+   personid    varchar2(50),
+   person_idcard  varchar2(20),
+   person_name varchar2(50),
+   status      varchar2(2),
+   data        clob,
+   created_time   date default sysdate,
+   updated_time   date default sysdate
+);
+comment on table t_order is '受理单信息';
+comment on column t_order.orderno is '受理单号';
+comment on column t_order.serviceid is '服务事项ID';
+comment on column t_order.service_name is '服务事项名称';
+comment on column t_order.userid is '用户id';
+comment on column t_order.user_idcard is '用户公民身份证号';
+comment on column t_order.user_name is '用户姓名';
+comment on column t_order.personid is '参保人ID';
+comment on column t_order.person_idcard is '参保人公民身份证号码';
+comment on column t_order.person_name is '参保人姓名';
+comment on column t_order.status is '业务状态，0申报中，10审核中，21审核成功,22审核失败';
+comment on column t_order.data is '业务信息，json格式存储';
+comment on column t_order.created_time is '创建时间';
+comment on column t_order.updated_time is '更新时间';

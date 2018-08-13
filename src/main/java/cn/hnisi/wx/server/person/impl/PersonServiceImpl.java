@@ -66,4 +66,13 @@ public class PersonServiceImpl implements PersonService {
         }
         return person;
     }
+
+    @Override
+    public Person queryByPersonid(String personid) {
+        Person person = personDAO.queryByPersonid(personid);
+        if(person == null){
+            throw new DataValidationException("查找不到对应的人员信息");
+        }
+        return person;
+    }
 }
