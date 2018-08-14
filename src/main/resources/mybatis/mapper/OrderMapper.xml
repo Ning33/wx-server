@@ -19,4 +19,12 @@
     <select id="queryByOrderno" resultType="cn.hnisi.wx.server.service.model.Order">
         select * from t_order where orderno = #{orderno}
     </select>
+
+    <update id="updateResult">
+        update t_order
+           set status = #{status},
+               updated_time = sysdate,
+               data = #{data}
+         where orderno = #{orderno}
+    </update>
 </mapper>

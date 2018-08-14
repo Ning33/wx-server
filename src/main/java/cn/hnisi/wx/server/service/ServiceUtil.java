@@ -1,11 +1,13 @@
 package cn.hnisi.wx.server.service;
 
+import cn.hnisi.wx.core.exception.DataValidationException;
 import cn.hnisi.wx.core.utils.JsonUtil;
 import cn.hnisi.wx.server.person.model.Person;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.dao.OrderDAO;
 import cn.hnisi.wx.server.service.model.Order;
 import cn.hnisi.wx.server.service.model.OrderStatus;
+import cn.hnisi.wx.server.service.model.ServiceResult;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -54,5 +56,16 @@ public class ServiceUtil {
 
     public Order query(String orderno){
         return orderDAO.queryByOrderno(orderno);
+    }
+
+    public <T> void update(ServiceResult<T> serviceResult){
+        String orderno = serviceResult.getOrderno();
+        String status = serviceResult.getStatus();
+        // 校验status
+        if(!(status.equals("21")||status.equals("22"))){
+            throw new DataValidationException("status 数据不符合规范");
+        }
+        String data = JsonUtil.convertBeanToJson(serviceResult.getData());
+        orderDAO.updateResult(orderno,status,data);
     }
 }

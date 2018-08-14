@@ -4,11 +4,13 @@ import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.ServiceUtil;
 import cn.hnisi.wx.server.service.model.Order;
-import cn.hnisi.wx.server.service.yldyhd.model.CallbackRequest;
+import cn.hnisi.wx.server.service.model.ServiceResult;
 import cn.hnisi.wx.server.service.yldyhd.model.CbqkqrResponse;
 import cn.hnisi.wx.server.service.yldyhd.model.FfzhqrResponse;
 import cn.hnisi.wx.server.service.yldyhd.model.SbxxResponse;
+import cn.hnisi.wx.server.service.yldyhd.model.YldyhdResult;
 import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -113,7 +115,9 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/server/service/yldyhd/callback")
-    public ResponseEntity callback(CallbackRequest request){
-        return null;
+    public ResponseEntity callback(@RequestBody ServiceResult<YldyhdResult> serviceResult){
+        serviceUtil.update(serviceResult);
+        return new ResponseEntity();
     }
+
 }
