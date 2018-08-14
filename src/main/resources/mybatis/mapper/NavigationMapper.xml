@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.service_navigation.dao.ServiceItemDAO">
+
+    <!--查询所有事项-->
+    <select id="queryAllItems" resultType="cn.hnisi.wx.server.service_navigation.model.ServiceItem">
+        SELECT 
+          itemId , name , title , content , itemType
+        FROM 
+          T_Service_Items
+    </select>
+    
+    <!--根据名称模糊查询事项-->
+    <select id="queryItemByTitle" resultType="cn.hnisi.wx.server.service_navigation.model.ServiceItem">
+        SELECT
+          itemId , name , title , content , itemType
+        FROM
+          T_Service_Items
+        WHERE
+          title like '%'||#{title}||'%'
+        or
+          content like '%'||#{title}||'%'
+    </select>
+</mapper>

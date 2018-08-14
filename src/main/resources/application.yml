@@ -15,7 +15,7 @@ properties:
       delayTime: 3600000
       saveNumberOnce: 10
       stopSaveTime: 7
-      machineid: 1
+      machineId: 1
       username: lfq
       password: lfq
       hostname: 192.168.51.45
@@ -39,3 +39,6 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
   config-location: classpath:mybatis/mybatis-config.xml
+logging:
+  level:
+     cn.hnisi.wx.server.service_navigation.dao.ServiceItemDAO : debug

@@ -86,7 +86,7 @@ public class ValidateFaceService {
      * @throws AppException
      */
     @Scheduled(cron = ("0 0 2 * * ?") )
-    public void startSaveDetail()throws AppException{
+    public void startSaveDetail() throws AppException{
         while(true){
             //获取当前时间
             Calendar time = Calendar.getInstance();
