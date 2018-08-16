@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.service.myservice.dao.MyServiceDao">
+
+    <!--查询我的所有事项-->
+    <select id="searchServices" resultType="cn.hnisi.wx.server.service.model.Order">
+        SELECT
+          o.ORDERNO , o.SERVICEID ,s.title as serviceName ,o.PERSONID , o.PERSON_IDCARD ,
+          o.PERSON_NAME ,o.STATUS ,o.CREATED_TIME ,o.UPDATED_TIME ,o.completionTime
+        FROM
+          T_ORDER o
+        JOIN
+          t_service s
+        ON
+          o.service_name = s.name
+        WHERE
+          o.userid = #{userid}
+        AND
+          o.status = #{status}
+    </select>
+
+    <select id="queryMyServiceByOrderNo" resultType="cn.hnisi.wx.server.service.model.Order">
+        SELECT
+          o.ORDERNO , o.SERVICEID ,s.title as serviceName  ,o.PERSONID ,o.PERSON_IDCARD ,
+          o.PERSON_NAME ,o.STATUS ,o.DATA ,o.CREATED_TIME ,o.UPDATED_TIME , o.completionTime
+        FROM
+          T_ORDER o
+        JOIN
+          t_service s
+        ON
+          o.service_name = s.name
+        WHERE
+           o.orderno = #{orderno}
+    </select>
+</mapper>

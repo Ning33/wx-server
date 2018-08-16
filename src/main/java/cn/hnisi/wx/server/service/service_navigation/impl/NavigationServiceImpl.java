@@ -1,10 +1,10 @@
-package cn.hnisi.wx.server.service_navigation.impl;
+package cn.hnisi.wx.server.service.service_navigation.impl;
 
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseStatus;
-import cn.hnisi.wx.server.service_navigation.NavigationService;
-import cn.hnisi.wx.server.service_navigation.dao.ServiceItemDAO;
-import cn.hnisi.wx.server.service_navigation.model.ServiceItem;
+import cn.hnisi.wx.server.service.service_navigation.NavigationService;
+import cn.hnisi.wx.server.service.service_navigation.dao.ServiceItemDAO;
+import cn.hnisi.wx.server.service.service_navigation.model.ServiceItem;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

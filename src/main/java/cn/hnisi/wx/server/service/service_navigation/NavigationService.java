@@ -1,6 +1,6 @@
-package cn.hnisi.wx.server.service_navigation;
+package cn.hnisi.wx.server.service.service_navigation;
 
-import cn.hnisi.wx.server.service_navigation.model.ServiceItem;
+import cn.hnisi.wx.server.service.service_navigation.model.ServiceItem;
 
 import java.util.List;
 

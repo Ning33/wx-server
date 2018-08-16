@@ -16,6 +16,15 @@ public class Order {
     private String data;
     private Date createdTime;
     private Date updatedTime;
+    private Date completionTime;
+
+    public Date getCompletionTime() {
+        return completionTime;
+    }
+
+    public void setCompletionTime(Date completionTime) {
+        this.completionTime = completionTime;
+    }
 
     public String getOrderno() {
         return orderno;

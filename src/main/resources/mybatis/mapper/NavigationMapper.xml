@@ -2,25 +2,25 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hnisi.wx.server.service_navigation.dao.ServiceItemDAO">
+<mapper namespace="cn.hnisi.wx.server.service.service_navigation.dao.ServiceItemDAO">
 
     <!--查询所有事项-->
-    <select id="queryAllItems" resultType="cn.hnisi.wx.server.service_navigation.model.ServiceItem">
+    <select id="queryAllItems" resultType="cn.hnisi.wx.server.service.service_navigation.model.ServiceItem">
         SELECT 
-          itemId , name , title , content , itemType
+          serviceId , name , title , description , catalog , securityLevel, orderNum
         FROM 
-          T_Service_Items
+          t_service
     </select>
     
     <!--根据名称模糊查询事项-->
-    <select id="queryItemByTitle" resultType="cn.hnisi.wx.server.service_navigation.model.ServiceItem">
+    <select id="queryItemByTitle" resultType="cn.hnisi.wx.server.service.service_navigation.model.ServiceItem">
         SELECT
-          itemId , name , title , content , itemType
+          serviceId , name , title , description , catalog , securityLevel, orderNum
         FROM
-          T_Service_Items
+          t_service
         WHERE
           title like '%'||#{title}||'%'
         or
-          content like '%'||#{title}||'%'
+          description like '%'||#{title}||'%'
     </select>
 </mapper>
