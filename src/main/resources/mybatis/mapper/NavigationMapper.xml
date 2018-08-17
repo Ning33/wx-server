@@ -23,4 +23,11 @@
         or
           description like '%'||#{title}||'%'
     </select>
+
+    <!--根据serviceName查询安全级别-->
+    <select id="queryByServiceName" resultType="String">
+        select securitylevel
+        from t_service
+        where name = #{serviceName}
+    </select>
 </mapper>

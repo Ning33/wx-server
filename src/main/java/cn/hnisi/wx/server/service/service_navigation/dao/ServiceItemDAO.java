@@ -19,4 +19,11 @@ public interface ServiceItemDAO {
      * @return
      */
     List<ServiceItem> queryItemByTitle(@Param("title") String title);
+
+    /**
+     * 根据serviceName查询数据, 查看安全级别 或者有无此事项
+     * @param serviceName
+     * @return
+     */
+    String queryByServiceName(@Param("serviceName") String serviceName);
 }
