@@ -2,10 +2,12 @@ package cn.hnisi.wx.server.filter;
 
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.core.utils.JsonUtil;
 import cn.hnisi.wx.server.person.dao.PersonDAO;
 import cn.hnisi.wx.server.person.model.Person;
-import cn.hnisi.wx.server.service.service_navigation.dao.ServiceItemDAO;
-import cn.hnisi.wx.server.service.service_navigation.impl.NavigationServiceImpl;
+import cn.hnisi.wx.server.service.dao.OrderDAO;
+import cn.hnisi.wx.server.service.model.Order;
+import cn.hnisi.wx.server.service.navigation.dao.ServiceItemDAO;
 import cn.hnisi.wx.server.validateface.ValidateFaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,19 +31,39 @@ public class MyIntercepter implements HandlerInterceptor{
 
     @Resource
     private PersonDAO personDAO;
+    @Resource
+    private OrderDAO orderDAO;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("-----------------开始进入请求地址拦截-----------------");
-        //截取url路径,获取服务业务名 service_name
-        int preNum = request.getRequestURL().indexOf("service");
-        int subNum = request.getRequestURL().indexOf("/",preNum+8);
-        String serviceName = request.getRequestURL().substring(preNum+8,subNum);
+        String serviceName; //服务名
+        String personid;    //参保人id
+        try{
+            //截取url路径,获取服务业务名 service_name
+            int preNum = request.getRequestURL().indexOf("service");
+            int subNum = request.getRequestURL().indexOf("/",preNum+8);
+            serviceName = request.getRequestURL().substring(preNum+8,subNum);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据解析异常");
+        }
         //查询安全级别 或 判断有无此事项
         String securityLevel = serviceItemDAO.queryByServiceName(serviceName);
         if(!StringUtils.isEmpty(securityLevel) && securityLevel.equals("3")){ //需要人脸识别的事项
             //判断用户是否已经人脸识别
-            String personid =  request.getParameter("personid");
+            personid = request.getParameter("personid");
+
+            //如果参数中没有personid 则试用orderno查询personid
+            if(StringUtils.isEmpty(personid)){
+                String orderno = request.getParameter("orderno");
+                Order order = orderDAO.queryByOrderno(orderno);
+                if(order == null){
+                    throw new AppException(ResponseStatus.UNKNOWN_ERROR);
+                }
+                personid = order.getPersonid();
+            }
+            //查询参保人获取其身份号码
             Person person = personDAO.queryByPersonid(personid);
             System.out.println(person.getIdcard());
             if(person == null){

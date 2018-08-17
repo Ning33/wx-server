@@ -1,6 +1,6 @@
-package cn.hnisi.wx.server.service.service_navigation.dao;
+package cn.hnisi.wx.server.service.navigation.dao;
 
-import cn.hnisi.wx.server.service.service_navigation.model.ServiceItem;
+import cn.hnisi.wx.server.service.navigation.model.ServiceItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

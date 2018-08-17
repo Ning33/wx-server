@@ -3,10 +3,12 @@ package cn.hnisi.wx.server.service.myservice;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.model.Order;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -24,8 +26,10 @@ public class MyServiceController {
      * @return
      */
     @RequestMapping("/api/frontend/myservice/searchServices")
-    public ResponseEntity<Order> searchReviewService(User user ,String status){
+    public ResponseEntity<Order> searchReviewService( User user , String status){
+
         //进行测试
+        //TODO
        List<Order> items =  myServiceService.searchServices("7eadc26aa1fa4c01b695ac7eeff58e1d" , status);
        return new ResponseEntity(items);
     }
