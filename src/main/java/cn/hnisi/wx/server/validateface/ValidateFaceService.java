@@ -1,6 +1,7 @@
 package cn.hnisi.wx.server.validateface;
 
 import cn.hnisi.wx.core.exception.AppException;
+import cn.hnisi.wx.core.exception.ValidateFaceException;
 import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.core.utils.FTPclientEntity;
 import cn.hnisi.wx.core.utils.JsonUtil;
@@ -24,8 +25,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -242,50 +241,31 @@ public class ValidateFaceService {
         return listPath;
     }
 
-
     /**
      * 验证token是否有效
      * @param request
      * @param idcard
+     * @param name
      * @return
      */
-    public String validateToken(HttpServletRequest request, String idcard){
-        String token = request.getHeader("x-tif-validate-face-"+idcard);
-
-        //从redis中获取token
-        String tokenStr = redisTemplate.opsForValue().get(VALIDATE_FACE_TOKEN+token);
-        if(StringUtils.isEmpty(tokenStr)){
-            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED);
-        }
-
-        //获取token信息，判断证件号码是否相同
-        GetDetectInfoResponse response = JsonUtil.convertJsonToBean(tokenStr,GetDetectInfoResponse.class);
-        if(!response.getID().equals(idcard)){
-            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED,"证件号码不符");
-        }
-
-        return token;
-
-    }
-
     public String validateToken(HttpServletRequest request, String idcard, String name){
         String token = request.getHeader("x-tif-validate-face-"+idcard);
 
         //从redis中获取token
         String tokenStr = redisTemplate.opsForValue().get(VALIDATE_FACE_TOKEN+token);
         if(StringUtils.isEmpty(tokenStr)){
-            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED);
+            throw new ValidateFaceException(idcard,name);
         }
 
         //获取token信息，判断证件号码是否相同
         GetDetectInfoResponse response = JsonUtil.convertJsonToBean(tokenStr,GetDetectInfoResponse.class);
         if(!response.getID().equals(idcard)){
-            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED,"证件号码不符");
+            throw new ValidateFaceException(idcard,name,"证件号码不符");
         }
 
         //判断姓名是否相同
         if(!response.getName().equals(name)){
-            throw new AppException(ResponseStatus.VALIDATE_FACE_EXPIRED,"姓名不符");
+            throw new ValidateFaceException(idcard,name,"姓名不符");
         }
 
         return token;
