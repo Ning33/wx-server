@@ -72,7 +72,7 @@ public class SecurityController {
     @RequestMapping("/api/frontend/user/unregister")
     public ResponseEntity unregister(User user,HttpServletRequest request){
         //验证人脸和注册用户是否一致
-        validateFaceService.validateToken(request,user.getIdcard());
+        validateFaceService.validateToken(request,user.getIdcard(),user.getName());
 
         return new ResponseEntity(ResponseStatus.UNKNOWN_ERROR,"此功能暂未开放");
     }

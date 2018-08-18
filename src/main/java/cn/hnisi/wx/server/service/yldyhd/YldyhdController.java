@@ -104,7 +104,7 @@ public class YldyhdController {
         //从订单中获取参保人信息
         Order order = serviceUtil.query(orderno);
         //验证人脸
-        validateFaceService.validateToken(request,order.getPersonIdcard());
+        validateFaceService.validateToken(request,order.getPersonIdcard(),order.getPersonName());
 
         yldyhdService.submit(orderno);
         return new ResponseEntity();

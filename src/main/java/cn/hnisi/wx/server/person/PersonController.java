@@ -40,7 +40,7 @@ public class PersonController {
     @RequestMapping("/api/frontend/user/unbind")
     public ResponseEntity unbind(String personid, User user, HttpServletRequest request){
         //验证人脸和注册用户是否一致
-        validateFaceService.validateToken(request,user.getIdcard());
+        validateFaceService.validateToken(request,user.getIdcard(),user.getName());
 
         //不允许删除本人的人员信息
         if(user.getPersonid().equals(personid)){
