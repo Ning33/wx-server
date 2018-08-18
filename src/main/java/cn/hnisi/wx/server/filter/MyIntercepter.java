@@ -56,7 +56,7 @@ public class MyIntercepter implements HandlerInterceptor{
                 personid = json.getString("personid");
                 //如果参数中没有personid 则试用orderno查询personid
                 if(StringUtils.isEmpty(personid)){
-                    String orderno = request.getParameter("orderno");
+                    String orderno = json.getString("orderno");
                     //如果orderno也没有获取到, 则抛出异常
                     if(StringUtils.isEmpty(orderno)){
                         throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据为空");
