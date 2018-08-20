@@ -34,6 +34,8 @@ public class MyIntercepter implements HandlerInterceptor{
     private PersonDAO personDAO;
     @Resource
     private OrderDAO orderDAO;
+    @Resource
+    private ValidateFaceService validateFaceService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -78,7 +80,6 @@ public class MyIntercepter implements HandlerInterceptor{
             throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据解析异常");
         }
         //检验token
-        ValidateFaceService validateFaceService = new ValidateFaceService();
         validateFaceService.validateToken(request,person.getIdcard(),person.getName());
         return true;
     }
