@@ -17,7 +17,6 @@ public class GetRequestJsonUtils {
     }
     /***
      * 获取 request 中 json 字符串的内容
-     *
      * @param request
      * @return : <code>byte[]</code>
      * @throws IOException
@@ -35,10 +34,7 @@ public class GetRequestJsonUtils {
     }
 
     /**
-     * 描述:获取 post 请求的 byte[] 数组
-     * <pre>
-     * 举例：
-     * </pre>
+     * 获取 post 请求的 byte[] 数组
      * @param request
      * @return
      * @throws IOException
@@ -63,10 +59,7 @@ public class GetRequestJsonUtils {
     }
 
     /**
-     * 描述:获取 post 请求内容
-     * <pre>
-     * 举例：
-     * </pre>
+     * 获取 post 请求内容
      * @param request
      * @return
      * @throws IOException
