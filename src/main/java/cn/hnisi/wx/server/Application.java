@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 @SpringBootApplication
 @Import(CoreAutoConfiguration.class)
 @EnableConfigurationProperties(WxProperties.class)
