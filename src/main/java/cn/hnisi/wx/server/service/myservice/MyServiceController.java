@@ -3,12 +3,9 @@ package cn.hnisi.wx.server.service.myservice;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.model.Order;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
