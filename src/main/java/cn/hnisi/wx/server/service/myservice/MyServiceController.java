@@ -28,9 +28,7 @@ public class MyServiceController {
     @RequestMapping("/api/frontend/myservice/searchServices")
     public ResponseEntity<Order> searchReviewService( User user , String status){
 
-        //进行测试
-        //TODO
-       List<Order> items =  myServiceService.searchServices("7eadc26aa1fa4c01b695ac7eeff58e1d" , status);
+       List<Order> items =  myServiceService.searchServices(user.getUserid() , status);
        return new ResponseEntity(items);
     }
 
