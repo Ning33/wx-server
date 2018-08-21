@@ -21,7 +21,6 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
         registry.addInterceptor(getMyIntercepter()).addPathPatterns("/api/frontend/service/**");
         super.addInterceptors(registry);
     }
-
     /**
      * 访问静态资源
      * addResourceHandler: 访问的路径
