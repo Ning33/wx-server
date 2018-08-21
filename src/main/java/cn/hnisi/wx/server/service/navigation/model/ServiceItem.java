@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server.service.service_navigation.model;
+package cn.hnisi.wx.server.service.navigation.model;
 
 /**
  * 事项导航 实体类

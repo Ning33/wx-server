@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hnisi.wx.server.service.service_navigation.dao.ServiceItemDAO">
+<mapper namespace="cn.hnisi.wx.server.service.navigation.dao.ServiceItemDAO">
 
     <!--查询所有事项-->
-    <select id="queryAllItems" resultType="cn.hnisi.wx.server.service.service_navigation.model.ServiceItem">
+    <select id="queryAllItems" resultType="cn.hnisi.wx.server.service.navigation.model.ServiceItem">
         SELECT 
           serviceId , name , title , description , catalog , securityLevel, orderNum
         FROM 
@@ -13,7 +13,7 @@
     </select>
     
     <!--根据名称模糊查询事项-->
-    <select id="queryItemByTitle" resultType="cn.hnisi.wx.server.service.service_navigation.model.ServiceItem">
+    <select id="queryItemByTitle" resultType="cn.hnisi.wx.server.service.navigation.model.ServiceItem">
         SELECT
           serviceId , name , title , description , catalog , securityLevel, orderNum
         FROM
@@ -22,5 +22,12 @@
           title like '%'||#{title}||'%'
         or
           description like '%'||#{title}||'%'
+    </select>
+
+    <!--根据serviceName查询安全级别-->
+    <select id="queryByServiceName" resultType="String">
+        select securitylevel
+        from t_service
+        where name = #{serviceName}
     </select>
 </mapper>

@@ -1,8 +1,8 @@
-package cn.hnisi.wx.server.service.service_navigation;
+package cn.hnisi.wx.server.service.navigation;
 
 
 import cn.hnisi.wx.core.io.ResponseEntity;
-import cn.hnisi.wx.server.service.service_navigation.model.ServiceItem;
+import cn.hnisi.wx.server.service.navigation.model.ServiceItem;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

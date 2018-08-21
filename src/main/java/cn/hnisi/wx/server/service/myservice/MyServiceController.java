@@ -5,7 +5,6 @@ import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.model.Order;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class MyServiceController {
      * @return
      */
     @RequestMapping("/api/frontend/myservice/searchServices")
-    public ResponseEntity<Order> searchReviewService(User user ,String status){
-        //进行测试
-       List<Order> items =  myServiceService.searchServices("7eadc26aa1fa4c01b695ac7eeff58e1d" , status);
+    public ResponseEntity<Order> searchReviewService( User user , String status){
+
+       List<Order> items =  myServiceService.searchServices(user.getUserid() , status);
        return new ResponseEntity(items);
     }
 
