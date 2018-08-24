@@ -20,7 +20,7 @@ public class MyServiceServiceImpl implements MyServiceService {
     public List<Order> searchServices(String userid , String status) {
         //检验userid
         if(StringUtils.isEmpty(userid)){
-            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据不能为空");
+            throw new AppException(ResponseStatus.UNBOUND_USER);
         }
         List<Order> items = myServiceDao.searchServices(userid , status);
 
@@ -31,7 +31,7 @@ public class MyServiceServiceImpl implements MyServiceService {
     public Order queryMyServiceByOrderNo(String orderno) {
         //检验userid
         if(StringUtils.isEmpty(orderno)){
-            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据不能为空");
+            throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION);
         }
 
         Order order = myServiceDao.queryMyServiceByOrderNo(orderno);

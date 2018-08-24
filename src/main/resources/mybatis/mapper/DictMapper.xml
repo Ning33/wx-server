@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.dict.dao.DictDao">
+    <select id="queryPlusDict" resultType="cn.hnisi.wx.server.dict.model.Dict">
+        SELECT
+          field , dictValue , dictDisplay , version
+        FROM
+          t_dictionary
+        WHERE
+          version > #{version}
+    </select>
+
+</mapper>

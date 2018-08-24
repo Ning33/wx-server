@@ -3,9 +3,12 @@ package cn.hnisi.wx.core.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpMethod;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class JsonUtil {
@@ -48,26 +51,24 @@ public class JsonUtil {
      * @throws IOException
      */
     public static Map getRequestJsonObject(HttpServletRequest request) throws IOException {
-        String json = getRequestJsonString(request);
-        Map map =  convertJsonToBean(json , Map.class);
-        return map;
-    }
-    /***
-     * 获取 request 中 json 字符串的内容
-     * @param request
-     * @return : <code>byte[]</code>
-     * @throws IOException
-     */
-    public static String getRequestJsonString(HttpServletRequest request)
-            throws IOException {
-        String submitMehtod = request.getMethod();
-        // GET
-        if (submitMehtod.equals("GET")) {
-            return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");
-            // POST
-        } else {
-            return getRequestPostStr(request);
+        Map<Object,String> map = new LinkedHashMap<>();
+        //判断请求方式
+        if(request.getMethod().equals(HttpMethod.GET.toString())){
+           String personid =  request.getParameter("personid");
+           if(StringUtils.isEmpty(personid)){
+               String orderno = request.getParameter("orderno");
+               map.put("orderno",orderno);
+           }else{
+               map.put("personid" , personid);
+           }
+           return map;
+        }else{
+            String json = getRequestPostStr(request);
+            map =  convertJsonToBean(json , Map.class);
+            return map;
+
         }
+
     }
 
     /**

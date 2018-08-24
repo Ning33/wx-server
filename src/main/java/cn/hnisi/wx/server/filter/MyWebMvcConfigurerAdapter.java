@@ -1,10 +1,13 @@
 package cn.hnisi.wx.server.filter;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-public class MyWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
+@Configuration
+public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
+
 
     //首先把拦截器进行注册
     @Bean
@@ -13,7 +16,7 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
     }
 
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则
         //excludePathPatterns 用于排除拦截
         registry.addInterceptor(getMyIntercepter()).addPathPatterns("/api/frontend/service/**");
