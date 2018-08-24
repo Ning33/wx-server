@@ -21,27 +21,31 @@ public class ServiceUtil {
     @Resource
     private OrderDAO orderDAO;
 
-    public Order createOrder(String serviceName,User user, Person person, Object data){
+    public <T> Order createOrder(String serviceName,User user, Person person, T data){
+        return createOrder(serviceName,user,person,data,OrderStatus.APPLY);
+    }
+
+    public <T> Order createOrder(String serviceName,User user, Person person, T data,OrderStatus orderStatus){
         Order order = new Order();
         //生成受理单号
-        order.setOrderno(orderNoGenerator.generate());
+        order.setOrderNo(orderNoGenerator.generate());
         //插入用户信息
-        order.setUserid(user.getUserid());
+        order.setUserId(user.getUserid());
         order.setUserIdcard(user.getIdcard());
         order.setUserName(user.getName());
         //插入人员信息
-        order.setPersonid(person.getPersonid());
+        order.setPersonId(person.getPersonid());
         order.setPersonIdcard(person.getIdcard());
         order.setPersonName(person.getName());
         //插入业务数据
         if(data == null){
-            order.setData("");
+            order.setRequestData("");
         }else{
-            order.setData(JsonUtil.convertBeanToJson(data));
+            order.setRequestData(JsonUtil.convertBeanToJson(data));
         }
 
         //插入业务状态
-        order.setStatus(OrderStatus.APPLY.toString());
+        order.setStatus(orderStatus.toString());
         //插入事项类型
         order.setServiceName(serviceName);
         //存入数据库
@@ -55,7 +59,7 @@ public class ServiceUtil {
     }
 
     public Order query(String orderno){
-        return orderDAO.queryByOrderno(orderno);
+        return orderDAO.queryByOrderNo(orderno);
     }
 
     public <T> void update(ServiceResult<T> serviceResult){

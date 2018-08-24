@@ -9,9 +9,9 @@ public interface OrderDAO {
 
     void insert(Order order);
 
-    void updateStatus(@Param("orderno") String orderno,@Param("status") String status);
+    void updateStatus(@Param("orderNo") String orderNo,@Param("status") String status);
 
-    Order queryByOrderno(@Param("orderno") String orderno);
+    Order queryByOrderNo(@Param("orderNo") String orderNo);
 
-    void updateResult(@Param("orderno") String orderno,@Param("status") String status,@Param("data") String data);
+    void updateResult(@Param("orderNo") String orderNo,@Param("status") String status,@Param("responseData") String responseData);
 }

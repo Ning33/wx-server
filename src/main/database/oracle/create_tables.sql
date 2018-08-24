@@ -82,31 +82,35 @@ comment on column t_person.sicard is '社保卡号';
 comment on column t_person.updated_time is '数据更新时间戳';
 
 create table t_order(
-   orderno     varchar2(50) primary key ,
-   serviceid   varchar2(50),
-   service_name varchar2(50),
-   userid     varchar2(50),
-   user_idcard varchar2(20),
-   user_name   varchar2(50),
-   personid    varchar2(50),
-   person_idcard  varchar2(20),
-   person_name varchar2(50),
+   orderNo     varchar2(50) primary key ,
+   serviceId   varchar2(50),
+   serviceName varchar2(50),
+   userId      varchar2(50),
+   userIdcard  varchar2(20),
+   userName    varchar2(50),
+   personId    varchar2(50),
+   personIdcard   varchar2(20),
+   personName  varchar2(50),
    status      varchar2(2),
-   data        clob,
-   created_time   date default sysdate,
-   updated_time   date default sysdate
+   requestData    clob,
+   responseData   clob,
+   createdTime   date default sysdate,
+   updatedTime   date default sysdate,
+   completionTime date
 );
 comment on table t_order is '受理单信息';
-comment on column t_order.orderno is '受理单号';
+comment on column t_order.orderNo is '受理单号';
 comment on column t_order.serviceid is '服务事项ID';
-comment on column t_order.service_name is '服务事项名称';
-comment on column t_order.userid is '用户id';
-comment on column t_order.user_idcard is '用户公民身份证号';
-comment on column t_order.user_name is '用户姓名';
-comment on column t_order.personid is '参保人ID';
-comment on column t_order.person_idcard is '参保人公民身份证号码';
-comment on column t_order.person_name is '参保人姓名';
+comment on column t_order.serviceName is '服务事项名称';
+comment on column t_order.userId is '用户id';
+comment on column t_order.userIdcard is '用户公民身份证号';
+comment on column t_order.userName is '用户姓名';
+comment on column t_order.personId is '参保人ID';
+comment on column t_order.personIdcard is '参保人公民身份证号码';
+comment on column t_order.personName is '参保人姓名';
 comment on column t_order.status is '业务状态，0申报中，10审核中，21审核成功,22审核失败';
-comment on column t_order.data is '业务信息，json格式存储';
-comment on column t_order.created_time is '创建时间';
-comment on column t_order.updated_time is '更新时间';
+comment on column t_order.requestData is '业务请求信息，json格式存储';
+comment on column t_order.responseData is '业务响应信息，json格式存储';
+comment on column t_order.createdTime is '创建时间';
+comment on column t_order.updatedTime is '更新时间';
+comment on column t_order.completionTime is '完成时间';

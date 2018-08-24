@@ -5,26 +5,27 @@
 <mapper namespace="cn.hnisi.wx.server.service.dao.OrderDAO">
 
     <insert id="insert">
-        insert into t_order(orderno,serviceid,service_name,userid,user_idcard,user_name,personid,person_idcard,person_name,status,data)
-        values(#{orderno},#{serviceid,jdbcType=VARCHAR},#{serviceName},#{userid},#{userIdcard},#{userName},#{personid},#{personIdcard},#{personName},#{status},#{data})
+        insert into t_order(orderno,serviceId,serviceName,userId,userIdcard,userName,personId,personIdcard,personName,status,requestData,responseData)
+        values(#{orderNo},#{serviceId,jdbcType=VARCHAR},#{serviceName},#{userId},#{userIdcard},#{userName},#{personId},#{personIdcard},#{personName},#{status},#{requestData,jdbcType=CLOB},#{responseData,jdbcType=CLOB})
     </insert>
 
     <update id="updateStatus">
         update t_order
            set status = #{status},
-               updated_time = sysdate
-         where orderno = #{orderno}
+               updatedTime = sysdate
+         where orderNo = #{orderNo}
     </update>
 
-    <select id="queryByOrderno" resultType="cn.hnisi.wx.server.service.model.Order">
-        select * from t_order where orderno = #{orderno}
+    <select id="queryByOrderNo" resultType="cn.hnisi.wx.server.service.model.Order">
+        select * from t_order where orderNo = #{orderNo}
     </select>
 
     <update id="updateResult">
         update t_order
            set status = #{status},
-               updated_time = sysdate,
-               data = #{data}
-         where orderno = #{orderno}
+               updatedTime = sysdate,
+               responseData = #{responseData},
+               completionTime = #{completionTime}
+         where orderNo = #{orderNo}
     </update>
 </mapper>

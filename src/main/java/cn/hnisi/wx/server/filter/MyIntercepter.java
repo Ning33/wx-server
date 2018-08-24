@@ -64,11 +64,11 @@ public class MyIntercepter implements HandlerInterceptor{
                     if(StringUtils.isEmpty(orderno)){
                         throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据为空");
                     }
-                    order = orderDAO.queryByOrderno(orderno);
+                    order = orderDAO.queryByOrderNo(orderno);
                     if(order == null){
                         throw new AppException(ResponseStatus.UNKNOWN_ERROR);
                     }
-                    personid = order.getPersonid();
+                    personid = order.getPersonId();
                 }
                 //查询参保人获取其身份号码
                 person = personDAO.queryByPersonid(personid);

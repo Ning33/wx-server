@@ -3,6 +3,7 @@ package cn.hnisi.wx.core.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -14,6 +15,17 @@ public class JsonUtil {
 
     static{
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+    }
+
+    public static class UpperCaseStrategy extends PropertyNamingStrategy.PropertyNamingStrategyBase{
+        @Override
+        public String translate(String input) {
+            if (input == null || input.length() == 0){
+                return input; // garbage in, garbage out
+            }
+
+            return input.toUpperCase();
+        }
     }
 
 

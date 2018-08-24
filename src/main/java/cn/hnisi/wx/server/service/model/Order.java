@@ -3,35 +3,28 @@ package cn.hnisi.wx.server.service.model;
 import java.util.Date;
 
 public class Order {
-    private String orderno;
+    private String orderNo;
     private String status;
-    private String personid;
+    private String personId;
     private String personIdcard;
     private String personName;
-    private String userid;
+    private String userId;
     private String userIdcard;
     private String userName;
-    private String serviceid;
+    private String serviceId;
     private String serviceName;
-    private String data;
+    private String requestData;
+    private String responseData;
     private Date createdTime;
     private Date updatedTime;
     private Date completionTime;
 
-    public Date getCompletionTime() {
-        return completionTime;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setCompletionTime(Date completionTime) {
-        this.completionTime = completionTime;
-    }
-
-    public String getOrderno() {
-        return orderno;
-    }
-
-    public void setOrderno(String orderno) {
-        this.orderno = orderno;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getStatus() {
@@ -42,12 +35,12 @@ public class Order {
         this.status = status;
     }
 
-    public String getPersonid() {
-        return personid;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPersonid(String personid) {
-        this.personid = personid;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public String getPersonIdcard() {
@@ -66,12 +59,12 @@ public class Order {
         this.personName = personName;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserIdcard() {
@@ -90,12 +83,12 @@ public class Order {
         this.userName = userName;
     }
 
-    public String getServiceid() {
-        return serviceid;
+    public String getServiceId() {
+        return serviceId;
     }
 
-    public void setServiceid(String serviceid) {
-        this.serviceid = serviceid;
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 
     public String getServiceName() {
@@ -106,12 +99,20 @@ public class Order {
         this.serviceName = serviceName;
     }
 
-    public String getData() {
-        return data;
+    public String getRequestData() {
+        return requestData;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setRequestData(String requestData) {
+        this.requestData = requestData;
+    }
+
+    public String getResponseData() {
+        return responseData;
+    }
+
+    public void setResponseData(String responseData) {
+        this.responseData = responseData;
     }
 
     public Date getCreatedTime() {
@@ -128,6 +129,14 @@ public class Order {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public Date getCompletionTime() {
+        return completionTime;
+    }
+
+    public void setCompletionTime(Date completionTime) {
+        this.completionTime = completionTime;
     }
 }
 

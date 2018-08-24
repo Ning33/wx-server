@@ -6,9 +6,9 @@ public class YldyhdResult {
 
 
     private String BAE007;
-    private CbqkqrResponse cbqk;
-    private FfzhqrResponse ffzh;
-    private SbxxResponse sbxx;
+    private Cbqkqr cbqk;
+    private Ffzhqr ffzh;
+    private Sbxx sbxx;
     private Hdjg hdjg;
 
     @JsonProperty("BAE007")
@@ -20,27 +20,27 @@ public class YldyhdResult {
         this.BAE007 = BAE007;
     }
 
-    public CbqkqrResponse getCbqk() {
+    public Cbqkqr getCbqk() {
         return cbqk;
     }
 
-    public void setCbqk(CbqkqrResponse cbqk) {
+    public void setCbqk(Cbqkqr cbqk) {
         this.cbqk = cbqk;
     }
 
-    public FfzhqrResponse getFfzh() {
+    public Ffzhqr getFfzh() {
         return ffzh;
     }
 
-    public void setFfzh(FfzhqrResponse ffzh) {
+    public void setFfzh(Ffzhqr ffzh) {
         this.ffzh = ffzh;
     }
 
-    public SbxxResponse getSbxx() {
+    public Sbxx getSbxx() {
         return sbxx;
     }
 
-    public void setSbxx(SbxxResponse sbxx) {
+    public void setSbxx(Sbxx sbxx) {
         this.sbxx = sbxx;
     }
 

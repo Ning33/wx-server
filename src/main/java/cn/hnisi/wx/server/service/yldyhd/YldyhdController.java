@@ -3,11 +3,10 @@ package cn.hnisi.wx.server.service.yldyhd;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.ServiceUtil;
-import cn.hnisi.wx.server.service.model.Order;
 import cn.hnisi.wx.server.service.model.ServiceResult;
-import cn.hnisi.wx.server.service.yldyhd.model.CbqkqrResponse;
-import cn.hnisi.wx.server.service.yldyhd.model.FfzhqrResponse;
-import cn.hnisi.wx.server.service.yldyhd.model.SbxxResponse;
+import cn.hnisi.wx.server.service.yldyhd.model.Cbqkqr;
+import cn.hnisi.wx.server.service.yldyhd.model.Ffzhqr;
+import cn.hnisi.wx.server.service.yldyhd.model.Sbxx;
 import cn.hnisi.wx.server.service.yldyhd.model.YldyhdResult;
 import cn.hnisi.wx.server.validateface.ValidateFaceService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 @RestController
@@ -49,20 +47,12 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/check-in")
-    public ResponseEntity<SbxxResponse> checkIn(String personid, User user, HttpServletRequest request){
-        SbxxResponse response = new SbxxResponse();
-        response.setXm("测试人员001");
+    public ResponseEntity<Sbxx> checkIn(String personid, User user){
+        Sbxx response = new Sbxx();
+        response.setAAC002("42011819861223152X");
+        response.setAAC003("测试人员001");
+        response.setAAE010("666666666");
         return new ResponseEntity<>(response);
-    }
-
-    /**
-     * 提交申报资料，开启流程
-     * @return
-     */
-    @RequestMapping("/api/frontend/service/yldyhd/step-sbxx-submit")
-    public ResponseEntity<String> submitSbxx(String personid,User user,HttpServletRequest request){
-        String orderno = yldyhdService.submitSbxx(personid,user);
-        return new ResponseEntity<>(orderno);
     }
 
     /**
@@ -70,13 +60,14 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/step-cbqkqr-query")
-    public ResponseEntity<CbqkqrResponse> queryCbqkqr(String orderno,User user,HttpServletRequest request){
-        CbqkqrResponse response = new CbqkqrResponse();
+    public ResponseEntity<Cbqkqr> queryCbqkqr(String personid, User user){
+        Cbqkqr response = new Cbqkqr();
         response.setStjfys(80);
         response.setSjjfys(100);
-        response.setLjjfys(180);
+        response.setHjjfys(180);
+        response.setSjzhje(new BigDecimal(10000));
         response.setStzhje(new BigDecimal(80040.23));
-        response.setYlzhje(new BigDecimal(99932.45));
+        response.setHjjfje(new BigDecimal(90040.23));
 
         return new ResponseEntity<>(response);
     }
@@ -86,12 +77,11 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/step-ffzhqr-query")
-    public ResponseEntity<FfzhqrResponse> yhxxqr(String orderno, User user, HttpServletRequest request){
-        FfzhqrResponse response = new FfzhqrResponse();
-        response.setXm("张三");
-        response.setZjhm("666666666");
-        response.setYhkzh("888888888888");
-        response.setYlsjhm("15145465899");
+    public ResponseEntity<Ffzhqr> yhxxqr(String personid, User user){
+        Ffzhqr response = new Ffzhqr();
+        response.setAAE133("张三");
+        response.setAAE010("888888888888");
+        response.setAAE195("东莞银行广州分行");
         return new ResponseEntity<>(response);
     }
 
@@ -100,14 +90,12 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/submit")
-    public ResponseEntity submit(String orderno,User user,HttpServletRequest request){
+    public ResponseEntity<String> submit(@RequestBody RequestEntity<Sbxx> entity, User user){
+        String personid = entity.getPersonid();
+        Sbxx sbxx = entity.getSbxx();
         //从订单中获取参保人信息
-        Order order = serviceUtil.query(orderno);
-        //验证人脸
-        validateFaceService.validateToken(request,order.getPersonIdcard(),order.getPersonName());
-
-        yldyhdService.submit(orderno);
-        return new ResponseEntity();
+        String orderno = yldyhdService.submit(personid,sbxx,user);
+        return new ResponseEntity<>(orderno);
     }
 
     /**
@@ -120,4 +108,30 @@ public class YldyhdController {
         return new ResponseEntity();
     }
 
+}
+
+/**
+ * 临时使用，后续调整
+ * TODO
+ * @param <T>
+ */
+class RequestEntity<T>{
+    private String personid;
+    private T sbxx;
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(String personid) {
+        this.personid = personid;
+    }
+
+    public T getSbxx() {
+        return sbxx;
+    }
+
+    public void setSbxx(T sbxx) {
+        this.sbxx = sbxx;
+    }
 }
