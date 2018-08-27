@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 @Component
 public class UserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
+    private static final String sessionHeaderKey = "x-tif-sessionid";
+
     @Resource
     private SecurityService securityService;
 
@@ -27,7 +29,7 @@ public class UserHandlerMethodArgumentResolver implements HandlerMethodArgumentR
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        String sessionid = webRequest.getHeader("x-tif-sessionid");
+        String sessionid = webRequest.getHeader(sessionHeaderKey);
         if(StringUtils.isEmpty(sessionid)){
             return null;
         }

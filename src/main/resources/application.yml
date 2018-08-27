@@ -1,8 +1,5 @@
 #项目配置
 properties:
-  gateway:
-    session-header-key: x-tif-sessionid
-    user-header-key: x-tif-uid
   wx:
     appid: wx1b023cc14a212804
     secret: 9c8b4949ba1ad1c8af474431f54cdff7
