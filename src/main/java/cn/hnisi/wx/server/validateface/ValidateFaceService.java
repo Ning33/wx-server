@@ -66,12 +66,13 @@ public class ValidateFaceService {
 
 
     @Transactional
-    public void saveToken(String token) throws AppException{
+    public Date saveToken(String token) throws AppException{
         //拉取token信息
         GetDetectInfoResponse response = getDetectInfo(token);
 
         //保存至redis中
-        redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,JsonUtil.convertBeanToJson(response),60, TimeUnit.MINUTES);
+        int expired = validateFaceProperties.getTokenExpired();
+        redisTemplate.opsForValue().set(VALIDATE_FACE_TOKEN+token,JsonUtil.convertBeanToJson(response),expired, TimeUnit.MINUTES);
 
         //保存至数据库中
         ValidateFaceLog validateFaceLog = new ValidateFaceLog();
@@ -82,6 +83,11 @@ public class ValidateFaceService {
         validateFaceDao.insert(validateFaceLog);
         //在把数据存入明细表中
         validateFaceDetailDao.insertFirst(validateFaceLog);
+
+        //返回有效期
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE,expired);
+        return calendar.getTime();
     }
 
     /**
@@ -279,7 +285,7 @@ public class ValidateFaceService {
         String secret = validateFaceProperties.getSecretKey();
         String appid = validateFaceProperties.getAppid();
         String now = String.valueOf(new Date().getTime()/1000);
-        int signExpired = validateFaceProperties.getExpired();
+        int signExpired = validateFaceProperties.getSignatureExpired();
 
         String originStr = "a="+appid+"&m="+apiName+"&t="+now+"&e="+signExpired;
 

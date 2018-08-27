@@ -4,10 +4,11 @@ properties:
     appid: wx1b023cc14a212804
     secret: 9c8b4949ba1ad1c8af474431f54cdff7
   validate-face:
+    tokenExpired: 60 #人脸识别token过期时间，单位分钟
     appid: 4818
     secret-key: 5dffe557603cdc4079b6a33554760837
     result-key: a98fe02e5d0075fc2089a3c3cb21f260
-    expired: 600
+    signatureExpired: 600 #人脸识别拉取签名有效期，单位秒
     ftp-upload:
       delayTime: 3600000
       saveNumberOnce: 10

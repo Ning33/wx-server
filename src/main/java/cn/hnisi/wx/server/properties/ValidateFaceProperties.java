@@ -8,7 +8,8 @@ public class ValidateFaceProperties {
     private String appid;
     private String secretKey;
     private String resultKey;
-    private int expired;
+    private int tokenExpired;
+    private int signatureExpired;
 
     public String getAppid() {
         return appid;
@@ -34,11 +35,19 @@ public class ValidateFaceProperties {
         this.resultKey = resultKey;
     }
 
-    public int getExpired() {
-        return expired;
+    public int getTokenExpired() {
+        return tokenExpired;
     }
 
-    public void setExpired(int expired) {
-        this.expired = expired;
+    public void setTokenExpired(int tokenExpired) {
+        this.tokenExpired = tokenExpired;
+    }
+
+    public int getSignatureExpired() {
+        return signatureExpired;
+    }
+
+    public void setSignatureExpired(int signatureExpired) {
+        this.signatureExpired = signatureExpired;
     }
 }

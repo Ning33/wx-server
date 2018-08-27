@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @RestController
 public class ValidateFaceController {
@@ -25,13 +26,13 @@ public class ValidateFaceController {
     }
 
     @RequestMapping("/api/frontend/validateFace/saveToken")
-    public ResponseEntity saveToken(String token, HttpServletRequest request){
+    public ResponseEntity<Long> saveToken(String token, HttpServletRequest request){
         if(StringUtils.isEmpty(token)){
             throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"token is null");
         }
 
-        validateFaceService.saveToken(token);
+        Date expiredDate = validateFaceService.saveToken(token);
 
-        return new ResponseEntity(ResponseStatus.OK);
+        return new ResponseEntity<>(expiredDate.getTime());
     }
 }
