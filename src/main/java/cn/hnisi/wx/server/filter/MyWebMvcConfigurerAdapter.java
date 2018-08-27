@@ -1,10 +1,12 @@
 package cn.hnisi.wx.server.filter;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-public class MyWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
+@Configuration
+public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 
 
     //首先把拦截器进行注册
