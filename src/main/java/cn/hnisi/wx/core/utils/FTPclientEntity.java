@@ -1,6 +1,8 @@
 package cn.hnisi.wx.core.utils;
 
 import org.apache.commons.net.ftp.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,8 @@ import java.io.InputStream;
  * 文件上传至FTP服务器
  */
 public class FTPclientEntity {
+
+    private static final Logger logger = LoggerFactory.getLogger(FTPclientEntity.class);
 
     /**
      * 连接FTP服务器
@@ -32,9 +36,9 @@ public class FTPclientEntity {
             ftp.login(userName, passWord);
             if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
                 ftp.disconnect();
-                System.out.println("连接服务器失败");
+                logger.info("连接服务器失败");
             }
-            System.out.println("登陆服务器成功");
+            logger.info("登陆服务器成功");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +54,7 @@ public class FTPclientEntity {
         if (ftp.isConnected()) {
             try {
                 ftp.disconnect();
-                System.out.println("ftp已经关闭");
+                logger.info("ftp已经关闭");
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,7 +90,7 @@ public class FTPclientEntity {
             inputStream.close();
             //表示上传成功
             success = true;
-            System.out.println("上传成功。。。。。。");
+            logger.info("上传成功。。。。。。");
         } catch (Exception e) {
             e.printStackTrace();
         }

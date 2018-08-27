@@ -10,6 +10,8 @@ import cn.hnisi.wx.server.properties.ValidateFaceProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,6 +35,8 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class ValidateFaceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ValidateFaceService.class);
 
     private static final String VALIDATE_FACE_TOKEN = "validateFace:";
 
@@ -100,7 +104,7 @@ public class ValidateFaceService {
                     TimerTask task = new TimerTask(){
                         @Override
                         public void run() {
-                            System.out.println("延迟后再次执行:");
+                            logger.info("延迟后再次执行:");
                             startSaveDetail();
                         }
                     };
@@ -108,7 +112,7 @@ public class ValidateFaceService {
                     break;
                 }
             }else{
-                System.out.println("停止存入");
+                logger.info("停止存入");
                 break;
             }
         }
@@ -161,7 +165,7 @@ public class ValidateFaceService {
                     validateFaceDetailLog.setExist(1);
                     //更新数据库
                     validateFaceDetailDao.updateDetail(validateFaceDetailLog);
-                    System.out.println("更新成功!");
+                    logger.info("更新成功!");
                 }
             } catch (Exception e){
                 e.printStackTrace();
