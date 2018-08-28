@@ -9,6 +9,8 @@ import cn.hnisi.wx.server.service.yldyhd.model.Ffzhqr;
 import cn.hnisi.wx.server.service.yldyhd.model.Sbxx;
 import cn.hnisi.wx.server.service.yldyhd.model.YldyhdResult;
 import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,14 +87,28 @@ public class YldyhdController {
         return new ResponseEntity<>(response);
     }
 
+
+    public static class SubmitRequest extends Sbxx{
+
+        private String personid;
+        @JsonProperty("personid")
+        public String getPersonid() {
+            return personid;
+        }
+        @JsonProperty("personid")
+        public void setPersonid(String personid) {
+            this.personid = personid;
+        }
+    }
     /**
      * 提交业务申报
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/submit")
-    public ResponseEntity<String> submit(@RequestBody RequestEntity<Sbxx> entity, User user){
-        String personid = entity.getPersonid();
-        Sbxx sbxx = entity.getSbxx();
+    public ResponseEntity<String> submit(@RequestBody SubmitRequest request, User user){
+        String personid = request.getPersonid();
+        Sbxx sbxx = new Sbxx();
+        BeanUtils.copyProperties(request,sbxx);
         //从订单中获取参保人信息
         String orderno = yldyhdService.submit(personid,sbxx,user);
         return new ResponseEntity<>(orderno);
@@ -108,30 +124,4 @@ public class YldyhdController {
         return new ResponseEntity();
     }
 
-}
-
-/**
- * 临时使用，后续调整
- * TODO
- * @param <T>
- */
-class RequestEntity<T>{
-    private String personid;
-    private T sbxx;
-
-    public String getPersonid() {
-        return personid;
-    }
-
-    public void setPersonid(String personid) {
-        this.personid = personid;
-    }
-
-    public T getSbxx() {
-        return sbxx;
-    }
-
-    public void setSbxx(T sbxx) {
-        this.sbxx = sbxx;
-    }
 }
