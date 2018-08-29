@@ -58,4 +58,10 @@ public class PersonController {
         return new ResponseEntity<>(persons);
     }
 
+    @RequestMapping("/api/frontend/person/personDetail")
+    public ResponseEntity<Person> queryPersonDetail(String personid){
+        Person person = personService.queryByPersonid(personid);
+        return new ResponseEntity<>(person);
+    }
+
 }
