@@ -11,7 +11,7 @@ public interface PersonDAO {
 
     void insert(Person person);
 
-    List<Person> queryByUserId(@Param("personId") String userId);
+    List<Person> queryByUserId(@Param("userId") String userId);
 
     void delete(@Param("personId") String personId);
 
