@@ -8,7 +8,6 @@ import cn.hnisi.wx.server.service.yldyhd.model.Cbqkqr;
 import cn.hnisi.wx.server.service.yldyhd.model.Ffzhqr;
 import cn.hnisi.wx.server.service.yldyhd.model.Sbxx;
 import cn.hnisi.wx.server.service.yldyhd.model.YldyhdResult;
-import cn.hnisi.wx.server.validateface.ValidateFaceService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +22,6 @@ public class YldyhdController {
 
     @Resource
     private YldyhdService yldyhdService;
-
-    @Resource
-    private ValidateFaceService validateFaceService;
 
     @Resource
     private ServiceUtil serviceUtil;
@@ -49,7 +45,7 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/check-in")
-    public ResponseEntity<Sbxx> checkIn(String personid, User user){
+    public ResponseEntity<Sbxx> checkIn(String personId, User user){
         Sbxx response = new Sbxx();
         response.setAAC002("42011819861223152X");
         response.setAAC003("测试人员001");
@@ -62,7 +58,7 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/step-cbqkqr-query")
-    public ResponseEntity<Cbqkqr> queryCbqkqr(String personid, User user){
+    public ResponseEntity<Cbqkqr> queryCbqkqr(String personId, User user){
         Cbqkqr response = new Cbqkqr();
         response.setStjfys(80);
         response.setSjjfys(100);
@@ -79,7 +75,7 @@ public class YldyhdController {
      * @return
      */
     @RequestMapping("/api/frontend/service/yldyhd/step-ffzhqr-query")
-    public ResponseEntity<Ffzhqr> yhxxqr(String personid, User user){
+    public ResponseEntity<Ffzhqr> yhxxqr(String personId, User user){
         Ffzhqr response = new Ffzhqr();
         response.setAAE133("张三");
         response.setAAE010("888888888888");
@@ -90,14 +86,14 @@ public class YldyhdController {
 
     public static class SubmitRequest extends Sbxx{
 
-        private String personid;
-        @JsonProperty("personid")
-        public String getPersonid() {
-            return personid;
+        private String personId;
+        @JsonProperty("personId")
+        public String getPersonId() {
+            return personId;
         }
-        @JsonProperty("personid")
-        public void setPersonid(String personid) {
-            this.personid = personid;
+        @JsonProperty("personId")
+        public void setPersonId(String personId) {
+            this.personId = personId;
         }
     }
     /**
@@ -106,12 +102,12 @@ public class YldyhdController {
      */
     @RequestMapping("/api/frontend/service/yldyhd/submit")
     public ResponseEntity<String> submit(@RequestBody SubmitRequest request, User user){
-        String personid = request.getPersonid();
+        String personId = request.getPersonId();
         Sbxx sbxx = new Sbxx();
         BeanUtils.copyProperties(request,sbxx);
         //从订单中获取参保人信息
-        String orderno = yldyhdService.submit(personid,sbxx,user);
-        return new ResponseEntity<>(orderno);
+        String orderNo = yldyhdService.submit(personId,sbxx,user);
+        return new ResponseEntity<>(orderNo);
     }
 
     /**

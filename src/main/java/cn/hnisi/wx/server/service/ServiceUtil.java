@@ -30,11 +30,11 @@ public class ServiceUtil {
         //生成受理单号
         order.setOrderNo(orderNoGenerator.generate());
         //插入用户信息
-        order.setUserId(user.getUserid());
+        order.setUserId(user.getUserId());
         order.setUserIdcard(user.getIdcard());
         order.setUserName(user.getName());
         //插入人员信息
-        order.setPersonId(person.getPersonid());
+        order.setPersonId(person.getPersonId());
         order.setPersonIdcard(person.getIdcard());
         order.setPersonName(person.getName());
         //插入业务数据
@@ -54,22 +54,22 @@ public class ServiceUtil {
         return order;
     }
 
-    public void submit(String orderno){
-        orderDAO.updateStatus(orderno, OrderStatus.REVIEW.toString());
+    public void submit(String orderNo){
+        orderDAO.updateStatus(orderNo, OrderStatus.REVIEW.toString());
     }
 
-    public Order query(String orderno){
-        return orderDAO.queryByOrderNo(orderno);
+    public Order query(String orderNo){
+        return orderDAO.queryByOrderNo(orderNo);
     }
 
     public <T> void update(ServiceResult<T> serviceResult){
-        String orderno = serviceResult.getOrderno();
+        String orderNo = serviceResult.getOrderNo();
         String status = serviceResult.getStatus();
         // 校验status
         if(!(status.equals("21")||status.equals("22"))){
             throw new DataValidationException("status 数据不符合规范");
         }
         String data = JsonUtil.convertBeanToJson(serviceResult.getData());
-        orderDAO.updateResult(orderno,status,data);
+        orderDAO.updateResult(orderNo,status,data);
     }
 }

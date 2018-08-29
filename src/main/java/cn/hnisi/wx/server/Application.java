@@ -2,7 +2,7 @@ package cn.hnisi.wx.server;
 
 import cn.hnisi.wx.core.CoreAutoConfiguration;
 import cn.hnisi.wx.server.properties.WxProperties;
-import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import cn.hnisi.wx.server.validateFace.ValidateFaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

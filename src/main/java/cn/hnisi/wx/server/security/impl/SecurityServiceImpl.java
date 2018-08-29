@@ -84,7 +84,7 @@ public class SecurityServiceImpl extends BaseSecurityService implements Security
             return null;
         }
 
-        Person selfPerson = personService.querySelf(user.getUserid());
+        Person selfPerson = personService.querySelf(user.getUserId());
 
         BeanUtils.copyProperties(selfPerson,user,Person.class);
 
@@ -102,7 +102,7 @@ public class SecurityServiceImpl extends BaseSecurityService implements Security
         }
 
         //注册用户信息
-        user.setUserid(GuidUtil.generate());
+        user.setUserId(GuidUtil.generate());
         userDAO.insert(user);
 
         //同步生成人员信息

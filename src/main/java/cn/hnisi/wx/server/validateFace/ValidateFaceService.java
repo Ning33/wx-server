@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server.validateface;
+package cn.hnisi.wx.server.validateFace;
 
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.exception.ValidateFaceException;

@@ -15,13 +15,13 @@ public interface PersonService {
      */
     Person bind(User user, Person person);
 
-    void unbind(String personid);
+    void unbind(String personId);
 
-    List<Person> queryByUser(String userid);
+    List<Person> queryByUser(String userId);
 
-    Person querySelf(String userid);
+    Person querySelf(String userId);
 
-    Person queryByPersonid(String personid);
+    Person queryByPersonId(String personId);
 
 
 }

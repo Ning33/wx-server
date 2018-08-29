@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JsonUtil {
@@ -60,18 +60,17 @@ public class JsonUtil {
      * 获取request 请求中的参数
      * @param request
      * @return
-     * @throws IOException
      */
-    public static Map getRequestJsonObject(HttpServletRequest request) throws IOException {
-        Map<Object,String> map = new LinkedHashMap<>();
+    public static Map getRequestJsonObject(HttpServletRequest request) {
+        Map<String,Object> map = new HashMap<>();
         //判断请求方式
         if(request.getMethod().equals(HttpMethod.GET.toString())){
-            String personid =  request.getParameter("personid");
-            if(StringUtils.isEmpty(personid)){
-                String orderno = request.getParameter("orderno");
-                map.put("orderno",orderno);
+            String personId =  request.getParameter("personId");
+            if(StringUtils.isEmpty(personId)){
+                String orderNo = request.getParameter("orderNo");
+                map.put("orderNo",orderNo);
             }else{
-                map.put("personid" , personid);
+                map.put("personId" , personId);
             }
             return map;
         }else{

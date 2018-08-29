@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User extends Person {
 
     /*用户ID*/
-    private String userid;
+    private String userId;
     /**
      * 用户唯一标识
      */
@@ -53,12 +53,12 @@ public class User extends Person {
         this.sessionid = sessionid;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

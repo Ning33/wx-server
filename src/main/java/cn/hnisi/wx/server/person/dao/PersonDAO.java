@@ -11,12 +11,12 @@ public interface PersonDAO {
 
     void insert(Person person);
 
-    List<Person> queryByUserid(String userid);
+    List<Person> queryByUserId(@Param("personId") String userId);
 
-    void delete(@Param("personid") String personid);
+    void delete(@Param("personId") String personId);
 
-    Person querySelf(@Param("userid") String userid);
+    Person querySelf(@Param("userId") String userId);
 
-    Person queryByPersonid(@Param("personid") String personid);
+    Person queryByPersonId(@Param("personId") String personId);
 
 }

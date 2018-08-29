@@ -26,29 +26,29 @@ public class YldyhdServiceImpl implements YldyhdService {
     private PersonService personService;
 
     @Override
-    public boolean checkIn(String personid) {
+    public boolean checkIn(String personId) {
         return false;
     }
 
     @Override
-    public Sbxx querySbxx(String personid) {
+    public Sbxx querySbxx(String personId) {
         return null;
     }
 
     @Override
-    public Cbqkqr queryCbqkqr(String personid) {
+    public Cbqkqr queryCbqkqr(String personId) {
         return null;
     }
 
     @Override
-    public Ffzhqr queryFfzhqr(String personid) {
+    public Ffzhqr queryFfzhqr(String personId) {
         return null;
     }
 
     @Override
-    public String submit(String personid, Sbxx sbxx, User user) {
+    public String submit(String personId, Sbxx sbxx, User user) {
         //查询人员信息
-        Person person = personService.queryByPersonid(personid);
+        Person person = personService.queryByPersonId(personId);
         Order order = serviceUtil.createOrder(this.serviceName,user,person,sbxx, OrderStatus.REVIEW);
         return order.getOrderNo();
     }

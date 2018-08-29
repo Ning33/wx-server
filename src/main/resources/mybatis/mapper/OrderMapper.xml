@@ -5,7 +5,7 @@
 <mapper namespace="cn.hnisi.wx.server.service.dao.OrderDAO">
 
     <insert id="insert">
-        insert into t_order(orderno,serviceId,serviceName,userId,userIdcard,userName,personId,personIdcard,personName,status,requestData,responseData)
+        insert into t_order(orderNo,serviceId,serviceName,userId,userIdcard,userName,personId,personIdcard,personName,status,requestData,responseData)
         values(#{orderNo},#{serviceId,jdbcType=VARCHAR},#{serviceName},#{userId},#{userIdcard},#{userName},#{personId},#{personIdcard},#{personName},#{status},#{requestData,jdbcType=CLOB},#{responseData,jdbcType=CLOB})
     </insert>
 

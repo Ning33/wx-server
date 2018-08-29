@@ -16,7 +16,7 @@
         ON
           o.servicename = s.name
         WHERE
-          o.userid = #{userid}
+          o.userId = #{userId}
         AND
           o.status = #{status}
     </select>
@@ -32,6 +32,6 @@
         ON
           o.servicename = s.name
         WHERE
-           o.orderno = #{orderno}
+           o.orderNo = #{orderNo}
     </select>
 </mapper>

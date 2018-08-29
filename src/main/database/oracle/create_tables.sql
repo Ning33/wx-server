@@ -1,19 +1,19 @@
-create table validate_face_log(
+create table t_validate_face_log(
    token    varchar2(50),
    idcard   varchar2(20),
    name     varchar2(50),
    data     clob,
-   log_time date default sysdate
+   logTime date default sysdate
 );
-comment on table validate_face_log is '人脸识别日志';
-comment on column validate_face_log.token is '拉取信息凭证';
-comment on column validate_face_log.idcard is '身份证号';
-comment on column validate_face_log.name is '姓名';
-comment on column validate_face_log.data is '详细数据';
-comment on column validate_face_log.log_time is '日志记录时间戳';
+comment on table t_validate_face_log is '人脸识别日志';
+comment on column t_validate_face_log.token is '拉取信息凭证';
+comment on column t_validate_face_log.idcard is '身份证号';
+comment on column t_validate_face_log.name is '姓名';
+comment on column t_validate_face_log.data is '详细数据';
+comment on column t_validate_face_log.logTime is '日志记录时间戳';
 
 --********************人脸识别日志详细信息s*********************--
-create table validate_face_log_detail(
+create table t_validate_face_log_detail(
    token    varchar2(50),
    idcard   varchar2(20),
    name     varchar2(50),
@@ -23,42 +23,42 @@ create table validate_face_log_detail(
    pic_3    varchar2(200),
    video    varchar2(200),
    machine  varchar2(50),
-   log_time date default sysdate,
+   logTime date default sysdate,
    data     clob
 );
-comment on table validate_face_log_detail is '人脸识别日志';
-comment on column validate_face_log_detail.token is '拉取信息凭证';
-comment on column validate_face_log_detail.idcard is '身份证号';
-comment on column validate_face_log_detail.name is '姓名';
-comment on column validate_face_log_detail.data is '详细数据';
-comment on column validate_face_log_detail.exist is '是否已经存入明细日志, 1 :表示已存 ,2 :表示没有 ';
-comment on column validate_face_log_detail.pic_1 is '照片数据地址_1';
-comment on column validate_face_log_detail.pic_2 is '照片数据地址_2';
-comment on column validate_face_log_detail.pic_3 is '照片数据地址_3';
-comment on column validate_face_log_detail.video is '视频数据地址';
-comment on column validate_face_log_detail.machine is '处理应用，记录具体哪一个应用处理';
-comment on column validate_face_log_detail.log_time is '日志记录时间戳';
+comment on table t_validate_face_log_detail is '人脸识别日志';
+comment on column t_validate_face_log_detail.token is '拉取信息凭证';
+comment on column t_validate_face_log_detail.idcard is '身份证号';
+comment on column t_validate_face_log_detail.name is '姓名';
+comment on column t_validate_face_log_detail.data is '详细数据';
+comment on column t_validate_face_log_detail.exist is '是否已经存入明细日志, 1 :表示已存 ,2 :表示没有 ';
+comment on column t_validate_face_log_detail.pic_1 is '照片数据地址_1';
+comment on column t_validate_face_log_detail.pic_2 is '照片数据地址_2';
+comment on column t_validate_face_log_detail.pic_3 is '照片数据地址_3';
+comment on column t_validate_face_log_detail.video is '视频数据地址';
+comment on column t_validate_face_log_detail.machine is '处理应用，记录具体哪一个应用处理';
+comment on column t_validate_face_log_detail.logTime is '日志记录时间戳';
 
 create table t_user(
-   userid   varchar2(50) primary key,
+   userId   varchar2(50) primary key,
    name     varchar2(50),
    idcard   varchar2(20),
    openid   varchar2(50),
-   updated_time date default sysdate
+   updatedTime date default sysdate
 );
 alter table t_user add constraint u_user_openid unique(openid);
 comment on table t_user is '用户信息';
-comment on column t_user.userid is '用户ID';
+comment on column t_user.userId is '用户ID';
 comment on column t_user.name is '姓名';
 comment on column t_user.idcard is '公民身份证号';
 comment on column t_user.openid is '微信用户ID';
-comment on column t_user.updated_time is '数据更新时间戳';
+comment on column t_user.updatedTime is '数据更新时间戳';
 
 
 create table t_person(
-   personid    varchar2(50) primary key ,
-   userid      varchar2(50),
-   is_self     varchar2(1),
+   personId    varchar2(50) primary key ,
+   userId      varchar2(50),
+   isSelf      varchar2(1),
    name        varchar2(50),
    idcard      varchar2(50),
    birthday    varchar2(8),
@@ -66,12 +66,12 @@ create table t_person(
    tel         varchar2(20),
    address     varchar2(200),
    sicard      varchar2(50),
-   updated_time   date default sysdate
+   updatedTime   date default sysdate
 );
 alter table t_user add constraint u_person_openid_idcard unique(openid,idcard);
 comment on table t_person is '人员信息表';
-comment on column t_person.personid is '人员ID';
-comment on column t_person.userid is '用户ID';
+comment on column t_person.personId is '人员ID';
+comment on column t_person.userId is '用户ID';
 comment on column t_person.name is '姓名';
 comment on column t_person.idcard is '公民身份证号码';
 comment on column t_person.birthday is '出生日期';
@@ -79,7 +79,7 @@ comment on column t_person.sex is '性别,1男,2女,9未知';
 comment on column t_person.tel is '联系电话';
 comment on column t_person.address is '联系地址';
 comment on column t_person.sicard is '社保卡号';
-comment on column t_person.updated_time is '数据更新时间戳';
+comment on column t_person.updatedTime is '数据更新时间戳';
 
 create table t_order(
    orderNo     varchar2(50) primary key ,
@@ -100,7 +100,7 @@ create table t_order(
 );
 comment on table t_order is '受理单信息';
 comment on column t_order.orderNo is '受理单号';
-comment on column t_order.serviceid is '服务事项ID';
+comment on column t_order.serviceId is '服务事项ID';
 comment on column t_order.serviceName is '服务事项名称';
 comment on column t_order.userId is '用户id';
 comment on column t_order.userIdcard is '用户公民身份证号';
@@ -114,3 +114,22 @@ comment on column t_order.responseData is '业务响应信息，json格式存储
 comment on column t_order.createdTime is '创建时间';
 comment on column t_order.updatedTime is '更新时间';
 comment on column t_order.completionTime is '完成时间';
+
+create table t_service
+(
+   serviceId    VARCHAR2(50) primary key,
+   name         VARCHAR2(50),
+   title        VARCHAR2(50),
+   description  VARCHAR2(200),
+   catalog      varchar2(20),
+   securityLevel varchar2(1),
+   orderNum         number
+);
+comment on table t_service is '事项配置表';
+comment on column t_service.serviceId is '事项ID';
+comment on column t_service.name is '事项名称';
+comment on column t_service.title is '事项标题';
+comment on column t_service.description is '事项概要';
+comment on column t_service.catalog is '事项类别: bxgx-征缴业务,yldy-养老待遇,gsdy-工伤待遇,syedy-失业待遇,yildy-医疗待遇';
+comment on column t_service.securityLevel is '安全级别';
+comment on column t_service.orderNum is '排序作用';

@@ -22,16 +22,16 @@ public class PersonServiceImpl implements PersonService {
     public Person bind(User user, Person person) {
 
         //校验是否重复添加
-        List<Person> personList = personDAO.queryByUserid(user.getUserid());
+        List<Person> personList = personDAO.queryByUserId(user.getUserId());
         for(Person _person : personList){
             if(_person.getIdcard().equals(person.getIdcard())){
                 throw new DataValidationException("参保人已添加");
             }
         }
 
-        //生成personid
-        if(StringUtils.isEmpty(person.getPersonid())){
-            person.setPersonid(GuidUtil.generate());
+        //生成personId
+        if(StringUtils.isEmpty(person.getPersonId())){
+            person.setPersonId(GuidUtil.generate());
         }
 
         //TODO
@@ -42,25 +42,25 @@ public class PersonServiceImpl implements PersonService {
 
 
         //插入人员信息表
-        person.setUserid(user.getUserid());
+        person.setUserId(user.getUserId());
         personDAO.insert(person);
 
         return person;
     }
 
     @Override
-    public void unbind(String personid) {
-        personDAO.delete(personid);
+    public void unbind(String personId) {
+        personDAO.delete(personId);
     }
 
     @Override
-    public List<Person> queryByUser(String userid) {
-        return personDAO.queryByUserid(userid);
+    public List<Person> queryByUser(String userId) {
+        return personDAO.queryByUserId(userId);
     }
 
     @Override
-    public Person querySelf(String userid) {
-        Person person = personDAO.querySelf(userid);
+    public Person querySelf(String userId) {
+        Person person = personDAO.querySelf(userId);
         if(person == null){
             throw new DataValidationException("查找不到当前用户对应的人员信息");
         }
@@ -68,8 +68,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person queryByPersonid(String personid) {
-        Person person = personDAO.queryByPersonid(personid);
+    public Person queryByPersonId(String personId) {
+        Person person = personDAO.queryByPersonId(personId);
         if(person == null){
             throw new DataValidationException("查找不到对应的人员信息");
         }

@@ -10,7 +10,7 @@ public abstract class BaseSecurityService implements SecurityService {
     abstract protected User queryUserInfo(String openid);
 
     /**
-     * 注入人员信息，包括userid
+     * 注入人员信息，包括userId
      * @param user
      */
     protected void injectPerson(User user){
@@ -23,6 +23,6 @@ public abstract class BaseSecurityService implements SecurityService {
         }
 
         BeanUtils.copyProperties(_user,user,Person.class);
-        user.setUserid(_user.getUserid());
+        user.setUserId(_user.getUserId());
     }
 }

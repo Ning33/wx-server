@@ -5,7 +5,7 @@ import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.server.security.model.User;
-import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import cn.hnisi.wx.server.validateFace.ValidateFaceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;

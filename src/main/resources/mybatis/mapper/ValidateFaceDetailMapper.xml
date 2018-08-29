@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hnisi.wx.server.validateface.ValidateFaceDetailDao">
+<mapper namespace="cn.hnisi.wx.server.validateFace.ValidateFaceDetailDao">
 
     <!-- 插入数据日志-->
     <insert id="insertFirst">
-        insert into validate_face_log_detail(token,idcard,name,data)
+        insert into t_validate_face_log_detail(token,idcard,name,data)
         values(#{token},#{idcard,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{data})
     </insert>
 
@@ -15,7 +15,7 @@
         select
           token
         from
-          validate_face_log_detail
+          t_validate_face_log_detail
         where
           exist = 0
         and
@@ -25,7 +25,7 @@
     <!--更新数据-->
     <update id="updateDetail">
         update
-          validate_face_log_detail
+          t_validate_face_log_detail
         <set>
             <if test="data != null">
                 data = #{data},
@@ -45,7 +45,7 @@
             <if test="video != null">
                 video = #{video},
             </if>
-            log_time = sysdate
+            logTime = sysdate
         </set>
         where
           token = #{token}
@@ -54,22 +54,22 @@
     <!--更新十条数据 并标记-->
     <update id="updateMachine">
         UPDATE
-          validate_face_log_detail
+          t_validate_face_log_detail
         SET
           machine=#{machineId}
         WHERE token
         IN
            (SELECT t.token FROM
-                 (SELECT token FROM validate_face_log_detail
+                 (SELECT token FROM t_validate_face_log_detail
                         where exist=0 and machine is null
-                              order by log_time) t where
+                              order by logTime) t where
                                     rownum &lt;=#{number})
     </update>
 
     <!--回滚机器码 重置为空-->
     <update id="fallbackMachineId">
         update
-          validate_face_log_detail
+          t_validate_face_log_detail
         set
           machine=''
         where

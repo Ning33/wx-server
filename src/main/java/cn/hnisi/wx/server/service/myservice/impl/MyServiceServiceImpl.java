@@ -17,24 +17,24 @@ public class MyServiceServiceImpl implements MyServiceService {
     private MyServiceDao myServiceDao;
 
     @Override
-    public List<Order> searchServices(String userid , String status) {
-        //检验userid
-        if(StringUtils.isEmpty(userid)){
+    public List<Order> searchServices(String userId , String status) {
+        //检验userId
+        if(StringUtils.isEmpty(userId)){
             throw new AppException(ResponseStatus.UNBOUND_USER);
         }
-        List<Order> items = myServiceDao.searchServices(userid , status);
+        List<Order> items = myServiceDao.searchServices(userId , status);
 
         return items;
     }
 
     @Override
-    public Order queryMyServiceByOrderNo(String orderno) {
-        //检验userid
-        if(StringUtils.isEmpty(orderno)){
+    public Order queryMyServiceByOrderNo(String orderNo) {
+        //检验userId
+        if(StringUtils.isEmpty(orderNo)){
             throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION);
         }
 
-        Order order = myServiceDao.queryMyServiceByOrderNo(orderno);
+        Order order = myServiceDao.queryMyServiceByOrderNo(orderNo);
 
         if(order == null){
             throw new AppException(ResponseStatus.UNKNOWN_ERROR,"SORRY UNKNOWN_ERROR");

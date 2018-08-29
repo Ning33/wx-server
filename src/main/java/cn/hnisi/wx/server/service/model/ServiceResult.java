@@ -3,17 +3,17 @@ package cn.hnisi.wx.server.service.model;
 import java.util.Date;
 
 public class ServiceResult<T> {
-    private String orderno;
+    private String orderNo;
     private String status;
     private Date completionTime;
     private T data;
 
-    public String getOrderno() {
-        return orderno;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setOrderno(String orderno) {
-        this.orderno = orderno;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getStatus() {

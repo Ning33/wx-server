@@ -1,4 +1,4 @@
-package cn.hnisi.wx.server.validateface;
+package cn.hnisi.wx.server.validateFace;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface MyServiceService {
     /**
-     * 根据微信userid 查询所有事项
-     * @param userid
+     * 根据微信userId 查询所有事项
+     * @param userId
      * @return
      */
-    List<Order> searchServices(String userid ,String status);
+    List<Order> searchServices(String userId ,String status);
 
     /**
-     * 根据orderno查询事项
-     * @param orderno
+     * 根据orderNo查询事项
+     * @param orderNo
      * @return
      */
-    Order queryMyServiceByOrderNo(String orderno);
+    Order queryMyServiceByOrderNo(String orderNo);
 }

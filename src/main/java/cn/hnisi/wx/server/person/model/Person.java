@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Person {
 
-    private String personid;
+    private String personId;
     @JsonIgnore
-    private String userid;
+    private String userId;
 
     private String idcard;
     private String name;
@@ -20,20 +20,20 @@ public class Person {
 
     private boolean isSelf;
 
-    public String getPersonid() {
-        return personid;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPersonid(String personid) {
-        this.personid = personid;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getIdcard() {

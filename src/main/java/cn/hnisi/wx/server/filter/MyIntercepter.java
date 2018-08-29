@@ -8,7 +8,7 @@ import cn.hnisi.wx.server.person.model.Person;
 import cn.hnisi.wx.server.service.dao.OrderDAO;
 import cn.hnisi.wx.server.service.model.Order;
 import cn.hnisi.wx.server.service.navigation.dao.ServiceItemDAO;
-import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import cn.hnisi.wx.server.validateFace.ValidateFaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -43,7 +43,7 @@ public class MyIntercepter implements HandlerInterceptor{
         //获取post请求中的参数
         Map<Object,String> json = JsonUtil.getRequestJsonObject(request);
         String serviceName; //服务名
-        String personid;    //参保人id
+        String personId;    //参保人id
         Order order ;        //订单
         Person person = null;      //参保人
         try{
@@ -55,23 +55,23 @@ public class MyIntercepter implements HandlerInterceptor{
             String securityLevel = serviceItemDAO.queryByServiceName(serviceName);
             if(!StringUtils.isEmpty(securityLevel) && securityLevel.equals("3")){ //需要人脸识别的事项
                 //判断用户是否已经人脸识别
-                personid = json.get("personid");
+                personId = json.get("personId");
 
-                //如果参数中没有personid 则试用orderno查询personid
-                if(StringUtils.isEmpty(personid)){
-                    String orderno = json.get("orderno");
-                    //如果orderno也没有获取到, 则抛出异常
-                    if(StringUtils.isEmpty(orderno)){
+                //如果参数中没有personId 则试用orderNo查询personId
+                if(StringUtils.isEmpty(personId)){
+                    String orderNo = json.get("orderNo");
+                    //如果orderNo也没有获取到, 则抛出异常
+                    if(StringUtils.isEmpty(orderNo)){
                         throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"数据为空");
                     }
-                    order = orderDAO.queryByOrderNo(orderno);
+                    order = orderDAO.queryByOrderNo(orderNo);
                     if(order == null){
                         throw new AppException(ResponseStatus.UNKNOWN_ERROR);
                     }
-                    personid = order.getPersonId();
+                    personId = order.getPersonId();
                 }
                 //查询参保人获取其身份号码
-                person = personDAO.queryByPersonid(personid);
+                person = personDAO.queryByPersonId(personId);
                 if(person == null){
                     throw new AppException(ResponseStatus.UNKNOWN_ERROR);
                 }

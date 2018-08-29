@@ -9,38 +9,38 @@ public interface YldyhdService{
 
     /**
      * 业务准入校验
-     * @param personid
+     * @param personId
      * @return
      */
-    boolean checkIn(String personid);
+    boolean checkIn(String personId);
 
     /**
      * 查询申报信息
-     * @param personid
+     * @param personId
      * @return
      */
-    Sbxx querySbxx(String personid);
+    Sbxx querySbxx(String personId);
 
 
     /**
      * 查询参保情况确认信息
-     * @param personid
+     * @param personId
      * @return
      */
-    Cbqkqr queryCbqkqr(String personid);
+    Cbqkqr queryCbqkqr(String personId);
 
     /**
      * 查询发放账户确认信息
-     * @param personid
+     * @param personId
      * @return
      */
-    Ffzhqr queryFfzhqr(String personid);
+    Ffzhqr queryFfzhqr(String personId);
 
     /**
      * 提交业务申报
-     * @param personid
+     * @param personId
      * @return
      */
-    String submit(String personid,Sbxx sbxx,User user);
+    String submit(String personId,Sbxx sbxx,User user);
 
 }

@@ -5,23 +5,23 @@
 <mapper namespace="cn.hnisi.wx.server.person.dao.PersonDAO">
 
     <insert id="insert">
-        insert into t_person(is_self,personid,userid,name,idcard,birthday,sex,tel,address,sicard)
-                values(#{isSelf},#{personid},#{userid},#{name},#{idcard},#{birthday,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{tel,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{sicard,jdbcType=VARCHAR})
+        insert into t_person(isSelf,personId,userId,name,idcard,birthday,sex,tel,address,sicard)
+                values(#{isSelf},#{personId},#{userId},#{name},#{idcard},#{birthday,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{tel,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{sicard,jdbcType=VARCHAR})
     </insert>
 
-    <select id="queryByUserid" resultType="cn.hnisi.wx.server.person.model.Person">
-        select * from t_person where userid = #{userid}
+    <select id="queryByUserId" resultType="cn.hnisi.wx.server.person.model.Person">
+        select * from t_person where userId = #{userId}
     </select>
 
-    <select id="queryByPersonid" resultType="cn.hnisi.wx.server.person.model.Person">
-        select * from t_person where personid = #{personid}
+    <select id="queryByPersonId" resultType="cn.hnisi.wx.server.person.model.Person">
+        select * from t_person where personId = #{personId}
     </select>
 
     <delete id="delete">
-        delete from t_person where personid = #{personid}
+        delete from t_person where personId = #{personId}
     </delete>
 
     <select id="querySelf" resultType="cn.hnisi.wx.server.person.model.Person">
-        select * from t_person where userid = #{userid} and is_self = '1'
+        select * from t_person where userId = #{userId} and isSelf = '1'
     </select>
 </mapper>

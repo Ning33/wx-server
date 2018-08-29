@@ -5,7 +5,7 @@
 <mapper namespace="cn.hnisi.wx.server.security.dao.UserDAO">
 
     <insert id="insert">
-        insert into t_user(userid,name,idcard,openid) values(#{userid},#{name},#{idcard},#{openid})
+        insert into t_user(userId,name,idcard,openid) values(#{userId},#{name},#{idcard},#{openid})
     </insert>
 
     <select id="query" resultType="cn.hnisi.wx.server.security.model.User">

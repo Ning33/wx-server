@@ -5,7 +5,7 @@ import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.core.io.ResponseStatus;
 import cn.hnisi.wx.server.person.model.Person;
 import cn.hnisi.wx.server.security.model.User;
-import cn.hnisi.wx.server.validateface.ValidateFaceService;
+import cn.hnisi.wx.server.validateFace.ValidateFaceService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,29 +38,29 @@ public class PersonController {
     }
 
     @RequestMapping("/api/frontend/user/unbind")
-    public ResponseEntity unbind(String personid, User user, HttpServletRequest request){
+    public ResponseEntity unbind(String personId, User user, HttpServletRequest request){
         //验证人脸和注册用户是否一致
         validateFaceService.validateToken(request,user.getIdcard(),user.getName());
 
         //不允许删除本人的人员信息
-        if(user.getPersonid().equals(personid)){
+        if(user.getPersonId().equals(personId)){
             throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION,"不允许删除本人的人员信息，请使用用户注销接口");
         }
 
         //人脸验证通过，删除参保人
-        personService.unbind(personid);
+        personService.unbind(personId);
         return new ResponseEntity();
     }
 
     @RequestMapping("/api/frontend/user/person/query")
     public ResponseEntity<List<Person>> query(User user){
-        List<Person> persons = personService.queryByUser(user.getUserid());
+        List<Person> persons = personService.queryByUser(user.getUserId());
         return new ResponseEntity<>(persons);
     }
 
     @RequestMapping("/api/frontend/person/personDetail")
-    public ResponseEntity<Person> queryPersonDetail(String personid){
-        Person person = personService.queryByPersonid(personid);
+    public ResponseEntity<Person> queryPersonDetail(String personId){
+        Person person = personService.queryByPersonId(personId);
         return new ResponseEntity<>(person);
     }
 

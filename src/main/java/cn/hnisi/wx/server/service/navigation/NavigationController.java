@@ -20,9 +20,9 @@ public class NavigationController {
      * @return
      */
     @RequestMapping("/api/frontend/serviceItems/queryAllItems")
-    public ResponseEntity<ServiceItem> queryAllItems(){
+    public ResponseEntity<List<ServiceItem>> queryAllItems(){
         List<ServiceItem> items =  navigationService.queryAllItems();
-        return new ResponseEntity(items);
+        return new ResponseEntity<>(items);
     }
 
     /**
@@ -31,8 +31,8 @@ public class NavigationController {
      * @return
      */
     @RequestMapping("/api/frontend/serviceItems/queryItemByTitle")
-    public ResponseEntity<ServiceItem> queryItemByTitle(String title){
+    public ResponseEntity<List<ServiceItem>> queryItemByTitle(String title){
         List<ServiceItem> items =  navigationService.queryItemByTitle(title);
-        return new ResponseEntity(items);
+        return new ResponseEntity<>(items);
     }
 }

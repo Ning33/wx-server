@@ -23,20 +23,20 @@ public class MyServiceController {
      * @return
      */
     @RequestMapping("/api/frontend/myservice/searchServices")
-    public ResponseEntity<Order> searchReviewService( User user , String status){
+    public ResponseEntity<List<Order>> searchReviewService( User user , String status){
 
-       List<Order> items =  myServiceService.searchServices(user.getUserid() , status);
-       return new ResponseEntity(items);
+       List<Order> items =  myServiceService.searchServices(user.getUserId() , status);
+       return new ResponseEntity<>(items);
     }
 
     /**
      * 根据受理单号查询事项
-     * @param orderno
+     * @param orderNo
      * @return
      */
     @RequestMapping("/api/frontend/myservice/queryMyServiceByOrderNo")
-    public ResponseEntity<Order> queryMyServiceByOrderNo(String orderno){
-        Order order = myServiceService.queryMyServiceByOrderNo(orderno);
-        return new ResponseEntity(order);
+    public ResponseEntity<Order> queryMyServiceByOrderNo(String orderNo){
+        Order order = myServiceService.queryMyServiceByOrderNo(orderNo);
+        return new ResponseEntity<>(order);
     }
 }

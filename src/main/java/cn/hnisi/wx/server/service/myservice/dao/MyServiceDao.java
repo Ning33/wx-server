@@ -10,15 +10,15 @@ import java.util.List;
 public interface MyServiceDao {
     /**
      * 查询我的所有事项
-     * @param userid
+     * @param userId
      * @return
      */
-    List<Order> searchServices(@Param("userid") String userid ,@Param("status") String status);
+    List<Order> searchServices(@Param("userId") String userId ,@Param("status") String status);
 
     /**
-     * 根据orderno查询事项
-     * @param orderno
+     * 根据orderNo查询事项
+     * @param orderNo
      * @return
      */
-    Order queryMyServiceByOrderNo(@Param("orderno") String orderno);
+    Order queryMyServiceByOrderNo(@Param("orderNo") String orderNo);
 }

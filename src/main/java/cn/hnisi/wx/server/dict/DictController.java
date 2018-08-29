@@ -16,6 +16,6 @@ public class DictController {
     @RequestMapping("/api/frontend/dict/update")
     public ResponseEntity<PackDict> isNeedUpdate(String version){
         PackDict packDict = dictService.isNeedUpdate(version);
-        return new ResponseEntity<PackDict>(packDict);
+        return new ResponseEntity<>(packDict);
     }
 }
