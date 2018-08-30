@@ -1,10 +1,30 @@
--- äº‹é¡¹é…ç½®
+-- ÊÂÏîÅäÖÃ
 insert into t_service (SERVICEID, NAME, TITLE, DESCRIPTION, CATALOG, SECURITYLEVEL, ORDERNUM)
-values (sys_guid(), 'yldyhd', 'å…»è€å¾…é‡æ ¸å®š', 'åŠç†ç¦»é€€ä¼‘å¾…é‡', 'yldy', '3', null);
+values (sys_guid(), 'yldyhd', 'ÑøÀÏ´ıÓöºË¶¨', '°ìÀíÀëÍËĞİ´ıÓö', 'yldy', '3', null);
 
 insert into t_service (SERVICEID, NAME, TITLE, DESCRIPTION, CATALOG, SECURITYLEVEL, ORDERNUM)
-values (sys_guid(), 'cbjfxx', 'å‚ä¿ç¼´è´¹ä¿¡æ¯', 'ç¼´è´¹ä¿¡æ¯æŸ¥è¯¢', 'bxgx', '2', null);
+values (sys_guid(), 'cbjfxx', '²Î±£½É·ÑĞÅÏ¢', '½É·ÑĞÅÏ¢²éÑ¯', 'bxgx', '2', null);
 
 insert into t_service (SERVICEID, NAME, TITLE, DESCRIPTION, CATALOG, SECURITYLEVEL, ORDERNUM)
-values (sys_guid(), 'txdysl', 'é€€ä¼‘å¾…é‡ç”³é¢†', 'é¢†å–é€€ä¼‘é‡‘', 'yldy', '3', null);
+values (sys_guid(), 'txdysl', 'ÍËĞİ´ıÓöÉêÁì', 'ÁìÈ¡ÍËĞİ½ğ', 'yldy', '3', null);
 
+insert into t_dictionary(field , dictvalue , dictdisplay , version )
+values('ĞÔ±ğ','1','ÄĞ',seq_dict.nextval);
+
+insert into t_dictionary(field , dictvalue , dictdisplay , version )
+values('ĞÔ±ğ','2','Å®',seq_dict.nextval);
+
+insert into t_service_catalog(name , title , ordernum)
+values('bxgx','Õ÷½ÉÒµÎñ',1);
+
+insert into t_service_catalog(name , title , ordernum)
+values('yldy','ÑøÀÏ´ıÓö',2);
+
+insert into t_service_catalog(name , title , ordernum)
+values('gsdy','¹¤ÉË´ıÓö',3);
+
+insert into t_service_catalog(name , title , ordernum)
+values('syedy','Ê§Òµ´ıÓö',4);
+
+insert into t_service_catalog(name , title , ordernum)
+values('yildy','Ò½ÁÆ´ıÓö',5);

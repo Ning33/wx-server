@@ -4,3 +4,6 @@ drop table t_user;
 drop table t_person;
 drop table t_order;
 drop table t_service;
+drop table t_dictionary;
+drop table t_service_catalog;
+drop sequence seq_dict;

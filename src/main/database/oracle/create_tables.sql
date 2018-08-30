@@ -5,14 +5,14 @@ create table t_validate_face_log(
    data     clob,
    logTime date default sysdate
 );
-comment on table t_validate_face_log is 'äººè„¸è¯†åˆ«æ—¥å¿—';
-comment on column t_validate_face_log.token is 'æ‹‰å–ä¿¡æ¯å‡­è¯';
-comment on column t_validate_face_log.idcard is 'èº«ä»½è¯å·';
-comment on column t_validate_face_log.name is 'å§“å';
-comment on column t_validate_face_log.data is 'è¯¦ç»†æ•°æ®';
-comment on column t_validate_face_log.logTime is 'æ—¥å¿—è®°å½•æ—¶é—´æˆ³';
+comment on table t_validate_face_log is 'ÈËÁ³Ê¶±ğÈÕÖ¾';
+comment on column t_validate_face_log.token is 'À­È¡ĞÅÏ¢Æ¾Ö¤';
+comment on column t_validate_face_log.idcard is 'Éí·İÖ¤ºÅ';
+comment on column t_validate_face_log.name is 'ĞÕÃû';
+comment on column t_validate_face_log.data is 'ÏêÏ¸Êı¾İ';
+comment on column t_validate_face_log.logTime is 'ÈÕÖ¾¼ÇÂ¼Ê±¼ä´Á';
 
---********************äººè„¸è¯†åˆ«æ—¥å¿—è¯¦ç»†ä¿¡æ¯s*********************--
+--********************ÈËÁ³Ê¶±ğÈÕÖ¾ÏêÏ¸ĞÅÏ¢s*********************--
 create table t_validate_face_log_detail(
    token    varchar2(50),
    idcard   varchar2(20),
@@ -26,18 +26,18 @@ create table t_validate_face_log_detail(
    logTime date default sysdate,
    data     clob
 );
-comment on table t_validate_face_log_detail is 'äººè„¸è¯†åˆ«æ—¥å¿—';
-comment on column t_validate_face_log_detail.token is 'æ‹‰å–ä¿¡æ¯å‡­è¯';
-comment on column t_validate_face_log_detail.idcard is 'èº«ä»½è¯å·';
-comment on column t_validate_face_log_detail.name is 'å§“å';
-comment on column t_validate_face_log_detail.data is 'è¯¦ç»†æ•°æ®';
-comment on column t_validate_face_log_detail.exist is 'æ˜¯å¦å·²ç»å­˜å…¥æ˜ç»†æ—¥å¿—, 1 :è¡¨ç¤ºå·²å­˜ ,2 :è¡¨ç¤ºæ²¡æœ‰ ';
-comment on column t_validate_face_log_detail.pic_1 is 'ç…§ç‰‡æ•°æ®åœ°å€_1';
-comment on column t_validate_face_log_detail.pic_2 is 'ç…§ç‰‡æ•°æ®åœ°å€_2';
-comment on column t_validate_face_log_detail.pic_3 is 'ç…§ç‰‡æ•°æ®åœ°å€_3';
-comment on column t_validate_face_log_detail.video is 'è§†é¢‘æ•°æ®åœ°å€';
-comment on column t_validate_face_log_detail.machine is 'å¤„ç†åº”ç”¨ï¼Œè®°å½•å…·ä½“å“ªä¸€ä¸ªåº”ç”¨å¤„ç†';
-comment on column t_validate_face_log_detail.logTime is 'æ—¥å¿—è®°å½•æ—¶é—´æˆ³';
+comment on table t_validate_face_log_detail is 'ÈËÁ³Ê¶±ğÏêÏ¸ÈÕÖ¾';
+comment on column t_validate_face_log_detail.token is 'À­È¡ĞÅÏ¢Æ¾Ö¤';
+comment on column t_validate_face_log_detail.idcard is 'Éí·İÖ¤ºÅ';
+comment on column t_validate_face_log_detail.name is 'ĞÕÃû';
+comment on column t_validate_face_log_detail.data is 'ÏêÏ¸Êı¾İ';
+comment on column t_validate_face_log_detail.exist is 'ÊÇ·ñÒÑ¾­´æÈëÃ÷Ï¸ÈÕÖ¾, 1 :±íÊ¾ÒÑ´æ ,2 :±íÊ¾Ã»ÓĞ ';
+comment on column t_validate_face_log_detail.pic_1 is 'ÕÕÆ¬Êı¾İµØÖ·_1';
+comment on column t_validate_face_log_detail.pic_2 is 'ÕÕÆ¬Êı¾İµØÖ·_2';
+comment on column t_validate_face_log_detail.pic_3 is 'ÕÕÆ¬Êı¾İµØÖ·_3';
+comment on column t_validate_face_log_detail.video is 'ÊÓÆµÊı¾İµØÖ·';
+comment on column t_validate_face_log_detail.machine is '´¦ÀíÓ¦ÓÃ£¬¼ÇÂ¼¾ßÌåÄÄÒ»¸öÓ¦ÓÃ´¦Àí';
+comment on column t_validate_face_log_detail.logTime is 'ÈÕÖ¾¼ÇÂ¼Ê±¼ä´Á';
 
 create table t_user(
    userId   varchar2(50) primary key,
@@ -47,12 +47,12 @@ create table t_user(
    updatedTime date default sysdate
 );
 alter table t_user add constraint u_user_openid unique(openid);
-comment on table t_user is 'ç”¨æˆ·ä¿¡æ¯';
-comment on column t_user.userId is 'ç”¨æˆ·ID';
-comment on column t_user.name is 'å§“å';
-comment on column t_user.idcard is 'å…¬æ°‘èº«ä»½è¯å·';
-comment on column t_user.openid is 'å¾®ä¿¡ç”¨æˆ·ID';
-comment on column t_user.updatedTime is 'æ•°æ®æ›´æ–°æ—¶é—´æˆ³';
+comment on table t_user is 'ÓÃ»§ĞÅÏ¢';
+comment on column t_user.userId is 'ÓÃ»§ID';
+comment on column t_user.name is 'ĞÕÃû';
+comment on column t_user.idcard is '¹«ÃñÉí·İÖ¤ºÅ';
+comment on column t_user.openid is 'Î¢ĞÅÓÃ»§ID';
+comment on column t_user.updatedTime is 'Êı¾İ¸üĞÂÊ±¼ä´Á';
 
 
 create table t_person(
@@ -69,17 +69,17 @@ create table t_person(
    updatedTime   date default sysdate
 );
 alter table t_user add constraint u_person_openid_idcard unique(openid,idcard);
-comment on table t_person is 'äººå‘˜ä¿¡æ¯è¡¨';
-comment on column t_person.personId is 'äººå‘˜ID';
-comment on column t_person.userId is 'ç”¨æˆ·ID';
-comment on column t_person.name is 'å§“å';
-comment on column t_person.idcard is 'å…¬æ°‘èº«ä»½è¯å·ç ';
-comment on column t_person.birthday is 'å‡ºç”Ÿæ—¥æœŸ';
-comment on column t_person.sex is 'æ€§åˆ«,1ç”·,2å¥³,9æœªçŸ¥';
-comment on column t_person.tel is 'è”ç³»ç”µè¯';
-comment on column t_person.address is 'è”ç³»åœ°å€';
-comment on column t_person.sicard is 'ç¤¾ä¿å¡å·';
-comment on column t_person.updatedTime is 'æ•°æ®æ›´æ–°æ—¶é—´æˆ³';
+comment on table t_person is 'ÈËÔ±ĞÅÏ¢±í';
+comment on column t_person.personId is 'ÈËÔ±ID';
+comment on column t_person.userId is 'ÓÃ»§ID';
+comment on column t_person.name is 'ĞÕÃû';
+comment on column t_person.idcard is '¹«ÃñÉí·İÖ¤ºÅÂë';
+comment on column t_person.birthday is '³öÉúÈÕÆÚ';
+comment on column t_person.sex is 'ĞÔ±ğ,1ÄĞ,2Å®,9Î´Öª';
+comment on column t_person.tel is 'ÁªÏµµç»°';
+comment on column t_person.address is 'ÁªÏµµØÖ·';
+comment on column t_person.sicard is 'Éç±£¿¨ºÅ';
+comment on column t_person.updatedTime is 'Êı¾İ¸üĞÂÊ±¼ä´Á';
 
 create table t_order(
    orderNo     varchar2(50) primary key ,
@@ -98,22 +98,22 @@ create table t_order(
    updatedTime   date default sysdate,
    completionTime date
 );
-comment on table t_order is 'å—ç†å•ä¿¡æ¯';
-comment on column t_order.orderNo is 'å—ç†å•å·';
-comment on column t_order.serviceId is 'æœåŠ¡äº‹é¡¹ID';
-comment on column t_order.serviceName is 'æœåŠ¡äº‹é¡¹åç§°';
-comment on column t_order.userId is 'ç”¨æˆ·id';
-comment on column t_order.userIdcard is 'ç”¨æˆ·å…¬æ°‘èº«ä»½è¯å·';
-comment on column t_order.userName is 'ç”¨æˆ·å§“å';
-comment on column t_order.personId is 'å‚ä¿äººID';
-comment on column t_order.personIdcard is 'å‚ä¿äººå…¬æ°‘èº«ä»½è¯å·ç ';
-comment on column t_order.personName is 'å‚ä¿äººå§“å';
-comment on column t_order.status is 'ä¸šåŠ¡çŠ¶æ€ï¼Œ0ç”³æŠ¥ä¸­ï¼Œ10å®¡æ ¸ä¸­ï¼Œ21å®¡æ ¸æˆåŠŸ,22å®¡æ ¸å¤±è´¥';
-comment on column t_order.requestData is 'ä¸šåŠ¡è¯·æ±‚ä¿¡æ¯ï¼Œjsonæ ¼å¼å­˜å‚¨';
-comment on column t_order.responseData is 'ä¸šåŠ¡å“åº”ä¿¡æ¯ï¼Œjsonæ ¼å¼å­˜å‚¨';
-comment on column t_order.createdTime is 'åˆ›å»ºæ—¶é—´';
-comment on column t_order.updatedTime is 'æ›´æ–°æ—¶é—´';
-comment on column t_order.completionTime is 'å®Œæˆæ—¶é—´';
+comment on table t_order is 'ÊÜÀíµ¥ĞÅÏ¢';
+comment on column t_order.orderNo is 'ÊÜÀíµ¥ºÅ';
+comment on column t_order.serviceId is '·şÎñÊÂÏîID';
+comment on column t_order.serviceName is '·şÎñÊÂÏîÃû³Æ';
+comment on column t_order.userId is 'ÓÃ»§id';
+comment on column t_order.userIdcard is 'ÓÃ»§¹«ÃñÉí·İÖ¤ºÅ';
+comment on column t_order.userName is 'ÓÃ»§ĞÕÃû';
+comment on column t_order.personId is '²Î±£ÈËID';
+comment on column t_order.personIdcard is '²Î±£ÈË¹«ÃñÉí·İÖ¤ºÅÂë';
+comment on column t_order.personName is '²Î±£ÈËĞÕÃû';
+comment on column t_order.status is 'ÒµÎñ×´Ì¬£¬0Éê±¨ÖĞ£¬10ÉóºËÖĞ£¬21ÉóºË³É¹¦,22ÉóºËÊ§°Ü';
+comment on column t_order.requestData is 'ÒµÎñÇëÇóĞÅÏ¢£¬json¸ñÊ½´æ´¢';
+comment on column t_order.responseData is 'ÒµÎñÏìÓ¦ĞÅÏ¢£¬json¸ñÊ½´æ´¢';
+comment on column t_order.createdTime is '´´½¨Ê±¼ä';
+comment on column t_order.updatedTime is '¸üĞÂÊ±¼ä';
+comment on column t_order.completionTime is 'Íê³ÉÊ±¼ä';
 
 create table t_service
 (
@@ -125,11 +125,54 @@ create table t_service
    securityLevel varchar2(1),
    orderNum         number
 );
-comment on table t_service is 'äº‹é¡¹é…ç½®è¡¨';
-comment on column t_service.serviceId is 'äº‹é¡¹ID';
-comment on column t_service.name is 'äº‹é¡¹åç§°';
-comment on column t_service.title is 'äº‹é¡¹æ ‡é¢˜';
-comment on column t_service.description is 'äº‹é¡¹æ¦‚è¦';
-comment on column t_service.catalog is 'äº‹é¡¹ç±»åˆ«: bxgx-å¾ç¼´ä¸šåŠ¡,yldy-å…»è€å¾…é‡,gsdy-å·¥ä¼¤å¾…é‡,syedy-å¤±ä¸šå¾…é‡,yildy-åŒ»ç–—å¾…é‡';
-comment on column t_service.securityLevel is 'å®‰å…¨çº§åˆ«';
-comment on column t_service.orderNum is 'æ’åºä½œç”¨';
+comment on table t_service is 'ÊÂÏîÅäÖÃ±í';
+comment on column t_service.serviceId is 'ÊÂÏîID';
+comment on column t_service.name is 'ÊÂÏîÃû³Æ';
+comment on column t_service.title is 'ÊÂÏî±êÌâ';
+comment on column t_service.description is 'ÊÂÏî¸ÅÒª';
+comment on column t_service.catalog is 'ÊÂÏîÀà±ğ: bxgx-Õ÷½ÉÒµÎñ,yldy-ÑøÀÏ´ıÓö,gsdy-¹¤ÉË´ıÓö,syedy-Ê§Òµ´ıÓö,yildy-Ò½ÁÆ´ıÓö';
+comment on column t_service.securityLevel is '°²È«¼¶±ğ';
+comment on column t_service.orderNum is 'ÅÅĞò×÷ÓÃ';
+
+create table t_dictionary(
+       field      varchar2(20)  not null ,
+       dictValue      varchar2(20) not null ,
+       dictDisplay      varchar2(20) not null ,
+       version      varchar2(20) not null ,
+       updatedTime  date default sysdate
+);
+-- Add comments to the table
+comment on table t_dictionary
+  is '×ÖµäÅäÖÃ±í';
+-- Add comments to the columns
+comment on column t_dictionary.field
+  is '×Ö¶ÎÃû³Æ';
+comment on column t_dictionary.dictValue
+  is '×ÖµäÊµ¼ÊÖµ';
+comment on column t_dictionary.dictDisplay
+  is '×ÖµäÏÔÊ¾Öµ';
+comment on column t_dictionary.version
+  is '°æ±¾ºÅ';
+comment on column t_dictionary.updatedTime
+is 'Êı¾İ¸üĞÂÊ±¼ä´Á£¬Ä¬ÈÏÏµÍ³Ê±¼ä';
+
+-- ´´½¨ĞòÁĞ
+CREATE SEQUENCE seq_dict START WITH 1;
+
+-- Create table
+create table T_SERVICE_CATALOG
+(
+  NAME     VARCHAR2(50),
+  TITLE    VARCHAR2(50),
+  ORDERNUM NUMBER
+);
+-- Add comments to the table
+comment on table T_SERVICE_CATALOG
+  is 'ÊÂÏîÅäÖÃ±í';
+-- Add comments to the columns
+comment on column T_SERVICE_CATALOG.NAME
+  is 'ÊÂÏîÀà±ğ(´úÂë)';
+comment on column T_SERVICE_CATALOG.TITLE
+  is 'ÊÂÏîÀà±ğ(±êÌâ)';
+comment on column T_SERVICE_CATALOG.ORDERNUM
+  is 'ÅÅĞò';

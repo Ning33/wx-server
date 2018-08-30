@@ -1,5 +1,6 @@
 package cn.hnisi.wx.server.service.navigation;
 
+import cn.hnisi.wx.server.service.navigation.model.ServiceCatalog;
 import cn.hnisi.wx.server.service.navigation.model.ServiceItem;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface NavigationService {
      * @return
      */
     List<ServiceItem> queryItemByTitle( String title);
+
+    /**
+     *查询所有分类
+     * @return
+     */
+    List<ServiceCatalog> queryAllCatalog();
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnisi.wx.server.service.navigation.dao.ServiceCatalogDAO">
+
+    <!--查询所有事项-->
+    <select id="queryAllCatalog" resultType="cn.hnisi.wx.server.service.navigation.model.ServiceCatalog">
+      SELECT
+        *
+      FROM
+        t_service_catalog
+    </select>
+    
+
+</mapper>

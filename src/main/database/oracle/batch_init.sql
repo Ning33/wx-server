@@ -3,17 +3,17 @@ spool wx-server.log
 set feedback off;
 SET define ON;
 
-prompt ç³»ç»Ÿåˆå§‹åŒ–å¼€å§‹
+prompt ÏµÍ³³õÊ¼»¯¿ªÊ¼
 
-prompt å»ºè¡¨å¼€å§‹
+prompt ½¨±í¿ªÊ¼
 @@create_tables.sql
-prompt å»ºè¡¨å®Œæˆ
+prompt ½¨±íÍê³É
 
-prompt å‚æ•°é…ç½®å¼€å§‹
+prompt ²ÎÊıÅäÖÃ¿ªÊ¼
 @@init_parameters.sql
-prompt å‚æ•°é…ç½®å®Œæˆ
+prompt ²ÎÊıÅäÖÃÍê³É
 
-prompt ç³»ç»Ÿåˆå§‹åŒ–å®Œæˆ
+prompt ÏµÍ³³õÊ¼»¯Íê³É
 
 commit;
 
