@@ -32,7 +32,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@192.168.14.12:1521:ora10g
-    username: minipro_dg_jccs
+#    username: minipro_dg_jccs #集成测试环境
+    username: wxxcx_gateway #开发环境
     password: a
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
