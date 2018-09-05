@@ -22,7 +22,7 @@ public class PersonController {
     @Resource
     private ValidateFaceService validateFaceService;
 
-    @RequestMapping("/api/frontend/user/bind")
+    @RequestMapping("/api/frontend/user/person/bind")
     public ResponseEntity<Person> bind(String idcard, String name, User user, HttpServletRequest request){
         //验证人脸和参保人用户是否一致
         validateFaceService.validateToken(request,idcard,name);
@@ -37,7 +37,7 @@ public class PersonController {
         return new ResponseEntity<>(resultPerson);
     }
 
-    @RequestMapping("/api/frontend/user/unbind")
+    @RequestMapping("/api/frontend/user/person/unbind")
     public ResponseEntity unbind(String personId, User user, HttpServletRequest request){
         //验证人脸和注册用户是否一致
         validateFaceService.validateToken(request,user.getIdcard(),user.getName());
