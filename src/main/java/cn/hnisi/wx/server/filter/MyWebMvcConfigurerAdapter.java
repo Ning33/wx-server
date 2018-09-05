@@ -19,7 +19,7 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则
         //excludePathPatterns 用于排除拦截
-        registry.addInterceptor(getMyIntercepter()).addPathPatterns("/api/frontend/service/**");
+        registry.addInterceptor(getMyIntercepter()).addPathPatterns("/api/frontend/**");
         super.addInterceptors(registry);
     }
 }

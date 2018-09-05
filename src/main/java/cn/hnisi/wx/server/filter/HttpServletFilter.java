@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
@@ -16,25 +17,27 @@ public class HttpServletFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         ServletRequest requestWrapper = null;
-        logger.info("进入过滤器");
+        logger.info("------------------进入过滤器-----------------");
         if(request instanceof HttpServletRequest) {
-            requestWrapper = new RequestWrapper((HttpServletRequest) request);
+            requestWrapper = new RequestWrapper(httpRequest);
         }
+
         if(requestWrapper == null) {
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         } else {
-            chain.doFilter(requestWrapper, response);
+            chain.doFilter(requestWrapper, httpResponse);
         }
     }
 
     @Override
     public void destroy() {
-
     }
+
 }
