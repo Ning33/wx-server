@@ -149,16 +149,16 @@ public class MyIntercepter implements HandlerInterceptor{
     private void checkBindUser(HttpServletRequest request){
         String sessionid = request.getHeader(sessionHeaderKey);
         if(StringUtils.isEmpty(sessionid)){
-            throw new AppException(ResponseStatus.UNBOUND_USER,"请实名验证");
+            throw new AppException(ResponseStatus.SESSION_GATEWAY_EXPIRED);
         }
         User user = securityService.getUser(sessionid);
         if(user == null){
-            throw new AppException(ResponseStatus.UNBOUND_USER,"请实名验证");
+            throw new AppException(ResponseStatus.UNBOUND_USER);
         }
         boolean boundIdcard = user.isBoundIdcard();
         //未实名绑定
         if(!boundIdcard){
-            throw new AppException(ResponseStatus.UNBOUND_USER,"请实名验证");
+            throw new AppException(ResponseStatus.UNBOUND_USER);
         }
     }
 
