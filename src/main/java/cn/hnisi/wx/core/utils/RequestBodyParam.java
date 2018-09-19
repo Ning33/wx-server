@@ -8,6 +8,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @Documented
-public @interface GetJsonValue {
+public @interface RequestBodyParam {
     public String value() default "";
 }

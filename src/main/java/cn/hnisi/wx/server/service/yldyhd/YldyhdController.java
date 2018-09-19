@@ -1,6 +1,7 @@
 package cn.hnisi.wx.server.service.yldyhd;
 
 import cn.hnisi.wx.core.io.ResponseEntity;
+import cn.hnisi.wx.core.utils.RequestBodyParam;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.ServiceUtil;
 import cn.hnisi.wx.server.service.model.ServiceResult;
@@ -10,8 +11,8 @@ import cn.hnisi.wx.server.service.yldyhd.model.Sbxx;
 import cn.hnisi.wx.server.service.yldyhd.model.YldyhdResult;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class YldyhdController {
      * @param user
      * @return
      */
-    @RequestMapping("/api/frontend/service/yldyhd/pre-check")
+    @PostMapping("/api/frontend/service/yldyhd/pre-check")
     public ResponseEntity preCheck(User user){
         // 查询是否存在未办结业务
 
@@ -44,8 +45,8 @@ public class YldyhdController {
      * 若允许办理则查询申报信息返回
      * @return
      */
-    @RequestMapping("/api/frontend/service/yldyhd/check-in")
-    public ResponseEntity<Sbxx> checkIn(String personId, User user){
+    @PostMapping("/api/frontend/service/yldyhd/check-in")
+    public ResponseEntity<Sbxx> checkIn(@RequestBodyParam String personId, User user){
         Sbxx response = new Sbxx();
         response.setAAC002("42011819861223152X");
         response.setAAC003("测试人员001");
@@ -57,8 +58,8 @@ public class YldyhdController {
      * 查询参保情况确认信息
      * @return
      */
-    @RequestMapping("/api/frontend/service/yldyhd/step-cbqkqr-query")
-    public ResponseEntity<Cbqkqr> queryCbqkqr(String personId, User user){
+    @PostMapping("/api/frontend/service/yldyhd/step-cbqkqr-query")
+    public ResponseEntity<Cbqkqr> queryCbqkqr(@RequestBodyParam String personId, User user){
         Cbqkqr response = new Cbqkqr();
         response.setStjfys(80);
         response.setSjjfys(100);
@@ -74,8 +75,8 @@ public class YldyhdController {
      * 查询发放账户确认信息
      * @return
      */
-    @RequestMapping("/api/frontend/service/yldyhd/step-ffzhqr-query")
-    public ResponseEntity<Ffzhqr> yhxxqr(String personId, User user){
+    @PostMapping("/api/frontend/service/yldyhd/step-ffzhqr-query")
+    public ResponseEntity<Ffzhqr> yhxxqr(@RequestBodyParam String personId, User user){
         Ffzhqr response = new Ffzhqr();
         response.setAAE133("张三");
         response.setAAE010("888888888888");
@@ -100,7 +101,7 @@ public class YldyhdController {
      * 提交业务申报
      * @return
      */
-    @RequestMapping("/api/frontend/service/yldyhd/submit")
+    @PostMapping("/api/frontend/service/yldyhd/submit")
     public ResponseEntity<String> submit(@RequestBody SubmitRequest request, User user){
         String personId = request.getPersonId();
         Sbxx sbxx = new Sbxx();
@@ -114,7 +115,7 @@ public class YldyhdController {
      * 回写业务办理结果
      * @return
      */
-    @RequestMapping("/api/server/service/yldyhd/callback")
+    @PostMapping("/api/server/service/yldyhd/callback")
     public ResponseEntity callback(@RequestBody ServiceResult<YldyhdResult> serviceResult){
         serviceUtil.update(serviceResult);
         return new ResponseEntity();

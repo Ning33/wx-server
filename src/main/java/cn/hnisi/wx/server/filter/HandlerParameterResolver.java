@@ -1,15 +1,17 @@
 package cn.hnisi.wx.server.filter;
 
-import cn.hnisi.wx.core.utils.GetJsonValue;
+import cn.hnisi.wx.core.utils.RequestBodyParam;
 import cn.hnisi.wx.core.utils.JsonUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Parameter;
 import java.util.Map;
 
 /**
@@ -25,7 +27,7 @@ public class HandlerParameterResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
         //拦截添加注解的方法参数
-        if(methodParameter.hasParameterAnnotation(GetJsonValue.class)){
+        if(methodParameter.hasParameterAnnotation(RequestBodyParam.class)){
             return true;
         }
         return false;
@@ -43,7 +45,11 @@ public class HandlerParameterResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         //获取注解的属性值
-        String value = methodParameter.getParameterAnnotation(GetJsonValue.class).value();
+        String value = methodParameter.getParameterAnnotation(RequestBodyParam.class).value();
+        if(StringUtils.isEmpty(value)){
+            //如注解没有定义属性值, 则获取参数名称
+            value = methodParameter.getParameterName();
+        }
         //获取request
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         //获取request里面json格式数据,转换成map

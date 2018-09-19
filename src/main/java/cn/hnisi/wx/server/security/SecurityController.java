@@ -4,10 +4,12 @@ package cn.hnisi.wx.server.security;
 import cn.hnisi.wx.core.exception.AppException;
 import cn.hnisi.wx.core.io.ResponseEntity;
 import cn.hnisi.wx.core.io.ResponseStatus;
+import cn.hnisi.wx.core.utils.RequestBodyParam;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.validateFace.ValidateFaceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +25,8 @@ public class SecurityController {
     @Resource
     private ValidateFaceService validateFaceService;
 
-    @RequestMapping("/api/frontend/user/login")
-    public ResponseEntity<User> login(String jsCode){
+    @PostMapping("/api/frontend/user/login")
+    public ResponseEntity<User> login(@RequestBodyParam String jsCode){
         if(StringUtils.isEmpty(jsCode)){
             throw new AppException(ResponseStatus.JS_CODE_INVALID,"jsCode is null");
         }
@@ -37,7 +39,7 @@ public class SecurityController {
     }
 
     @RequestMapping("/frontend/user/checkLogin")
-    public ResponseEntity<User> checkLogin(String sessionid){
+    public ResponseEntity<User> checkLogin( String sessionid){
         if(StringUtils.isEmpty(sessionid)){
             throw new AppException(ResponseStatus.DATA_VALIDATE_EXCEPTION);
         }
@@ -49,8 +51,8 @@ public class SecurityController {
     /**
      * 注册
      */
-    @RequestMapping("/api/frontend/user/register")
-    public ResponseEntity<User> register(String idcard, String name, User user,HttpServletRequest request){
+    @PostMapping("/api/frontend/user/register")
+    public ResponseEntity<User> register(@RequestBodyParam String idcard, @RequestBodyParam String name,User user,HttpServletRequest request){
         //验证人脸和注册用户是否一致
         validateFaceService.validateToken(request,idcard,name);
 
@@ -69,7 +71,7 @@ public class SecurityController {
      * @param request
      * @return
      */
-    @RequestMapping("/api/frontend/user/unregister")
+    @PostMapping("/api/frontend/user/unregister")
     public ResponseEntity unregister(User user,HttpServletRequest request){
         //验证人脸和注册用户是否一致
         validateFaceService.validateToken(request,user.getIdcard(),user.getName());
