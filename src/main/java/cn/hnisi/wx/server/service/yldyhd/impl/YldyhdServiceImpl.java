@@ -17,8 +17,6 @@ import javax.annotation.Resource;
 @Service
 public class YldyhdServiceImpl implements YldyhdService {
 
-    private String serviceName = "yldyhd";
-
     @Resource
     private ServiceUtil serviceUtil;
 
@@ -49,7 +47,7 @@ public class YldyhdServiceImpl implements YldyhdService {
     public String submit(String personId, Sbxx sbxx, User user) {
         //查询人员信息
         Person person = personService.queryByPersonId(personId);
-        Order order = serviceUtil.createOrder(this.serviceName,user,person,sbxx, OrderStatus.REVIEW);
+        Order order = serviceUtil.createOrder(serviceName,user,person,sbxx, OrderStatus.REVIEW);
         return order.getOrderNo();
     }
 }

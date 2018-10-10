@@ -7,6 +7,8 @@ import cn.hnisi.wx.server.service.yldyhd.model.Sbxx;
 
 public interface YldyhdService{
 
+    String serviceName = "yldyhd";
+
     /**
      * 业务准入校验
      * @param personId
