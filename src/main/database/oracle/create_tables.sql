@@ -68,7 +68,7 @@ create table t_person(
    sicard      varchar2(50),
    updatedTime   date default sysdate
 );
-alter table t_user add constraint u_person_openid_idcard unique(openid,idcard);
+alter table t_person add constraint u_person_userId_idcard unique(userId,idcard);
 comment on table t_person is '人员信息表';
 comment on column t_person.personId is '人员ID';
 comment on column t_person.userId is '用户ID';
