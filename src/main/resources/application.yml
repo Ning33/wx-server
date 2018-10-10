@@ -21,6 +21,8 @@ properties:
       path_ftp: /data/
       imgPath_suf_jpg: .jpg
       videoPath_suf: .mp4
+  yw-server:
+    uri: http://localhost:8081
 server:
   port: 8081
 spring:

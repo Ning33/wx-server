@@ -21,6 +21,10 @@ public class ServiceUtil {
     @Resource
     private OrderDAO orderDAO;
 
+    public String generateOrderNo(){
+        return orderNoGenerator.generate();
+    }
+
     public <T> Order createOrder(String serviceName,User user, Person person, T data){
         return createOrder(serviceName,user,person,data,OrderStatus.APPLY);
     }

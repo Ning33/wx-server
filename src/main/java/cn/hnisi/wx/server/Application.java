@@ -3,6 +3,7 @@ package cn.hnisi.wx.server;
 import cn.hnisi.wx.core.CoreAutoConfiguration;
 import cn.hnisi.wx.server.properties.WxProperties;
 import cn.hnisi.wx.server.validateFace.ValidateFaceService;
+import cn.hnisi.wx.server.ywserver.YwServerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @Import(CoreAutoConfiguration.class)
-@EnableConfigurationProperties(WxProperties.class)
+@EnableConfigurationProperties({WxProperties.class,YwServerProperties.class})
 @EnableTransactionManagement
 @EnableScheduling
 public class Application {

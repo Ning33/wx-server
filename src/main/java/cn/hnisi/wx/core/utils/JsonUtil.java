@@ -56,6 +56,11 @@ public class JsonUtil {
         }
     }
 
+    public static <T> T convertBeanToBean(Object obj,Class<T> cls){
+        return convertJsonToBean(convertBeanToJson(obj),cls);
+    }
+
+
     /**
      * 获取request 请求中的参数
      * @param request
