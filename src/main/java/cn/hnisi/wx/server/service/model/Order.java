@@ -11,13 +11,15 @@ public class Order {
     private String userId;
     private String userIdcard;
     private String userName;
-    private String serviceId;
     private String serviceName;
     private String requestData;
     private String responseData;
     private Date createdTime;
     private Date updatedTime;
     private Date completionTime;
+    private String bae007;
+    private String remark;
+    private String tel;
 
     public String getOrderNo() {
         return orderNo;
@@ -83,14 +85,6 @@ public class Order {
         this.userName = userName;
     }
 
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
-
     public String getServiceName() {
         return serviceName;
     }
@@ -137,6 +131,30 @@ public class Order {
 
     public void setCompletionTime(Date completionTime) {
         this.completionTime = completionTime;
+    }
+
+    public String getBae007() {
+        return bae007;
+    }
+
+    public void setBae007(String bae007) {
+        this.bae007 = bae007;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 }
 

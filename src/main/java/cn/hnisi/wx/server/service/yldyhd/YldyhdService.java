@@ -147,4 +147,8 @@ public class YldyhdService{
 
     }
 
+    public void callback(ResponseDTO responseDTO){
+        serviceUtil.callback(responseDTO);
+    }
+
 }

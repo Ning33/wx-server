@@ -7,7 +7,7 @@
     <!--查询我的所有事项-->
     <select id="searchServices" resultType="cn.hnisi.wx.server.service.model.Order">
         SELECT
-          o.ORDERNO , o.SERVICEID ,s.title as serviceName ,o.PERSONID , o.PERSONIDCARD ,
+          o.ORDERNO ,s.title as serviceName ,o.PERSONID , o.PERSONIDCARD ,
           o.PERSONNAME ,o.STATUS ,o.CREATEDTIME ,o.UPDATEDTIME ,o.completionTime
         FROM
           T_ORDER o
@@ -23,7 +23,7 @@
 
     <select id="queryMyServiceByOrderNo" resultType="cn.hnisi.wx.server.service.model.Order">
         SELECT
-          o.ORDERNO , o.SERVICEID ,s.title as serviceName  ,o.PERSONID ,o.PERSONIDCARD ,
+          o.ORDERNO  ,s.title as serviceName  ,o.PERSONID ,o.PERSONIDCARD ,
           o.PERSONNAME ,o.STATUS ,o.requestData ,o.CREATEDTIME ,o.UPDATEDTIME , o.completionTime
         FROM
           T_ORDER o

@@ -1,13 +1,12 @@
 package cn.hnisi.wx.server.service;
 
-import cn.hnisi.wx.core.exception.DataValidationException;
 import cn.hnisi.wx.core.utils.JsonUtil;
 import cn.hnisi.wx.server.person.model.Person;
 import cn.hnisi.wx.server.security.model.User;
 import cn.hnisi.wx.server.service.dao.OrderDAO;
 import cn.hnisi.wx.server.service.model.Order;
 import cn.hnisi.wx.server.service.model.OrderStatus;
-import cn.hnisi.wx.server.service.model.ServiceResult;
+import cn.hnisi.wx.server.ywserver.model.ResponseDTO;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -26,7 +25,7 @@ public class ServiceUtil {
     }
 
     public <T> Order createOrder(String serviceName,User user, Person person, T data){
-        return createOrder(serviceName,user,person,data,OrderStatus.APPLY);
+        return createOrder(serviceName,user,person,data,OrderStatus.SUCCESS);
     }
 
     public <T> Order createOrder(String serviceName,User user, Person person, T data,OrderStatus orderStatus){
@@ -58,22 +57,30 @@ public class ServiceUtil {
         return order;
     }
 
-    public void submit(String orderNo){
-        orderDAO.updateStatus(orderNo, OrderStatus.REVIEW.toString());
-    }
-
     public Order query(String orderNo){
         return orderDAO.queryByOrderNo(orderNo);
     }
 
-    public <T> void update(ServiceResult<T> serviceResult){
-        String orderNo = serviceResult.getOrderNo();
-        String status = serviceResult.getStatus();
-        // 校验status
-        if(!(status.equals("21")||status.equals("22"))){
-            throw new DataValidationException("status 数据不符合规范");
+    public <T> void callback(ResponseDTO responseDTO){
+        Order order = new Order();
+        String orderNo = responseDTO.getOrderNo();
+
+        if(responseDTO.isSuccess()){
+            // 回写状态
+            order.setStatus(OrderStatus.SUCCESS.toString());
+            // 回写业务流水号
+            order.setBae007(responseDTO.getBae007());
+            // 回写responseData
+            order.setResponseData(JsonUtil.convertBeanToJson(responseDTO.getResponseData()));
+            // 回写requestData,可选
+        }else{
+            // 回写状态
+            order.setStatus(OrderStatus.FAIL.toString());
+            // 回写业务流水号
+            order.setBae007(responseDTO.getBae007());
+            // 回写requestData,可选
         }
-        String data = JsonUtil.convertBeanToJson(serviceResult.getData());
-        orderDAO.updateResult(orderNo,status,data);
+
+        orderDAO.update(orderNo,order);
     }
 }

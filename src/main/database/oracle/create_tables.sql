@@ -83,7 +83,6 @@ comment on column t_person.updatedTime is '数据更新时间戳';
 
 create table t_order(
    orderNo     varchar2(50) primary key ,
-   serviceId   varchar2(50),
    serviceName varchar2(50),
    userId      varchar2(50),
    userIdcard  varchar2(20),
@@ -96,11 +95,13 @@ create table t_order(
    responseData   clob,
    createdTime   date default sysdate,
    updatedTime   date default sysdate,
-   completionTime date
+   completionTime date,
+   bae007      varchar2(50),
+   remark      varchar2(4000),
+   tel         varchar2(20)
 );
 comment on table t_order is '受理单信息';
 comment on column t_order.orderNo is '受理单号';
-comment on column t_order.serviceId is '服务事项ID';
 comment on column t_order.serviceName is '服务事项名称';
 comment on column t_order.userId is '用户id';
 comment on column t_order.userIdcard is '用户公民身份证号';
@@ -114,6 +115,9 @@ comment on column t_order.responseData is '业务响应信息，json格式存储';
 comment on column t_order.createdTime is '创建时间';
 comment on column t_order.updatedTime is '更新时间';
 comment on column t_order.completionTime is '完成时间';
+comment on column t_order.bae007 is '业务流水号';
+comment on column t_order.remark is '备注';
+comment on column t_order.tel is '手机号码';
 
 create table t_service
 (

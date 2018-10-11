@@ -13,5 +13,5 @@ public interface OrderDAO {
 
     Order queryByOrderNo(@Param("orderNo") String orderNo);
 
-    void updateResult(@Param("orderNo") String orderNo,@Param("status") String status,@Param("responseData") String responseData);
+    void update(@Param("orderNo") String orderNo,@Param("order") Order order);
 }

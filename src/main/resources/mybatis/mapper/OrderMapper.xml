@@ -5,8 +5,95 @@
 <mapper namespace="cn.hnisi.wx.server.service.dao.OrderDAO">
 
     <insert id="insert">
-        insert into t_order(orderNo,serviceId,serviceName,userId,userIdcard,userName,personId,personIdcard,personName,status,requestData,responseData)
-        values(#{orderNo},#{serviceId,jdbcType=VARCHAR},#{serviceName},#{userId},#{userIdcard},#{userName},#{personId},#{personIdcard},#{personName},#{status},#{requestData,jdbcType=CLOB},#{responseData,jdbcType=CLOB})
+        insert into t_order(
+        <if test="orderNo != null">
+            orderNo,
+        </if>
+        <if test="serviceName != null">
+            serviceName,
+        </if>
+        <if test="userId != null">
+            userId,
+        </if>
+        <if test="userIdcard != null">
+            userIdcard,
+        </if>
+        <if test="userName != null">
+            userName,
+        </if>
+        <if test="personId != null">
+            personId,
+        </if>
+        <if test="personIdcard != null">
+            personIdcard,
+        </if>
+        <if test="personName != null">
+            personName,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        <if test="requestData != null">
+            requestData,
+        </if>
+        <if test="responseData != null">
+            responseData,
+        </if>
+        <if test="bae007 != null">
+            bae007,
+        </if>
+        <if test="remark != null">
+            remark,
+        </if>
+        <if test="tel != null">
+            tel,
+        </if>
+        createdTime,updatedTime
+        ) values(
+        <if test="orderNo != null">
+            #{orderNo},
+        </if>
+        <if test="serviceName != null">
+            #{serviceName},
+        </if>
+        <if test="userId != null">
+            #{userId},
+        </if>
+        <if test="userIdcard != null">
+            #{userIdcard},
+        </if>
+        <if test="userName != null">
+            #{userName},
+        </if>
+        <if test="personId != null">
+            #{personId},
+        </if>
+        <if test="personIdcard != null">
+            #{personIdcard},
+        </if>
+        <if test="personName != null">
+            #{personName},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        <if test="requestData != null">
+            #{requestData},
+        </if>
+        <if test="responseData != null">
+            #{responseData},
+        </if>
+        <if test="bae007 != null">
+            #{bae007},
+        </if>
+        <if test="remark != null">
+            #{remark},
+        </if>
+        <if test="tel != null">
+            #{tel},
+        </if>
+        sysdate,sysdate
+        )
     </insert>
 
     <update id="updateStatus">
@@ -20,12 +107,51 @@
         select * from t_order where orderNo = #{orderNo}
     </select>
 
-    <update id="updateResult">
-        update t_order
-           set status = #{status},
-               updatedTime = sysdate,
-               responseData = #{responseData},
-               completionTime = #{completionTime}
+    <update id="update">
+        update t_order set
+        <if test="order.orderNo != null">
+            orderNo = #{order.orderNo},
+        </if>
+        <if test="order.serviceName != null">
+            serviceName = #{order.serviceName},
+        </if>
+        <if test="order.userId != null">
+            userId = #{order.userId},
+        </if>
+        <if test="order.userIdcard != null">
+            userIdcard = #{order.userIdcard},
+        </if>
+        <if test="order.userName != null">
+            userName = #{order.userName},
+        </if>
+        <if test="order.personId != null">
+            personId = #{order.personId},
+        </if>
+        <if test="order.personIdcard != null">
+            personIdcard = #{order.personIdcard},
+        </if>
+        <if test="order.personName != null">
+            personName = #{order.personName},
+        </if>
+        <if test="order.status != null">
+            status = #{order.status},
+        </if>
+        <if test="order.requestData != null">
+            requestData = #{order.requestData},
+        </if>
+        <if test="order.responseData != null">
+            responseData = #{order.responseData},
+        </if>
+        <if test="order.bae007 != null">
+            bae007 = #{order.bae007},
+        </if>
+        <if test="order.remark != null">
+            remark = #{order.remark},
+        </if>
+        <if test="order.tel != null">
+            tel = #{order.tel},
+        </if>
+        updatedTime = sysdate
          where orderNo = #{orderNo}
     </update>
 </mapper>
