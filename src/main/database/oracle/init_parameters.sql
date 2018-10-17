@@ -8,6 +8,9 @@ values (sys_guid(), 'cbjfxx', '参保缴费信息', '缴费信息查询', 'bxgx', '2', null)
 insert into t_service (SERVICEID, NAME, TITLE, DESCRIPTION, CATALOG, SECURITYLEVEL, ORDERNUM)
 values (sys_guid(), 'txdysl', '退休待遇申领', '领取退休金', 'yldy', '3', null);
 
+insert into t_service (SERVICEID, NAME, TITLE, DESCRIPTION, CATALOG, SECURITYLEVEL, ORDERNUM)
+values (sys_guid(), 'grsfjy', '个人身份减员', '办理个人减员', 'bxgx', '2', null);
+
 insert into t_dictionary(field , dictvalue , dictdisplay , version )
 values('性别','1','男',seq_dict.nextval);
 
